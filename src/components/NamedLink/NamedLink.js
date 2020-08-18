@@ -30,6 +30,10 @@ export const NamedLinkComponent = props => {
   // Link props
   const { to, children } = props;
   const pathname = pathByRouteName(name, routeConfiguration(), params);
+  if (name === 'NewTeacherListingPage') {
+    console.log('pathname: ', pathname);
+    console.log('to: ', to);
+  }
   const { match } = props;
   const active = match.url && match.url === pathname;
 

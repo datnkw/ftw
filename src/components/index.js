@@ -164,7 +164,15 @@ export { default as EditListingLocationPanel } from './EditListingLocationPanel/
 export { default as EditListingPhotosPanel } from './EditListingPhotosPanel/EditListingPhotosPanel';
 export { default as EditListingPoliciesPanel } from './EditListingPoliciesPanel/EditListingPoliciesPanel';
 export { default as EditListingPricingPanel } from './EditListingPricingPanel/EditListingPricingPanel';
+
+export { default as EditTeacherListingGeneralPanel } from './EditTeacherListingGeneralPanel/EditTeacherListingGeneralPanel';
+export { default as EditTeacherListingAvailabilityPanel } from './EditListingAvailabilityPanel/EditListingAvailabilityPanel';
+export { default as EditTeacherListingLocationPanel } from './EditListingLocationPanel/EditListingLocationPanel';
+export { default as EditTeacherListingPricingPanel } from './EditTeacherListingPricingPanel/EditTeacherListingPricingPanel';
+
 export { default as EditListingWizard } from './EditListingWizard/EditListingWizard';
+export { default as EditTeacherListingWizard } from './EditListingWizard/EditTeacherListingWizard';
+
 export { default as Footer } from './Footer/Footer';
 export { default as SectionHero } from './SectionHero/SectionHero';
 export { default as SectionHowItWorks } from './SectionHowItWorks/SectionHowItWorks';

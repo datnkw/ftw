@@ -5,6 +5,7 @@ import {
   CheckoutPage,
   ContactDetailsPage,
   EditListingPage,
+  EditTeacherListingPage,
   EmailVerificationPage,
   InboxPage,
   LandingPage,
@@ -93,6 +94,30 @@ const routeConfiguration = () => {
       component: RedirectToLandingPage,
     },
     {
+      path: '/l/teacher/new',
+      name: 'NewTeacherListingPage',
+      auth: true,
+      component: () => {
+        console.log('get in /l/teacher/new');
+        return (
+          <NamedRedirect
+            name="EditTeacherListingPage"
+            params={{ slug: draftSlug, id: draftId, type: 'new', tab: 'general' }}
+          />
+        );
+      },
+    },
+    {
+      path: '/l/teacher/:slug/:id/:type/:tab',
+      name: 'EditTeacherListingPage',
+      auth: true,
+      component: props => {
+        console.log('EditTeacherListingPage');
+        return <EditTeacherListingPage {...props} />;
+      },
+      loadData: EditListingPage.loadData,
+    },
+    {
       path: '/l/:slug/:id',
       name: 'ListingPage',
       component: props => <ListingPage {...props} />,
@@ -117,12 +142,17 @@ const routeConfiguration = () => {
       path: '/l/new',
       name: 'NewListingPage',
       auth: true,
-      component: () => (
-        <NamedRedirect
-          name="EditListingPage"
-          params={{ slug: draftSlug, id: draftId, type: 'new', tab: 'description' }}
-        />
-      ),
+      component: () => {
+        alert('/l/new');
+        console.log('/l/new');
+
+        return (
+          <NamedRedirect
+            name="EditListingPage"
+            params={{ slug: draftSlug, id: draftId, type: 'new', tab: 'description' }}
+          />
+        );
+      },
     },
     {
       path: '/l/:slug/:id/:type/:tab',

@@ -178,6 +178,8 @@
   "EditListingPage.loadingListingData": "Loading listing data…",
   "EditListingPage.titleCreateListing": "Create a listing",
   "EditListingPage.titleEditListing": "Edit listing",
+  "EditTeacherListingPage.titleCreateListing": "Create a teacher",
+  "EditTeacherListingPage.titleEditListing": "Edit teacher",
   "EditListingPhotosForm.addImagesTip": "Tip: Choose the top 2-3 photos of your sauna from different angles in a good light that really show the space.",
   "EditListingPhotosForm.bankAccountNumberRequired": "You need to add a bank account number.",
   "EditListingPhotosForm.chooseImage": "+ Choose an image…",
@@ -219,6 +221,12 @@
   "EditListingWizard.saveEditPhotos": "Save photos",
   "EditListingWizard.saveEditPolicies": "Save rules",
   "EditListingWizard.saveEditPricing": "Save pricing",
+
+  "EditListingWizard.saveEditGeneral": "Save general",
+  "EditListingWizard.saveEditTeacherAvailability": "Save availability",
+  "EditListingWizard.saveEditTeacherLocation": "Save location",
+  "EditListingWizard.saveEditTeacherPricing": "Save pricing",
+
   "EditListingWizard.saveNewDescription": "Next: Amenities",
   "EditListingWizard.saveNewFeatures": "Next: Rules",
   "EditListingWizard.saveNewLocation": "Next: Pricing",
@@ -226,6 +234,12 @@
   "EditListingWizard.saveNewPhotos": "Publish listing",
   "EditListingWizard.saveNewPolicies": "Next: Location",
   "EditListingWizard.saveNewPricing": "Next: Availability",
+
+  "EditListingWizard.saveNewGeneral": "Next: Availability",
+  "EditListingWizard.saveNewTeacherAvailability": "Next: Location",
+  "EditListingWizard.saveNewTeacherLocation": "Next: Pricing",
+  "EditListingWizard.saveNewTeacherPricing": "Publish listing",
+
   "EditListingWizard.tabLabelDescription": "Description",
   "EditListingWizard.tabLabelFeatures": "Amenities",
   "EditListingWizard.tabLabelAvailability": "Availability",
@@ -233,6 +247,12 @@
   "EditListingWizard.tabLabelPhotos": "Photos",
   "EditListingWizard.tabLabelPolicy": "Sauna rules",
   "EditListingWizard.tabLabelPricing": "Pricing",
+
+  "EditTeacherListingWizard.tabLabelGeneral": "General",
+  "EditTeacherListingWizard.tabLabelLocation": "Location",
+  "EditTeacherListingWizard.tabLabelPricing": "Pricing",
+  "EditTeacherListingWizard.tabLabelAvailability": "Availability",
+
   "EmailVerificationForm.finishAccountSetup": "We will need to send you email notifications. To allow this, please verify your email address {email}.",
   "EmailVerificationForm.successButtonText": "Continue exploring",
   "EmailVerificationForm.successText": "Everything looks good. Time to get out there – have a great day.",
@@ -946,6 +966,7 @@
   "Topbar.searchIcon": "Open search",
   "TopbarDesktop.accountSettingsLink": "Account settings",
   "TopbarDesktop.createListing": "+ Add your sauna",
+  "TopbarDesktop.createTeacherListing": "+ Add your teacher profile",
   "TopbarDesktop.inbox": "Inbox",
   "TopbarDesktop.login": "Log in",
   "TopbarDesktop.logo": "Saunatime",
