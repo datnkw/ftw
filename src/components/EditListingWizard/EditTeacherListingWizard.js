@@ -72,8 +72,6 @@ const tabLabel = (intl, tab) => {
  * @return true if tab / step is completed.
  */
 const tabCompleted = (tab, listing) => {
-  console.log('listing in tabComplete: ', listing);
-
   const {
     availabilityPlan,
     description,
@@ -103,9 +101,9 @@ const tabCompleted = (tab, listing) => {
     case GENERAL:
       return true;
     case TEACHER_LOCATION:
-      return false;
+      return true;
     case TEACHER_PRICING:
-      return false;
+      return true;
     case TEACHER_AVAILABILITY:
       return false;
     default:
@@ -123,8 +121,6 @@ const tabCompleted = (tab, listing) => {
  * @return object containing activity / editability of different tabs of this wizard
  */
 const tabsActive = (isNew, listing) => {
-  console.log('listing: ', listing);
-
   return TABS.reduce((acc, tab) => {
     const previousTabIndex = TABS.findIndex(t => t === tab) - 1;
     const isActive =
@@ -317,7 +313,7 @@ class EditTeacherListingWizard extends Component {
     }
 
     const tabLink = tab => {
-      return { name: 'EditListingPage', params: { ...params, tab } };
+      return { name: 'EditTeacherListingPage', params: { ...params, tab } };
     };
 
     const formDisabled = getAccountLinkInProgress;

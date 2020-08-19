@@ -93,6 +93,34 @@ export const filters = [
     },
   },
   {
+    id: 'gender',
+    label: 'Gender',
+    type: 'SelectSingleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_gender'],
+    config: {
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for the UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [{ key: 'male', label: 'Male' }, { key: 'female', label: 'Female' }],
+    },
+  },
+  {
+    id: 'teachTime',
+    label: 'Teach time',
+    type: 'SelectSingleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_teacheTime'],
+    config: {
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for the UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [{ key: 'fulltime', label: 'Fulltime' }, { key: 'parttime', label: 'Parttime' }],
+    },
+  },
+  {
     id: 'amenities',
     label: 'Amenities',
     type: 'SelectMultipleFilter',

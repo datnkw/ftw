@@ -98,7 +98,6 @@ const routeConfiguration = () => {
       name: 'NewTeacherListingPage',
       auth: true,
       component: () => {
-        console.log('get in /l/teacher/new');
         return (
           <NamedRedirect
             name="EditTeacherListingPage"
@@ -112,7 +111,6 @@ const routeConfiguration = () => {
       name: 'EditTeacherListingPage',
       auth: true,
       component: props => {
-        console.log('EditTeacherListingPage');
         return <EditTeacherListingPage {...props} />;
       },
       loadData: EditListingPage.loadData,
@@ -143,9 +141,6 @@ const routeConfiguration = () => {
       name: 'NewListingPage',
       auth: true,
       component: () => {
-        alert('/l/new');
-        console.log('/l/new');
-
         return (
           <NamedRedirect
             name="EditListingPage"

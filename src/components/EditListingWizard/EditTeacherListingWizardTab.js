@@ -18,32 +18,13 @@ import {
 
 import css from './EditListingWizard.css';
 
-export const AVAILABILITY = 'availability';
-export const DESCRIPTION = 'description';
-export const FEATURES = 'features';
-export const POLICY = 'policy';
-export const LOCATION = 'location';
-export const PRICING = 'pricing';
-export const PHOTOS = 'photos';
 export const GENERAL = 'general';
 export const TEACHER_LOCATION = 'location';
 export const TEACHER_PRICING = 'pricing';
 export const TEACHER_AVAILABILITY = 'availability';
 
 // EditListingWizardTab component supports these tabs
-export const SUPPORTED_TABS = [
-  DESCRIPTION,
-  FEATURES,
-  POLICY,
-  LOCATION,
-  PRICING,
-  AVAILABILITY,
-  PHOTOS,
-  GENERAL,
-  TEACHER_LOCATION,
-  TEACHER_PRICING,
-  TEACHER_AVAILABILITY,
-];
+export const SUPPORTED_TABS = [GENERAL, TEACHER_LOCATION, TEACHER_PRICING, TEACHER_AVAILABILITY];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
   const nextTabIndex = marketplaceTabs.findIndex(s => s === tab) + 1;
@@ -167,31 +148,64 @@ const EditListingWizardTab = props => {
         ? 'EditListingWizard.saveNewGeneral'
         : 'EditListingWizard.saveEditGeneral';
 
-      return <EditTeacherListingGeneralPanel />;
+      return (
+        <EditTeacherListingGeneralPanel
+          {...panelProps(GENERAL)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
     }
     case TEACHER_AVAILABILITY: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewTeacherAvailability'
         : 'EditListingWizard.saveEditTeacherAvailability';
 
-      return <EditTeacherListingAvailabilityPanel />;
+      return (
+        <EditTeacherListingAvailabilityPanel
+          {...panelProps(TEACHER_AVAILABILITY)}
+          availability={availability}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
     }
     case TEACHER_LOCATION: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewTeacherLocation'
         : 'EditListingWizard.saveEditTeacherLocation';
 
-      return <EditTeacherListingLocationPanel />;
+      return (
+        <EditTeacherListingLocationPanel
+          {...panelProps(TEACHER_LOCATION)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
     }
     case TEACHER_PRICING: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewTeacherPricing'
         : 'EditListingWizard.saveEditTeacherPricing';
 
-      return <EditTeacherListingPricingPanel />;
+      return (
+        <EditTeacherListingPricingPanel
+          {...panelProps(TEACHER_PRICING)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
     }
     default:
-      return null;
+      return <div>null</div>;
   }
 };
 

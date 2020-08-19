@@ -124,8 +124,9 @@ const tabCompleted = (tab, listing) => {
 const tabsActive = (isNew, listing) => {
   return TABS.reduce((acc, tab) => {
     const previousTabIndex = TABS.findIndex(t => t === tab) - 1;
-    const isActive =
-      previousTabIndex >= 0 ? !isNew || tabCompleted(TABS[previousTabIndex], listing) : true;
+    // const isActive =
+    //   previousTabIndex >= 0 ? !isNew || tabCompleted(TABS[previousTabIndex], listing) : true;
+    const isActive = true;
     return { ...acc, [tab]: isActive };
   }, {});
 };

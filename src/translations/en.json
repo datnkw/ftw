@@ -178,8 +178,7 @@
   "EditListingPage.loadingListingData": "Loading listing data…",
   "EditListingPage.titleCreateListing": "Create a listing",
   "EditListingPage.titleEditListing": "Edit listing",
-  "EditTeacherListingPage.titleCreateListing": "Create a teacher",
-  "EditTeacherListingPage.titleEditListing": "Edit teacher",
+
   "EditListingPhotosForm.addImagesTip": "Tip: Choose the top 2-3 photos of your sauna from different angles in a good light that really show the space.",
   "EditListingPhotosForm.bankAccountNumberRequired": "You need to add a bank account number.",
   "EditListingPhotosForm.chooseImage": "+ Choose an image…",
@@ -203,6 +202,7 @@
   "EditListingPricingForm.pricePerDay": "Price per day in euros",
   "EditListingPricingForm.pricePerNight": "Price per night in euros",
   "EditListingPricingForm.pricePerUnit": "Price per unit in euros",
+  "EditListingPricingForm.pricePerHour": "Price per hour in euros",
   "EditListingPricingForm.priceRequired": "You need to add a valid price.",
   "EditListingPricingForm.priceTooLow": "Price should be at least {minPrice}.",
   "EditListingPricingForm.showListingFailed": "Fetching listing data failed",
@@ -210,6 +210,26 @@
   "EditListingPricingPanel.createListingTitle": "How much does it cost?",
   "EditListingPricingPanel.listingPriceCurrencyInvalid": "Listing currency is different from the marketplace currency. You cannot edit the price.",
   "EditListingPricingPanel.title": "Edit the pricing of {listingTitle}",
+
+  "EditTeacherListingPage.titleCreateListing": "Create a teacher",
+  "EditTeacherListingPage.titleEditListing": "Edit teacher",
+  "EditTeacherListingGeneralForm.titlePlaceholder": "What's the name of the teacher?",
+  "EditTeacherListingGeneralForm.titleRequired": "You need to add a name.",
+  "EditTeacherListingGeneralForm.title": "The teacher's name",
+  "EditTeacherListingGeneralForm.genderLabel": "Gender",
+  "EditTeacherListingGeneralForm.genderPlaceholder": "Choose the teacher's gender",
+  "EditTeacherListingGeneralForm.genderRequired": "You need to select a gender.",
+  "EditTeacherListingGeneralForm.teachingHourLabel": "Teaching hour",
+  "EditTeacherListingGeneralForm.teachingHourPlaceholder": "Choose how much the teacher can work",
+  "EditTeacherListingGeneralForm.teachingHourRequired": "You need to select an option.",
+
+  "EditTeacherListingPricingPanel.createListingTitle": "How much is the teacher's hourly price",
+
+  "EditTeacherListingGeneralForm.maxLength": "Must be {maxLength} characters or less",
+  "EditTeacherListingGeneral.createListingTitle": "Add a teacher",
+  "EditTeacherListingGeneral.title": "Edit teacher",
+  "EditTeacherListingLocationPanel.createListingTitle": "Where's the teacher?",
+
   "EditListingWizard.payoutModalInfo": "Almost done! In order to send you money, we need to know a bit more about you. Next, we will guide you through verifying your account. The details can also be edited from Account Setting page on Payout details tab. ",
   "EditListingWizard.payoutModalTitleOneMoreThing": "One more thing:",
   "EditListingWizard.payoutModalTitlePayoutPreferences": "Payout preferences",
@@ -235,10 +255,10 @@
   "EditListingWizard.saveNewPolicies": "Next: Location",
   "EditListingWizard.saveNewPricing": "Next: Availability",
 
-  "EditListingWizard.saveNewGeneral": "Next: Availability",
-  "EditListingWizard.saveNewTeacherAvailability": "Next: Location",
+  "EditListingWizard.saveNewGeneral": "Next: Location",
+  "EditListingWizard.saveNewTeacherAvailability": "Publish listing",
   "EditListingWizard.saveNewTeacherLocation": "Next: Pricing",
-  "EditListingWizard.saveNewTeacherPricing": "Publish listing",
+  "EditListingWizard.saveNewTeacherPricing": "Next: Availability",
 
   "EditListingWizard.tabLabelDescription": "Description",
   "EditListingWizard.tabLabelFeatures": "Amenities",
