@@ -171,6 +171,68 @@ export const filters = [
       ],
     },
   },
+  {
+    id: 'subjects',
+    label: 'Subjects',
+    type: 'SelectMultipleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_subjects'],
+    config: {
+      // Optional modes: 'has_all', 'has_any'
+      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+      searchMode: 'has_all',
+
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        {
+          key: 'math',
+          label: 'Math',
+        },
+        {
+          key: 'Physics',
+          label: 'physics',
+        },
+        {
+          key: 'Chemistry',
+          label: 'chemistry',
+        },
+      ],
+    },
+  },
+  {
+    id: 'levels',
+    label: 'Levels',
+    type: 'SelectMultipleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_levels'],
+    config: {
+      // Optional modes: 'has_all', 'has_any'
+      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+      searchMode: 'has_all',
+
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        {
+          key: 'beginner',
+          label: 'Beginner',
+        },
+        {
+          key: 'intermediate',
+          label: 'Intermediate',
+        },
+        {
+          key: 'expert',
+          label: 'Expert',
+        },
+      ],
+    },
+  },
 ];
 
 export const sortConfig = {

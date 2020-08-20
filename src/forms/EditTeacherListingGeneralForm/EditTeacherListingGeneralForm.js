@@ -4,10 +4,13 @@ import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
+import arrayMutators from 'final-form-arrays';
+import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput } from '../../components';
+import { Form, Button, FieldTextInput, FieldCheckboxGroup } from '../../components';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
+import config from '../../config';
 
 import css from '../EditListingDescriptionForm/EditListingDescriptionForm.css';
 
@@ -16,6 +19,7 @@ const TITLE_MAX_LENGTH = 60;
 const EditTeacherListingGeneralFormComponent = props => (
   <FinalForm
     {...props}
+    mutators={{ ...arrayMutators }}
     render={formRenderProps => {
       const {
         genderOptions,
@@ -31,7 +35,10 @@ const EditTeacherListingGeneralFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
+        filterConfig,
       } = formRenderProps;
+
+      console.log('');
 
       const titleMessage = intl.formatMessage({ id: 'EditTeacherListingGeneralForm.title' });
       const titlePlaceholderMessage = intl.formatMessage({
@@ -84,6 +91,9 @@ const EditTeacherListingGeneralFormComponent = props => (
         required: 'EditTeacherListingGeneralForm.teachingHourRequired',
       };
 
+      const subjectOptions = findOptionsForSelectFilter('subjects', filterConfig);
+      const levelOptions = findOptionsForSelectFilter('levels', filterConfig);
+
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessageCreateListingDraft}
@@ -117,6 +127,22 @@ const EditTeacherListingGeneralFormComponent = props => (
             intl={intl}
           />
 
+          <FieldCheckboxGroup
+            className={css.features}
+            id={'subjects'}
+            name={'subjects'}
+            label={'Subjects'}
+            options={subjectOptions}
+          />
+
+          <FieldCheckboxGroup
+            className={css.features}
+            id={'levels'}
+            name={'levels'}
+            label={'Levels'}
+            options={levelOptions}
+          />
+
           <Button
             className={css.submitButton}
             type="submit"
@@ -132,7 +158,11 @@ const EditTeacherListingGeneralFormComponent = props => (
   />
 );
 
-EditTeacherListingGeneralFormComponent.defaultProps = { className: null, fetchErrors: null };
+EditTeacherListingGeneralFormComponent.defaultProps = {
+  className: null,
+  fetchErrors: null,
+  filterConfig: config.custom.filters,
+};
 
 EditTeacherListingGeneralFormComponent.propTypes = {
   className: string,
@@ -154,6 +184,7 @@ EditTeacherListingGeneralFormComponent.propTypes = {
       label: string.isRequired,
     })
   ),
+  filterConfig: propTypes.filterConfig,
 };
 
 export default compose(injectIntl)(EditTeacherListingGeneralFormComponent);

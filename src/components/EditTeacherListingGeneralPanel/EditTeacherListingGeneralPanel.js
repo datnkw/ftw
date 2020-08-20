@@ -68,7 +68,7 @@ const EditTeacherListingGeneralPanel = props => {
         genderOptions={genderOptions}
         teachingHourOptions={teachingHourOptions}
       />
-      <EditTeacherListingGeneralForm
+      {/* <EditTeacherListingGeneralForm
         className={css.form}
         initialValues={{ title, description, category: publicData.category }}
         saveActionMsg={submitButtonText}
@@ -89,7 +89,7 @@ const EditTeacherListingGeneralPanel = props => {
         updateInProgress={updateInProgress}
         fetchErrors={errors}
         categories={genderOptions}
-      />
+      /> */}
     </div>
   );
 };
