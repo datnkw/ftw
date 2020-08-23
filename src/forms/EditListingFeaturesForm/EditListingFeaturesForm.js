@@ -31,8 +31,6 @@ const EditListingFeaturesFormComponent = props => (
         filterConfig,
       } = formRenderProps;
 
-      console.log('name in features form: ', name);
-
       const classes = classNames(rootClassName || css.root, className);
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
@@ -52,8 +50,6 @@ const EditListingFeaturesFormComponent = props => (
       ) : null;
 
       const options = findOptionsForSelectFilter('amenities', filterConfig);
-
-      console.log('amenities config: ', filterConfig);
 
       return (
         <Form className={classes} onSubmit={handleSubmit}>

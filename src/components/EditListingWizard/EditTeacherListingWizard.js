@@ -72,14 +72,7 @@ const tabLabel = (intl, tab) => {
  * @return true if tab / step is completed.
  */
 const tabCompleted = (tab, listing) => {
-  const {
-    availabilityPlan,
-    description,
-    geolocation,
-    price,
-    title,
-    publicData,
-  } = listing.attributes;
+  const { publicData, title, geolocation, price, availabilityPlan } = listing.attributes;
   const images = listing.images;
 
   switch (tab) {
@@ -99,13 +92,20 @@ const tabCompleted = (tab, listing) => {
     //   return images && images.length > 0;
 
     case GENERAL:
-      return true;
+      return !!(
+        title &&
+        publicData &&
+        publicData.gender &&
+        publicData.teachingHour &&
+        publicData.subjects.length > 0 &&
+        publicData.levels.length > 0
+      );
     case TEACHER_LOCATION:
-      return true;
+      return !!(geolocation && publicData && publicData.location && publicData.location.address);
     case TEACHER_PRICING:
-      return true;
+      return !!price;
     case TEACHER_AVAILABILITY:
-      return false;
+      return !!availabilityPlan;
     default:
       return false;
   }
@@ -293,7 +293,12 @@ class EditTeacherListingWizard extends Component {
         .reverse()
         .find(t => tabsStatus[t]);
 
-      return <NamedRedirect name="EditListingPage" params={{ ...params, tab: nearestActiveTab }} />;
+      return (
+        <NamedRedirect
+          name="EditTeacherListingPage"
+          params={{ ...params, tab: nearestActiveTab }}
+        />
+      );
     }
 
     const { width } = viewport;
@@ -497,13 +502,25 @@ EditTeacherListingWizard.propTypes = {
   // We cannot use propTypes.listing since the listing might be a draft.
   listing: shape({
     attributes: shape({
+      // publicData: object,
+      // description: string,
+      // geolocation: object,
+      // pricing: object,
+      // title: string,
+
       publicData: object,
-      description: string,
+      // {
+      //   levels,
+      //   subjects,
+      //   teachingHour,
+      //   gender,
+      //    address
+      //    detail
+      // }
+      name: string,
       geolocation: object,
       pricing: object,
-      title: string,
     }),
-    images: array,
   }),
 
   errors: shape({

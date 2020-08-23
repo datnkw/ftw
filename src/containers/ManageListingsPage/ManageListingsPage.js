@@ -61,6 +61,8 @@ export class ManageListingsPageComponent extends Component {
       intl,
     } = this.props;
 
+    console.log('current listing in ManageListingPage: ', listings);
+
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
     const listingsAreLoaded = !queryInProgress && hasPaginationInfo;
 

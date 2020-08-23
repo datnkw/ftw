@@ -38,8 +38,6 @@ const EditTeacherListingGeneralFormComponent = props => (
         filterConfig,
       } = formRenderProps;
 
-      console.log('');
-
       const titleMessage = intl.formatMessage({ id: 'EditTeacherListingGeneralForm.title' });
       const titlePlaceholderMessage = intl.formatMessage({
         id: 'EditTeacherListingGeneralForm.titlePlaceholder',
@@ -120,8 +118,8 @@ const EditTeacherListingGeneralFormComponent = props => (
           />
 
           <CustomCategorySelectFieldMaybe
-            id="gender"
-            name="gender"
+            id="teachingHour"
+            name="teachingHour"
             allText={allTextTeachingHourSelect}
             categories={teachingHourOptions}
             intl={intl}

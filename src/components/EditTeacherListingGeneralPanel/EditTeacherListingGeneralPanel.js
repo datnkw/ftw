@@ -28,7 +28,8 @@ const EditTeacherListingGeneralPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
-  const { description, title, publicData } = currentListing.attributes;
+  const { title, publicData } = currentListing.attributes;
+  publicData.isTeacher = true;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -40,6 +41,14 @@ const EditTeacherListingGeneralPanel = props => {
     <FormattedMessage id="EditTeacherListingGeneral.createListingTitle" />
   );
 
+  // const dataToTest = {
+  //   title: 'a',
+  //   teachingHour: 'fulltime',
+  //   gender: 'male',
+  //   subjects: ['math'],
+  //   levels: ['beginner'],
+  // };
+
   const teachingHourOptions = findOptionsForSelectFilter('teachTime', config.custom.filters);
   const genderOptions = findOptionsForSelectFilter('gender', config.custom.filters);
   return (
@@ -47,14 +56,21 @@ const EditTeacherListingGeneralPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditTeacherListingGeneralForm
         className={css.form}
-        initialValues={{ title, description, category: publicData.category }}
+        initialValues={{
+          title,
+          teachingHour: publicData.teachingHour,
+          gender: publicData.gender,
+          subjects: publicData.subjects,
+          levels: publicData.levels,
+          isTeacher: publicData.isTeacher,
+        }}
+        //initialValues={{ ...dataToTest }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, category } = values;
+          const { title, teachingHour, gender, subjects, levels, isTeacher } = values;
           const updateValues = {
             title: title.trim(),
-            description,
-            publicData: { category },
+            publicData: { teachingHour, gender, subjects, levels, isTeacher },
           };
 
           onSubmit(updateValues);

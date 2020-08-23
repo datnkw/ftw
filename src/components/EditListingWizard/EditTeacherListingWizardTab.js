@@ -47,17 +47,22 @@ const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, histo
   // Replace current "new" path to "draft" path.
   // Browser's back button should lead to editing current draft instead of creating a new one.
   if (params.type === LISTING_PAGE_PARAM_TYPE_NEW) {
-    const draftURI = createResourceLocatorString('EditListingPage', routes, currentPathParams, {});
+    const draftURI = createResourceLocatorString(
+      'EditTeacherListingPage',
+      routes,
+      currentPathParams,
+      {}
+    );
     history.replace(draftURI);
   }
 
   // Redirect to next tab
   const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
-  const to = createResourceLocatorString('EditListingPage', routes, nextPathParams, {});
+  const to = createResourceLocatorString('EditTeacherListingPage', routes, nextPathParams, {});
   history.push(to);
 };
 
-const EditListingWizardTab = props => {
+const EditTeacherListingWizardTab = props => {
   const {
     tab,
     marketplaceTabs,
@@ -209,14 +214,14 @@ const EditListingWizardTab = props => {
   }
 };
 
-EditListingWizardTab.defaultProps = {
+EditTeacherListingWizardTab.defaultProps = {
   listing: null,
   updatedTab: null,
 };
 
 const { array, bool, func, object, oneOf, shape, string } = PropTypes;
 
-EditListingWizardTab.propTypes = {
+EditTeacherListingWizardTab.propTypes = {
   params: shape({
     id: string.isRequired,
     slug: string.isRequired,
@@ -265,4 +270,4 @@ EditListingWizardTab.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default EditListingWizardTab;
+export default EditTeacherListingWizardTab;

@@ -493,8 +493,12 @@ export function requestShowListing(actionPayload) {
 }
 
 export function requestCreateListingDraft(data) {
+  console.log('get in requestCreateListingDraft in EditListingPage.duck.js');
+
   return (dispatch, getState, sdk) => {
     dispatch(createListingDraft(data));
+
+    console.log('data in requestCreateListingDraft: ', data);
 
     const queryParams = {
       expand: true,
@@ -507,6 +511,8 @@ export function requestCreateListingDraft(data) {
       .then(response => {
         //const id = response.data.data.id.uuid;
 
+        console.log('response createDraft: ', response);
+
         // Add the created listing to the marketplace data
         dispatch(addMarketplaceEntities(response));
 
@@ -516,6 +522,7 @@ export function requestCreateListingDraft(data) {
       })
       .catch(e => {
         log.error(e, 'create-listing-draft-failed', { listingData: data });
+
         return dispatch(createListingDraftError(storableError(e)));
       });
   };
@@ -649,6 +656,7 @@ export const requestDeleteAvailabilityException = params => (dispatch, getState,
 // the data to the listing, and marks the tab updated so the UI can
 // display the state.
 export function requestUpdateListing(tab, data) {
+  console.log('get in requestUpdateListing');
   return (dispatch, getState, sdk) => {
     dispatch(updateListing(data));
     const { id } = data;

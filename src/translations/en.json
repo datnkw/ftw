@@ -222,6 +222,8 @@
   "EditTeacherListingGeneralForm.teachingHourLabel": "Teaching hour",
   "EditTeacherListingGeneralForm.teachingHourPlaceholder": "Choose how much the teacher can work",
   "EditTeacherListingGeneralForm.teachingHourRequired": "You need to select an option.",
+  "EditTeacherListingGeneralForm.updateFailed": "Failed to update listing. Please try again.",
+  "EditTeacherListingGeneralForm.createListingDraftError": "Failed to create a draft listing. Please try again.",
 
   "EditTeacherListingPricingPanel.createListingTitle": "How much is the teacher's hourly price",
 
