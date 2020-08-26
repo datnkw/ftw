@@ -398,6 +398,7 @@
   "ListingPage.perDay": "per day",
   "ListingPage.perNight": "per night",
   "ListingPage.perUnit": "per unit",
+  "ListingPage.perHour": "per hour",
   "ListingPage.reviewsError": "Loading reviews failed.",
   "ListingPage.reviewsHeading": "Reviews ({count})",
   "ListingPage.rulesTitle": "Sauna rules",

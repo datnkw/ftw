@@ -16,21 +16,6 @@ import css from './FieldDateInput.css';
 
 const MAX_MOBILE_SCREEN_WIDTH = 768;
 
-const generateHourOptions = (isBegin = false, hourBegin = -1) => {
-  let result = [];
-
-  const lastHour = isBegin ? 22 : 23;
-
-  for (let i = parseInt(hourBegin + 1); i < lastHour; i++) {
-    result.push({
-      key: i,
-      label: `${i > 10 ? '0' + i : i}:00`,
-    });
-  }
-
-  return result;
-};
-
 const hourSelection = {
   id: 'gender',
   label: 'Gender',
@@ -83,6 +68,29 @@ const categories = [
 
 class FieldDateInputComponent extends Component {
   //setState fromHour
+  constructor(props) {
+    super(props);
+    this.state = {
+      timeBegin: 0,
+    };
+  }
+
+  generateHourOptions(isBegin, hourBegin = -1) {
+    let hourSelection = [];
+
+    const lastHour = isBegin ? 22 : 23;
+
+    for (let i = parseInt(hourBegin) + 1; i < lastHour; i++) {
+      hourSelection.push({
+        key: i,
+        //render hour format: hh:mm
+        label: `${i < 10 ? '0' + i : i}:00`,
+      });
+    }
+
+    return hourSelection;
+  }
+
   render() {
     const {
       className,
@@ -101,9 +109,6 @@ class FieldDateInputComponent extends Component {
 
     const { touched, invalid, error } = meta;
     const value = input.value;
-
-    console.log('meta: ', meta);
-    console.log('input: ', input);
 
     // If startDate is valid label changes color and bottom border changes color too
     const dateIsValid = value && value.date instanceof Date;
@@ -137,11 +142,21 @@ class FieldDateInputComponent extends Component {
           </label>
         ) : null}
         <div className={css.hourSelectorWrapper}>
-          <FieldSelect name="FromHour" id="from" label="From">
+          <FieldSelect
+            name="FromHour"
+            id="from"
+            label="From"
+            onChangeCustomEvent={event => {
+              console.log('event in select: ', event.target.value);
+              this.setState({
+                timeBegin: event.target.value,
+              });
+            }}
+          >
             <option disabled value="">
               Select an hour
             </option>
-            {categories.map(c => (
+            {this.generateHourOptions(true).map(c => (
               <option key={c.key} value={c.key}>
                 {c.label}
               </option>
@@ -151,7 +166,7 @@ class FieldDateInputComponent extends Component {
             <option disabled value="">
               Select an hour
             </option>
-            {categories.map(c => (
+            {this.generateHourOptions(false, this.state.timeBegin).map(c => (
               <option key={c.key} value={c.key}>
                 {c.label}
               </option>
@@ -188,7 +203,6 @@ FieldDateInputComponent.propTypes = {
 };
 
 const FieldDateInput = props => {
-  console.log('in render FieldDateInput');
   return <Field component={FieldDateInputComponent} {...props} />;
 };
 

@@ -435,6 +435,7 @@ export class ListingPageComponent extends Component {
                 <SectionAvatar user={currentAuthor} params={params} />
                 <div className={css.mainContent}>
                   <SectionHeading
+                    isTeacher={publicData && publicData.isTeacher}
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
@@ -493,7 +494,7 @@ export class ListingPageComponent extends Component {
                 {(() => {
                   return (
                     <BookingPanel
-                      isTeacher={publicData.isTeacher}
+                      isTeacher={publicData && publicData.isTeacher}
                       className={css.bookingPanel}
                       listing={currentListing}
                       isOwnListing={isOwnListing}
