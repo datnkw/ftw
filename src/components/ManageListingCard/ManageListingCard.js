@@ -127,6 +127,7 @@ export const ManageListingCardComponent = props => {
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
+  const isTeacher = currentListing.attributes.publicData.isTeacher;
   const id = currentListing.id.uuid;
   const { title = '', price, state } = currentListing.attributes;
   const slug = createSlug(title);
@@ -159,7 +160,9 @@ export const ManageListingCardComponent = props => {
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
 
-  const unitTranslationKey = isNightly
+  const unitTranslationKey = isTeacher
+    ? 'ManageListingCard.perHour'
+    : isNightly
     ? 'ManageListingCard.perNight'
     : isDaily
     ? 'ManageListingCard.perDay'
@@ -330,8 +333,13 @@ export const ManageListingCardComponent = props => {
         <div className={css.manageLinks}>
           <NamedLink
             className={css.manageLink}
-            name="EditListingPage"
-            params={{ id, slug, type: editListingLinkType, tab: 'description' }}
+            name={isTeacher ? 'EditTeacherListingPage' : 'EditListingPage'}
+            params={{
+              id,
+              slug,
+              type: editListingLinkType,
+              tab: isTeacher ? 'general' : 'description',
+            }}
           >
             <FormattedMessage id="ManageListingCard.editListing" />
           </NamedLink>

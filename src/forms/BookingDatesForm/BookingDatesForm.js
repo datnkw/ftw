@@ -75,10 +75,8 @@ export class BookingDatesFormComponent extends Component {
 
   render() {
     const { rootClassName, className, price: unitPrice, isTeacher, ...rest } = this.props;
-    console.log('prop BookingDatesFrom: ', this.props);
-    const classes = classNames(rootClassName || css.root, className);
 
-    console.log('isTeacher in BookingDatesForm: ', isTeacher);
+    const classes = classNames(rootClassName || css.root, className);
 
     if (!unitPrice) {
       return (
@@ -121,8 +119,6 @@ export class BookingDatesFormComponent extends Component {
             fetchLineItemsInProgress,
             fetchLineItemsError,
           } = fieldRenderProps;
-
-          console.log('timeSlots in BookingDatesForm: ', timeSlots);
 
           const { startDate, endDate } = values && values.bookingDates ? values.bookingDates : {};
 

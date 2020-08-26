@@ -16,56 +16,6 @@ import css from './FieldDateInput.css';
 
 const MAX_MOBILE_SCREEN_WIDTH = 768;
 
-const hourSelection = {
-  id: 'gender',
-  label: 'Gender',
-  type: 'SelectSingleFilter',
-  group: 'secondary',
-  queryParamNames: ['pub_gender'],
-  config: {
-    // "key" is the option you see in Flex Console.
-    // "label" is set here for the UI only.
-    // Note: label is not added through the translation files
-    // to make filter customizations a bit easier.
-    options: [{ key: 'male', label: 'Male' }, { key: 'female', label: 'Female' }],
-  },
-};
-
-const categories = [
-  {
-    key: '0',
-    label: '00:00',
-  },
-  {
-    key: '1',
-    label: '01:00',
-  },
-  {
-    key: '2',
-    label: '02:00',
-  },
-  {
-    key: '3',
-    label: '03:00',
-  },
-  {
-    key: '4',
-    label: '04:00',
-  },
-  {
-    key: '5',
-    label: '05:00',
-  },
-  {
-    key: '6',
-    label: '06:00',
-  },
-  {
-    key: '7',
-    label: '07:00',
-  },
-];
-
 class FieldDateInputComponent extends Component {
   //setState fromHour
   constructor(props) {
@@ -147,7 +97,6 @@ class FieldDateInputComponent extends Component {
             id="from"
             label="From"
             onChangeCustomEvent={event => {
-              console.log('event in select: ', event.target.value);
               this.setState({
                 timeBegin: event.target.value,
               });

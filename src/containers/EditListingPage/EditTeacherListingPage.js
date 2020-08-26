@@ -87,8 +87,6 @@ export const EditTeacherListingPageComponent = props => {
     updateStripeAccountError,
   } = props;
 
-  console.log('get in editTeacherListingPage');
-
   const { id, type, returnURLType } = params;
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
@@ -105,8 +103,6 @@ export const EditTeacherListingPageComponent = props => {
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
 
   if (shouldRedirect) {
-    console.log('should Redirect');
-
     const isPendingApproval =
       currentListing && currentListingState === LISTING_STATE_PENDING_APPROVAL;
 

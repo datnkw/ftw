@@ -17,10 +17,6 @@ import {
   EditListingPhotosPanel,
   EditListingPoliciesPanel,
   EditListingPricingPanel,
-  EditTeacherListingGeneralPanel,
-  EditTeacherListingLocationPanel,
-  EditTeacherListingPricingPanel,
-  EditTeacherListingAvailabilityPanel,
 } from '../../components';
 
 import css from './EditListingWizard.css';
@@ -272,34 +268,6 @@ const EditListingWizardTab = props => {
           onUpdateImageOrder={onUpdateImageOrder}
         />
       );
-    }
-    case GENERAL: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewGeneral'
-        : 'EditListingWizard.saveEditGeneral';
-
-      return <EditTeacherListingGeneralPanel />;
-    }
-    case TEACHER_AVAILABILITY: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewTeacherAvailability'
-        : 'EditListingWizard.saveEditTeacherAvailability';
-
-      return <EditTeacherListingAvailabilityPanel />;
-    }
-    case TEACHER_LOCATION: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewTeacherLocation'
-        : 'EditListingWizard.saveEditTeacherLocation';
-
-      return <EditTeacherListingLocationPanel />;
-    }
-    case TEACHER_PRICING: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewTeacherPricing'
-        : 'EditListingWizard.saveEditTeacherPricing';
-
-      return <EditTeacherListingPricingPanel />;
     }
     default:
       return null;

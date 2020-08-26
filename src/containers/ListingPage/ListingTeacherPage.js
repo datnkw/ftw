@@ -215,7 +215,7 @@ export class ListingPageComponent extends Component {
     const listingType = isDraftVariant
       ? LISTING_PAGE_PARAM_TYPE_DRAFT
       : LISTING_PAGE_PARAM_TYPE_EDIT;
-    const listingTab = isDraftVariant ? 'photos' : 'description';
+    const listingTab = isTeacher ? 'general' : isDraftVariant ? 'photos' : 'description';
 
     const isApproved =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_PENDING_APPROVAL;
@@ -411,6 +411,7 @@ export class ListingPageComponent extends Component {
           <LayoutWrapperMain>
             <div>
               <SectionImages
+                isTeacher={isTeacher}
                 title={title}
                 listing={currentListing}
                 isOwnListing={isOwnListing}

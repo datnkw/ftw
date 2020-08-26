@@ -19,8 +19,6 @@ const FieldSelectComponent = props => {
     ...rest
   } = props;
 
-  console.log('onChangeCustomEvent: ', onChangeCustomEvent);
-
   if (label && !id) {
     throw new Error('id required when a label is given');
   }
@@ -45,9 +43,6 @@ const FieldSelectComponent = props => {
       onChangeCustomEvent && onChangeCustomEvent(e);
     },
   };
-  console.log('rest: ', rest);
-  console.log('input: ', input);
-  console.log('selectProps: ', selectProps);
   const classes = classNames(rootClassName || css.root, className);
   return (
     <div className={classes}>
@@ -85,8 +80,6 @@ FieldSelectComponent.propTypes = {
 };
 
 const FieldSelect = props => {
-  console.log('prop in FieldSelect: ', props);
-  console.log('onChangeCustomEvent: ', props.onChangeCustomEvent);
   return <Field component={FieldSelectComponent} {...props} />;
 };
 

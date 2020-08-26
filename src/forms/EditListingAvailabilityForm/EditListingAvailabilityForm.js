@@ -53,7 +53,6 @@ export class EditListingAvailabilityFormComponent extends Component {
                 {(() => {
                   const { isTeacher } = this.props;
                   if (isTeacher) {
-                    console.log('isTeacher: ', isTeacher);
                     return (
                       <ManageAvailabilityTeacherCalendar
                         availability={availability}

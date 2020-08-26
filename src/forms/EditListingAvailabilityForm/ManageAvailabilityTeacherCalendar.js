@@ -172,7 +172,7 @@ const renderDayContents = (calendar, availabilityPlan) => date => {
     date
   );
 
-  const dayClasses = classNames(css.defaultTeacher, {
+  const dayClasses = classNames(css.default, {
     [css.outsideRange]: isOutsideRange,
     [css.today]: isSameDay,
     [css.reserved]: isBooked,
@@ -306,7 +306,6 @@ class ManageAvailabilityCalendar extends Component {
   }
 
   onDateChange(date) {
-    console.log('get in onDateChange');
     this.setState({ date });
 
     const { availabilityPlan, availability } = this.props;
@@ -326,11 +325,10 @@ class ManageAvailabilityCalendar extends Component {
       return;
     } else if (isBlocked) {
       // Unblock the date (seats = 1)
-      this.onDayAvailabilityChange(date, 0, exceptions);
+      this.onDayAvailabilityChange(date, 1, exceptions);
     } else {
       // Block the date (seats = 0)
-      console.log('get in selectdate');
-      this.onDayAvailabilityChange(date, 1, exceptions);
+      this.onDayAvailabilityChange(date, 0, exceptions);
     }
   }
 
@@ -340,7 +338,6 @@ class ManageAvailabilityCalendar extends Component {
   }
 
   onMonthClick(monthFn) {
-    console.log('get in onMonthClick');
     const onMonthChanged = this.props.onMonthChanged;
     this.setState(
       prevState => ({ currentMonth: monthFn(prevState.currentMonth) }),
@@ -353,7 +350,6 @@ class ManageAvailabilityCalendar extends Component {
         // If previous fetch for month data failed, try again.
         const monthId = monthIdString(this.state.currentMonth);
         const currentMonthData = this.props.availability.calendar[monthId];
-        console.log('currentMonthData in onMonthSelect: ', currentMonthData);
         const { fetchExceptionsError, fetchBookingsError } = currentMonthData || {};
         if (currentMonthData && (fetchExceptionsError || fetchBookingsError)) {
           this.fetchMonthData(this.state.currentMonth);
@@ -387,9 +383,6 @@ class ManageAvailabilityCalendar extends Component {
     const calendarGridWidth = daySize * TABLE_COLUMNS + TABLE_BORDER;
 
     const calendar = availability.calendar;
-    console.log('availability: ', availability);
-    console.log('currentMonth: ', currentMonth);
-    console.log('monthIdString: ', monthIdString(currentMonth));
     const currentMonthData = calendar[monthIdString(currentMonth)];
     const {
       fetchExceptionsInProgress,
@@ -397,7 +390,6 @@ class ManageAvailabilityCalendar extends Component {
       fetchExceptionsError,
       fetchBookingsError,
     } = currentMonthData || {};
-    console.log('currentMonthData: ', currentMonthData);
     const isMonthDataFetched =
       !isMonthInRange(currentMonth, TODAY_MOMENT, END_OF_RANGE_MOMENT) ||
       (!!currentMonthData && !fetchExceptionsInProgress && !fetchBookingsInProgress);

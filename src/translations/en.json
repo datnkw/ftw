@@ -433,6 +433,7 @@
   "ManageListingCard.perDay": "per day",
   "ManageListingCard.perNight": "per night",
   "ManageListingCard.perUnit": "per unit",
+  "ManageListingCard.perHour": "per hour",
   "ManageListingCard.priceNotSet": "Price not set",
   "ManageListingCard.unsupportedPrice": "({currency})",
   "ManageListingCard.unsupportedPriceTitle": "Unsupported currency ({currency})",

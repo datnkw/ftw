@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from 'react';
-import { array, bool, func, number, object, oneOf, shape, string } from 'prop-types';
+import { bool, func, number, object, oneOf, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
@@ -25,10 +25,6 @@ import EditTeacherListingWizardTab, {
   TEACHER_AVAILABILITY,
 } from './EditTeacherListingWizardTab';
 import css from './EditListingWizard.css';
-import { POLICY } from './EditListingWizardTab';
-
-// Show availability calendar only if environment variable availabilityEnabled is true
-const availabilityMaybe = config.enableAvailability ? [TEACHER_AVAILABILITY] : [];
 
 // You can reorder these panels.
 // Note 1: You need to change save button translations for new listing flow
@@ -73,31 +69,17 @@ const tabLabel = (intl, tab) => {
  */
 const tabCompleted = (tab, listing) => {
   const { publicData, title, geolocation, price, availabilityPlan } = listing.attributes;
-  const images = listing.images;
 
   switch (tab) {
-    // case DESCRIPTION:
-    //   return !!(description && title);
-    // case FEATURES:
-    //   return !!(publicData && publicData.amenities);
-    // case POLICY:
-    //   return !!(publicData && typeof publicData.rules !== 'undefined');
-    // case LOCATION:
-    //   return !!(geolocation && publicData && publicData.location && publicData.location.address);
-    // case PRICING:
-    //   return !!price;
-    // case AVAILABILITY:
-    //   return !!availabilityPlan;
-    // case PHOTOS:
-    //   return images && images.length > 0;
-
     case GENERAL:
       return !!(
         title &&
         publicData &&
         publicData.gender &&
         publicData.teachingHour &&
+        publicData.subjects &&
         publicData.subjects.length > 0 &&
+        publicData.levels &&
         publicData.levels.length > 0
       );
     case TEACHER_LOCATION:
@@ -106,14 +88,6 @@ const tabCompleted = (tab, listing) => {
       return !!price;
     case TEACHER_AVAILABILITY:
       return !!availabilityPlan;
-    // case GENERAL:
-    //   return true;
-    // case TEACHER_LOCATION:
-    //   return true;
-    // case TEACHER_PRICING:
-    //   return true;
-    // case TEACHER_AVAILABILITY:
-    //   return !!availabilityPlan;
     default:
       return false;
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, shape, string } from 'prop-types';
+import { shape, string } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { FaMale, FaFemale } from 'react-icons/fa';
 

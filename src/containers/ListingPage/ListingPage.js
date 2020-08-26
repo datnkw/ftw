@@ -220,6 +220,12 @@ export class ListingPageComponent extends Component {
       : LISTING_PAGE_PARAM_TYPE_EDIT;
     const listingTab = isDraftVariant ? 'photos' : 'description';
 
+    // const finalListingTab = publicData
+    //   ? publicData.isTeacher
+    //     ? 'general'
+    //     : listingTab
+    //   : listingTab;
+
     const isApproved =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_PENDING_APPROVAL;
 
@@ -417,6 +423,7 @@ export class ListingPageComponent extends Component {
           <LayoutWrapperMain>
             <div>
               <SectionImages
+                isTeacher={publicData && publicData.isTeacher}
                 title={title}
                 listing={currentListing}
                 isOwnListing={isOwnListing}
@@ -424,7 +431,7 @@ export class ListingPageComponent extends Component {
                   id: listingId.uuid,
                   slug: listingSlug,
                   type: listingType,
-                  tab: listingTab,
+                  tab: publicData && publicData.isTeacher ? 'general' : listingTab,
                 }}
                 imageCarouselOpen={this.state.imageCarouselOpen}
                 onImageCarouselClose={() => this.setState({ imageCarouselOpen: false })}
