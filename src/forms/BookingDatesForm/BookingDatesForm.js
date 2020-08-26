@@ -9,7 +9,13 @@ import { required, bookingDatesRequired, composeValidators } from '../../util/va
 import { START_DATE, END_DATE } from '../../util/dates';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Form, IconSpinner, PrimaryButton, FieldDateRangeInput } from '../../components';
+import {
+  Form,
+  IconSpinner,
+  PrimaryButton,
+  FieldDateRangeInput,
+  FieldDateInput,
+} from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 
 import css from './BookingDatesForm.css';
@@ -68,8 +74,11 @@ export class BookingDatesFormComponent extends Component {
   }
 
   render() {
-    const { rootClassName, className, price: unitPrice, ...rest } = this.props;
+    const { rootClassName, className, price: unitPrice, isTeacher, ...rest } = this.props;
+    console.log('prop BookingDatesFrom: ', this.props);
     const classes = classNames(rootClassName || css.root, className);
+
+    console.log('isTeacher in BookingDatesForm: ', isTeacher);
 
     if (!unitPrice) {
       return (
@@ -112,6 +121,9 @@ export class BookingDatesFormComponent extends Component {
             fetchLineItemsInProgress,
             fetchLineItemsError,
           } = fieldRenderProps;
+
+          console.log('timeSlots in BookingDatesForm: ', timeSlots);
+
           const { startDate, endDate } = values && values.bookingDates ? values.bookingDates : {};
 
           const bookingStartLabel = intl.formatMessage({
@@ -200,27 +212,36 @@ export class BookingDatesFormComponent extends Component {
                   this.handleOnChange(values);
                 }}
               />
-              <FieldDateRangeInput
-                className={css.bookingDates}
-                name="bookingDates"
-                unitType={unitType}
-                startDateId={`${formId}.bookingStartDate`}
-                startDateLabel={bookingStartLabel}
-                startDatePlaceholderText={startDatePlaceholderText}
-                endDateId={`${formId}.bookingEndDate`}
-                endDateLabel={bookingEndLabel}
-                endDatePlaceholderText={endDatePlaceholderText}
-                focusedInput={this.state.focusedInput}
-                onFocusedInputChange={this.onFocusedInputChange}
-                format={identity}
-                timeSlots={timeSlots}
-                useMobileMargins
-                validate={composeValidators(
-                  required(requiredMessage),
-                  bookingDatesRequired(startDateErrorMessage, endDateErrorMessage)
-                )}
-                disabled={fetchLineItemsInProgress}
-              />
+              {isTeacher ? (
+                <FieldDateInput
+                  name="test date input"
+                  placeholderText="Book a date"
+                  id="bookingTeacher"
+                  timeSlots={timeSlots}
+                />
+              ) : (
+                <FieldDateRangeInput
+                  className={css.bookingDates}
+                  name="bookingDates"
+                  unitType={unitType}
+                  startDateId={`${formId}.bookingStartDate`}
+                  startDateLabel={bookingStartLabel}
+                  startDatePlaceholderText={startDatePlaceholderText}
+                  endDateId={`${formId}.bookingEndDate`}
+                  endDateLabel={bookingEndLabel}
+                  endDatePlaceholderText={endDatePlaceholderText}
+                  focusedInput={this.state.focusedInput}
+                  onFocusedInputChange={this.onFocusedInputChange}
+                  format={identity}
+                  timeSlots={timeSlots}
+                  useMobileMargins
+                  validate={composeValidators(
+                    required(requiredMessage),
+                    bookingDatesRequired(startDateErrorMessage, endDateErrorMessage)
+                  )}
+                  disabled={fetchLineItemsInProgress}
+                />
+              )}
 
               {bookingInfoMaybe}
               {loadingSpinnerMaybe}

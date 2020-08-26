@@ -112,6 +112,8 @@ const timeSlotEqualsDay = (timeSlot, day) => {
   // the start date is used to represent available dates.
   const localStartDate = dateFromAPIToLocalNoon(timeSlot.attributes.start);
 
+  //console.log('localStartDate: ', localStartDate);
+
   const isDay = ensureTimeSlot(timeSlot).attributes.type === TIME_SLOT_DAY;
   return isDay && isSameDay(day, moment(localStartDate));
 };

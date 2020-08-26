@@ -71,21 +71,19 @@ const EditTeacherListingWizardTab = props => {
     fetchInProgress,
     newListingPublished,
     history,
-    images,
     availability,
     listing,
     handleCreateFlowTabScrolling,
     handlePublishListing,
     onUpdateListing,
     onCreateListingDraft,
-    onImageUpload,
-    onUpdateImageOrder,
-    onRemoveImage,
     onChange,
     updatedTab,
     updateInProgress,
     intl,
   } = props;
+
+  console.log('availability in EditTeacherListingWizardTab: ', availability);
 
   const { type } = params;
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;

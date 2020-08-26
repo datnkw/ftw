@@ -118,7 +118,10 @@ const routeConfiguration = () => {
     {
       path: '/l/:slug/:id',
       name: 'ListingPage',
-      component: props => <ListingPage {...props} />,
+      component: props => {
+        console.log('props when routing: ', props);
+        return <ListingPage {...props} />;
+      },
       loadData: ListingPage.loadData,
     },
     {
@@ -169,7 +172,10 @@ const routeConfiguration = () => {
     {
       path: '/l/:id',
       name: 'ListingPageCanonical',
-      component: props => <ListingPage {...props} />,
+      component: props => {
+        console.log('props when routing: ', props);
+        return <ListingPage {...props} />;
+      },
       loadData: ListingPage.loadData,
     },
     {

@@ -4,6 +4,14 @@
   --ManageAvailabilityCalendar_gridColor: #e0e0e0;
   --ManageAvailabilityCalendar_availableColor: #ffffff;
   --ManageAvailabilityCalendar_availableColorHover: #fafafa;
+
+  --ManageAvailabilityTeacherCalendar_availableColor: #ebebeb;
+  --ManageAvailabilityTeacherCalendar_availableColorHover: #e6e6e6;
+  --ManageAvailabilityTeacherCalendar_blockedColor: #ffffff;
+  --ManageAvailabilityTeacherCalendar_blockedColorHover: #fafafa;
+  --ManageAvailabilityTeacherCalendar_reservedColor: #ffffff;
+  --ManageAvailabilityTeacherCalendar_reservedColorHover: #fafafa;
+
   --ManageAvailabilityCalendar_blockedColor: #ebebeb;
   --ManageAvailabilityCalendar_blockedColorHover: #e6e6e6;
   --ManageAvailabilityCalendar_reservedColor: #e6fff0;
@@ -170,6 +178,11 @@
   background-color: var(--ManageAvailabilityCalendar_availableColor);
 }
 
+.defaultTeacher {
+  composes: day;
+  background-color: var(--ManageAvailabilityTeacherCalendar_availableColor);
+}
+
 .outsideRange {
   background-color: var(--ManageAvailabilityCalendar_blockedColor);
 
@@ -180,6 +193,28 @@
   & .dayNumber {
     text-decoration: line-through;
     color: lightgrey;
+  }
+}
+
+.todayTeacher {
+  background-color: var(--ManageAvailabilityTeacherCalendar_availableColor);
+
+  & .dayNumber {
+    position: relative;
+    text-decoration: none;
+
+    /* underline */
+    &:after {
+      position: absolute;
+      content: '';
+      height: 2px;
+      width: 100%;
+      right: 0;
+      bottom: -4px;
+      left: 0;
+      margin: 0 auto;
+      background-color: var(--matterColor);
+    }
   }
 }
 
@@ -205,11 +240,27 @@
   }
 }
 
+.blockedTeacher {
+  background-color: var(--ManageAvailabilityTeacherCalendar_blockedColor);
+
+  &:hover {
+    background-color: var(--ManageAvailabilityTeacherCalendar_blockedColorHover);
+  }
+}
+
 .blocked {
   background-color: var(--ManageAvailabilityCalendar_blockedColor);
 
   &:hover {
     background-color: var(--ManageAvailabilityCalendar_blockedColorHover);
+  }
+}
+
+.reservedTeacher {
+  background-color: var(--ManageAvailabilityTeacherCalendar_reservedColor) !important;
+
+  &:hover {
+    background-color: var(--ManageAvailabilityTeacherCalendar_reservedColorHover);
   }
 }
 

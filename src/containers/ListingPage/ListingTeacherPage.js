@@ -57,9 +57,6 @@ import SectionReviews from './SectionReviews';
 import SectionHostMaybe from './SectionHostMaybe';
 import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
-import SectionGender from './SectionGender';
-import SectionTeachingHour from './SectionTeachingHour';
-import SectionListingAttribute from './SectionListingAttribute';
 import css from './ListingPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -384,9 +381,6 @@ export class ListingPageComponent extends Component {
 
     const amenityOptions = findOptionsForSelectFilter('amenities', filterConfig);
     const categoryOptions = findOptionsForSelectFilter('category', filterConfig);
-    const subjectOptions = findOptionsForSelectFilter('subjects', filterConfig);
-    const levelOptions = findOptionsForSelectFilter('levels', filterConfig);
-
     const category =
       publicData && publicData.category ? (
         <span>
@@ -443,33 +437,6 @@ export class ListingPageComponent extends Component {
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
                   />
-                  {(() => {
-                    if (publicData && publicData.isTeacher) {
-                      return (
-                        <div>
-                          <SectionGender publicData={publicData} />
-                          <SectionTeachingHour publicData={publicData} />
-                          <SectionListingAttribute
-                            publicData={publicData}
-                            type="subjects"
-                            options={subjectOptions}
-                          />
-                          <SectionListingAttribute
-                            publicData={publicData}
-                            type="levels"
-                            options={levelOptions}
-                          />
-                        </div>
-                      );
-                    }
-                    return (
-                      <div>
-                        <SectionDescriptionMaybe description={description} />
-                        <SectionFeaturesMaybe options={amenityOptions} publicData={publicData} />
-                        <SectionRulesMaybe publicData={publicData} />
-                      </div>
-                    );
-                  })()}
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
@@ -490,28 +457,23 @@ export class ListingPageComponent extends Component {
                     onManageDisableScrolling={onManageDisableScrolling}
                   />
                 </div>
-                {(() => {
-                  return (
-                    <BookingPanel
-                      isTeacher={publicData.isTeacher}
-                      className={css.bookingPanel}
-                      listing={currentListing}
-                      isOwnListing={isOwnListing}
-                      unitType={unitType}
-                      onSubmit={handleBookingSubmit}
-                      title={bookingTitle}
-                      subTitle={bookingSubTitle}
-                      authorDisplayName={authorDisplayName}
-                      onManageDisableScrolling={onManageDisableScrolling}
-                      timeSlots={timeSlots}
-                      fetchTimeSlotsError={fetchTimeSlotsError}
-                      onFetchTransactionLineItems={onFetchTransactionLineItems}
-                      lineItems={lineItems}
-                      fetchLineItemsInProgress={fetchLineItemsInProgress}
-                      fetchLineItemsError={fetchLineItemsError}
-                    />
-                  );
-                })()}
+                <BookingPanel
+                  className={css.bookingPanel}
+                  listing={currentListing}
+                  isOwnListing={isOwnListing}
+                  unitType={unitType}
+                  onSubmit={handleBookingSubmit}
+                  title={bookingTitle}
+                  subTitle={bookingSubTitle}
+                  authorDisplayName={authorDisplayName}
+                  onManageDisableScrolling={onManageDisableScrolling}
+                  timeSlots={timeSlots}
+                  fetchTimeSlotsError={fetchTimeSlotsError}
+                  onFetchTransactionLineItems={onFetchTransactionLineItems}
+                  lineItems={lineItems}
+                  fetchLineItemsInProgress={fetchLineItemsInProgress}
+                  fetchLineItemsError={fetchLineItemsError}
+                />
               </div>
             </div>
           </LayoutWrapperMain>

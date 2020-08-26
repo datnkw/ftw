@@ -106,6 +106,14 @@ const tabCompleted = (tab, listing) => {
       return !!price;
     case TEACHER_AVAILABILITY:
       return !!availabilityPlan;
+    // case GENERAL:
+    //   return true;
+    // case TEACHER_LOCATION:
+    //   return true;
+    // case TEACHER_PRICING:
+    //   return true;
+    // case TEACHER_AVAILABILITY:
+    //   return !!availabilityPlan;
     default:
       return false;
   }

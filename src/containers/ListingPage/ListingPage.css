@@ -411,6 +411,60 @@
   }
 }
 
+.genderDescription {
+  padding: 0 24px;
+  margin-bottom: 35px;
+
+  @media (--viewportMedium) {
+    padding: 0;
+    margin-bottom: 52px;
+  }
+}
+
+.genderTitle {
+  /* Font */
+  @apply --marketplaceH3FontStyles;
+  color: var(--matterColorAnti);
+
+  margin-top: 0;
+  margin-bottom: 13px;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+}
+
+.gender {
+  padding-left: 20px;
+}
+
+.teachingHourDescription {
+  padding: 0 24px;
+  margin-bottom: 35px;
+
+  @media (--viewportMedium) {
+    padding: 0;
+    margin-bottom: 52px;
+  }
+}
+
+.teachingHourTitle {
+  /* Font */
+  @apply --marketplaceH3FontStyles;
+  color: var(--matterColorAnti);
+
+  margin-top: 0;
+  margin-bottom: 13px;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+}
+
+.teachingHour {
+  padding-left: 20px;
+}
+
 .sectionFeatures {
   padding: 0 24px;
   margin-bottom: 32px;

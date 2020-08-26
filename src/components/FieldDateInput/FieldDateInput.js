@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import { bool, object, string, arrayOf } from 'prop-types';
 import { Field } from 'react-final-form';
 import classNames from 'classnames';
-import { ValidationError } from '../../components';
+import { ValidationError, FieldSelect } from '../../components';
 import { propTypes } from '../../util/types';
 
 import DateInput from './DateInput';
@@ -16,7 +16,73 @@ import css from './FieldDateInput.css';
 
 const MAX_MOBILE_SCREEN_WIDTH = 768;
 
+const generateHourOptions = (isBegin = false, hourBegin = -1) => {
+  let result = [];
+
+  const lastHour = isBegin ? 22 : 23;
+
+  for (let i = parseInt(hourBegin + 1); i < lastHour; i++) {
+    result.push({
+      key: i,
+      label: `${i > 10 ? '0' + i : i}:00`,
+    });
+  }
+
+  return result;
+};
+
+const hourSelection = {
+  id: 'gender',
+  label: 'Gender',
+  type: 'SelectSingleFilter',
+  group: 'secondary',
+  queryParamNames: ['pub_gender'],
+  config: {
+    // "key" is the option you see in Flex Console.
+    // "label" is set here for the UI only.
+    // Note: label is not added through the translation files
+    // to make filter customizations a bit easier.
+    options: [{ key: 'male', label: 'Male' }, { key: 'female', label: 'Female' }],
+  },
+};
+
+const categories = [
+  {
+    key: '0',
+    label: '00:00',
+  },
+  {
+    key: '1',
+    label: '01:00',
+  },
+  {
+    key: '2',
+    label: '02:00',
+  },
+  {
+    key: '3',
+    label: '03:00',
+  },
+  {
+    key: '4',
+    label: '04:00',
+  },
+  {
+    key: '5',
+    label: '05:00',
+  },
+  {
+    key: '6',
+    label: '06:00',
+  },
+  {
+    key: '7',
+    label: '07:00',
+  },
+];
+
 class FieldDateInputComponent extends Component {
+  //setState fromHour
   render() {
     const {
       className,
@@ -35,6 +101,9 @@ class FieldDateInputComponent extends Component {
 
     const { touched, invalid, error } = meta;
     const value = input.value;
+
+    console.log('meta: ', meta);
+    console.log('input: ', input);
 
     // If startDate is valid label changes color and bottom border changes color too
     const dateIsValid = value && value.date instanceof Date;
@@ -67,6 +136,28 @@ class FieldDateInputComponent extends Component {
             {label}
           </label>
         ) : null}
+        <div className={css.hourSelectorWrapper}>
+          <FieldSelect name="FromHour" id="from" label="From">
+            <option disabled value="">
+              Select an hour
+            </option>
+            {categories.map(c => (
+              <option key={c.key} value={c.key}>
+                {c.label}
+              </option>
+            ))}
+          </FieldSelect>
+          <FieldSelect name="ToHour" id="to" label="To">
+            <option disabled value="">
+              Select an hour
+            </option>
+            {categories.map(c => (
+              <option key={c.key} value={c.key}>
+                {c.label}
+              </option>
+            ))}
+          </FieldSelect>
+        </div>
         <DateInput className={inputClasses} {...inputProps} />
         <ValidationError className={errorClasses} fieldMeta={meta} />
       </div>
@@ -97,6 +188,7 @@ FieldDateInputComponent.propTypes = {
 };
 
 const FieldDateInput = props => {
+  console.log('in render FieldDateInput');
   return <Field component={FieldDateInputComponent} {...props} />;
 };
 
