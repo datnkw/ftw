@@ -16,8 +16,17 @@ const SectionGender = props => {
         <FormattedMessage id="ListingPage.genderTitle" />
       </h2>
       <p className={css.gender}>
-        {gender === 'male' ? <FaMale /> : <FaFemale />}
-        {gender}
+        {gender === 'male' ? (
+          <span>
+            <FaMale />
+            <FormattedMessage id="ListingPage.maleGender" />
+          </span>
+        ) : (
+          <span>
+            <FaFemale />
+            <FormattedMessage id="ListingPage.femaleGender" />
+          </span>
+        )}
       </p>
     </div>
   );

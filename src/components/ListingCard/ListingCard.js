@@ -44,7 +44,11 @@ const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRenderi
 export const ListingCardComponent = props => {
   const { className, rootClassName, intl, listing, renderSizes, setActiveListing } = props;
   const classes = classNames(rootClassName || css.root, className);
+  //console.log('listing in ListingCard: ', listing);
   const currentListing = ensureListing(listing);
+  // console.log('currentListing in ListingCard: ', currentListing);
+  const publicData = currentListing.attributes.publicData;
+  const isTeacher = publicData && publicData.isTeacher ? publicData.isTeacher : false;
   const id = currentListing.id.uuid;
   const { title = '', price } = currentListing.attributes;
   const slug = createSlug(title);
@@ -59,7 +63,9 @@ export const ListingCardComponent = props => {
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
 
-  const unitTranslationKey = isNightly
+  const unitTranslationKey = isTeacher
+    ? 'ListingCard.perHour'
+    : isNightly
     ? 'ListingCard.perNight'
     : isDaily
     ? 'ListingCard.perDay'

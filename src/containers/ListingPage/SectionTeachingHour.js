@@ -14,7 +14,9 @@ const SectionTeachingHour = props => {
       <h2 className={css.teachingHourTitle}>
         <FormattedMessage id="ListingPage.teachingHourTitle" />
       </h2>
-      <p className={css.teachingHour}>{teachingHour}</p>
+      <p className={css.teachingHour}>
+        <FormattedMessage id="ListingPage.teachingHourFulltime" />
+      </p>
     </div>
   );
 };

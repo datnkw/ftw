@@ -120,6 +120,8 @@ export class BookingDatesFormComponent extends Component {
             fetchLineItemsError,
           } = fieldRenderProps;
 
+          console.log('type of timeSlots: ', typeof timeSlots);
+
           const { startDate, endDate } = values && values.bookingDates ? values.bookingDates : {};
 
           const bookingStartLabel = intl.formatMessage({
@@ -211,7 +213,9 @@ export class BookingDatesFormComponent extends Component {
               {isTeacher ? (
                 <FieldDateInput
                   name="test date input"
-                  placeholderText="Book a date"
+                  placeholderText={intl.formatMessage({
+                    id: 'BookingDatesForm.placeholderInputSingleDate',
+                  })}
                   id="bookingTeacher"
                   timeSlots={timeSlots}
                 />

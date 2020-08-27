@@ -159,11 +159,15 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
     ...priceMaybe,
     ...datesMaybe,
     per_page: perPage,
+    expand: true,
   };
+
+  params['fields.listing'].push('publicData');
 
   return sdk.listings
     .query(params)
     .then(response => {
+      console.log('response: ', response);
       dispatch(addMarketplaceEntities(response));
       dispatch(searchListingsSuccess(response));
       return response;

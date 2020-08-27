@@ -10,7 +10,7 @@ import { Field } from 'react-final-form';
 import classNames from 'classnames';
 import { ValidationError, FieldSelect } from '../../components';
 import { propTypes } from '../../util/types';
-
+import { intlShape, injectIntl } from '../../util/reactIntl';
 import DateInput from './DateInput';
 import css from './FieldDateInput.css';
 
@@ -50,6 +50,7 @@ class FieldDateInputComponent extends Component {
       input,
       meta,
       useMobileMargins,
+      intl,
       ...rest
     } = this.props;
 
@@ -72,6 +73,7 @@ class FieldDateInputComponent extends Component {
     });
 
     const { onBlur, onFocus, type, checked, ...restOfInput } = input;
+
     const inputProps = {
       onBlur: input.onBlur,
       onFocus: input.onFocus,
@@ -81,6 +83,13 @@ class FieldDateInputComponent extends Component {
       ...restOfInput,
       ...rest,
     };
+
+    if (!inputProps.value) {
+      inputProps.value = {
+        date: null,
+      };
+    }
+
     const classes = classNames(rootClassName || css.fieldRoot, className);
     const errorClasses = classNames({ [css.mobileMargins]: useMobileMargins });
 
@@ -91,11 +100,13 @@ class FieldDateInputComponent extends Component {
             {label}
           </label>
         ) : null}
+        <DateInput className={JSON.stringify(inputClasses)} {...inputProps} />
+        <ValidationError className={errorClasses} fieldMeta={meta} />
         <div className={css.hourSelectorWrapper}>
           <FieldSelect
             name="FromHour"
             id="from"
-            label="From"
+            label={intl.formatMessage({ id: 'FieldDateInput.fromLabel' })}
             onChangeCustomEvent={event => {
               this.setState({
                 timeBegin: event.target.value,
@@ -103,7 +114,7 @@ class FieldDateInputComponent extends Component {
             }}
           >
             <option disabled value="">
-              Select an hour
+              {intl.formatMessage({ id: 'FieldDateInput.selectHour' })}
             </option>
             {this.generateHourOptions(true).map(c => (
               <option key={c.key} value={c.key}>
@@ -111,9 +122,13 @@ class FieldDateInputComponent extends Component {
               </option>
             ))}
           </FieldSelect>
-          <FieldSelect name="ToHour" id="to" label="To">
+          <FieldSelect
+            name="ToHour"
+            id="to"
+            label={intl.formatMessage({ id: 'FieldDateInput.toLabel' })}
+          >
             <option disabled value="">
-              Select an hour
+              {intl.formatMessage({ id: 'FieldDateInput.selectHour' })}
             </option>
             {this.generateHourOptions(false, this.state.timeBegin).map(c => (
               <option key={c.key} value={c.key}>
@@ -122,8 +137,6 @@ class FieldDateInputComponent extends Component {
             ))}
           </FieldSelect>
         </div>
-        <DateInput className={inputClasses} {...inputProps} />
-        <ValidationError className={errorClasses} fieldMeta={meta} />
       </div>
     );
   }
@@ -156,4 +169,4 @@ const FieldDateInput = props => {
 };
 
 export { DateInput };
-export default FieldDateInput;
+export default injectIntl(FieldDateInput);
