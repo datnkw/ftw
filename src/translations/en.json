@@ -181,6 +181,8 @@
   "EditListingPage.titleCreateListing": "Create a listing",
   "EditListingPage.titleEditListing": "Edit listing",
 
+  "EditTeacherListingPhotosForm.addImagesTip": "Tip: Choose the top 2-3 photos of your teacher.",
+
   "EditListingPhotosForm.addImagesTip": "Tip: Choose the top 2-3 photos of your sauna from different angles in a good light that really show the space.",
   "EditListingPhotosForm.bankAccountNumberRequired": "You need to add a bank account number.",
   "EditListingPhotosForm.chooseImage": "+ Choose an image…",
@@ -258,6 +260,7 @@
   "EditListingWizard.saveEditTeacherAvailability": "Save availability",
   "EditListingWizard.saveEditTeacherLocation": "Save location",
   "EditListingWizard.saveEditTeacherPricing": "Save pricing",
+  "EditListingWizard.saveEditTeacherPhotos": "Save photos",
 
   "EditListingWizard.saveNewDescription": "Next: Amenities",
   "EditListingWizard.saveNewFeatures": "Next: Rules",
@@ -270,7 +273,8 @@
   "EditListingWizard.saveNewGeneral": "Next: Location",
   "EditListingWizard.saveNewTeacherAvailability": "Publish listing",
   "EditListingWizard.saveNewTeacherLocation": "Next: Pricing",
-  "EditListingWizard.saveNewTeacherPricing": "Next: Availability",
+  "EditListingWizard.saveNewTeacherPricing": "Next: Photos",
+  "EditListingWizard.saveNewTeacherPhotos": "Next: Availability",
 
   "EditListingWizard.tabLabelDescription": "Description",
   "EditListingWizard.tabLabelFeatures": "Amenities",
@@ -284,6 +288,7 @@
   "EditTeacherListingWizard.tabLabelLocation": "Location",
   "EditTeacherListingWizard.tabLabelPricing": "Pricing",
   "EditTeacherListingWizard.tabLabelAvailability": "Availability",
+  "EditTeacherListingWizard.tabLabelPhotos": "Photos",
 
   "EmailVerificationForm.finishAccountSetup": "We will need to send you email notifications. To allow this, please verify your email address {email}.",
   "EmailVerificationForm.successButtonText": "Continue exploring",

@@ -23,6 +23,7 @@ import EditTeacherListingWizardTab, {
   TEACHER_LOCATION,
   TEACHER_PRICING,
   TEACHER_AVAILABILITY,
+  TEACHER_PHOTOS,
 } from './EditTeacherListingWizardTab';
 import css from './EditListingWizard.css';
 
@@ -38,6 +39,7 @@ export const TABS = [
   TEACHER_LOCATION,
   TEACHER_PRICING,
   //TEACHER_AVAILABILITY,
+  TEACHER_PHOTOS,
   ...availabilityMaybe,
 ];
 
@@ -55,6 +57,8 @@ const tabLabel = (intl, tab) => {
     key = 'EditTeacherListingWizard.tabLabelLocation';
   } else if (tab === TEACHER_PRICING) {
     key = 'EditTeacherListingWizard.tabLabelPricing';
+  } else if (tab === TEACHER_PHOTOS) {
+    key = 'EditTeacherListingWizard.tabLabelPhotos';
   } else if (tab === TEACHER_AVAILABILITY) {
     key = 'EditTeacherListingWizard.tabLabelAvailability';
   }
@@ -71,7 +75,11 @@ const tabLabel = (intl, tab) => {
  * @return true if tab / step is completed.
  */
 const tabCompleted = (tab, listing) => {
+  const { images } = listing;
   const { publicData, title, geolocation, price, availabilityPlan } = listing.attributes;
+  console.log('listing: ', listing);
+  console.log('attribute: ', listing.attributes);
+  console.log('images: ', images);
 
   switch (tab) {
     case GENERAL:
@@ -89,6 +97,8 @@ const tabCompleted = (tab, listing) => {
       return !!(geolocation && publicData && publicData.location && publicData.location.address);
     case TEACHER_PRICING:
       return !!price;
+    case TEACHER_PHOTOS:
+      return images && images.length > 0;
     case TEACHER_AVAILABILITY:
       return !!availabilityPlan;
     default:

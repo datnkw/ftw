@@ -14,6 +14,7 @@ import {
   EditTeacherListingLocationPanel,
   EditTeacherListingPricingPanel,
   EditTeacherListingAvailabilityPanel,
+  EditTeacherListingPhotosPanel,
 } from '../../components';
 
 import css from './EditListingWizard.css';
@@ -22,9 +23,16 @@ export const GENERAL = 'general';
 export const TEACHER_LOCATION = 'location';
 export const TEACHER_PRICING = 'pricing';
 export const TEACHER_AVAILABILITY = 'availability';
+export const TEACHER_PHOTOS = 'photos';
 
 // EditListingWizardTab component supports these tabs
-export const SUPPORTED_TABS = [GENERAL, TEACHER_LOCATION, TEACHER_PRICING, TEACHER_AVAILABILITY];
+export const SUPPORTED_TABS = [
+  GENERAL,
+  TEACHER_LOCATION,
+  TEACHER_PRICING,
+  TEACHER_AVAILABILITY,
+  TEACHER_PHOTOS,
+];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
   const nextTabIndex = marketplaceTabs.findIndex(s => s === tab) + 1;
@@ -67,6 +75,10 @@ const EditTeacherListingWizardTab = props => {
     tab,
     marketplaceTabs,
     params,
+    images,
+    onImageUpload,
+    onRemoveImage,
+    onUpdateImageOrder,
     errors,
     fetchInProgress,
     newListingPublished,
@@ -202,6 +214,25 @@ const EditTeacherListingWizardTab = props => {
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
+        />
+      );
+    }
+    case TEACHER_PHOTOS: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewTeacherPhotos'
+        : 'EditListingWizard.saveEditTeacherPhotos';
+
+      return (
+        <EditTeacherListingPhotosPanel
+          {...panelProps(TEACHER_PHOTOS)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          images={images}
+          onImageUpload={onImageUpload}
+          onRemoveImage={onRemoveImage}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+          onUpdateImageOrder={onUpdateImageOrder}
         />
       );
     }

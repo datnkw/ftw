@@ -170,6 +170,7 @@ export { default as EditTeacherListingGeneralPanel } from './EditTeacherListingG
 export { default as EditTeacherListingAvailabilityPanel } from './EditTeacherListingAvailabilityPanel/EditTeacherListingAvailabilityPanel';
 export { default as EditTeacherListingLocationPanel } from './EditTeacherListingLocationPanel/EditTeacherListingLocationPanel';
 export { default as EditTeacherListingPricingPanel } from './EditTeacherListingPricingPanel/EditTeacherListingPricingPanel';
+export { default as EditTeacherListingPhotosPanel } from './EditTeacherListingPhotosPanel/EditTeacherListingPhotosPanel';
 
 export { default as EditListingWizard } from './EditListingWizard/EditListingWizard';
 export { default as EditTeacherListingWizard } from './EditListingWizard/EditTeacherListingWizard';

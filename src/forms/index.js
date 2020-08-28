@@ -8,7 +8,7 @@ export { default as EditListingPhotosForm } from './EditListingPhotosForm/EditLi
 export { default as EditListingPoliciesForm } from './EditListingPoliciesForm/EditListingPoliciesForm';
 export { default as EditListingPricingForm } from './EditListingPricingForm/EditListingPricingForm';
 export { default as EditTeacherListingPricingForm } from './EditTeacherListingPricingForm/EditTeacherListingPricingForm';
-
+export { default as EditTeacherListingPhotosForm } from './EditListingPhotosForm/EditTeacherListingPhotosForm';
 export { default as EditTeacherListingGeneralForm } from './EditTeacherListingGeneralForm/EditTeacherListingGeneralForm';
 
 export { default as EmailVerificationForm } from './EmailVerificationForm/EmailVerificationForm';

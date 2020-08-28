@@ -63,7 +63,10 @@ const priceData = (price, intl) => {
 };
 
 const createListingURL = (routes, listing) => {
+  console.log('routes in createListingURL: ', routes);
+
   const id = listing.id.uuid;
+  const { isTeacher } = listing.attributes.publicData;
   const slug = createSlug(listing.attributes.title);
   const isPendingApproval = listing.attributes.state === LISTING_STATE_PENDING_APPROVAL;
   const isDraft = listing.attributes.state === LISTING_STATE_DRAFT;
@@ -82,6 +85,11 @@ const createListingURL = (routes, listing) => {
             slug,
             variant,
           },
+        }
+      : isTeacher
+      ? {
+          name: 'TeacherListingPage',
+          params: { id, slug },
         }
       : {
           name: 'ListingPage',

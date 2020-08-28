@@ -120,8 +120,6 @@ export class BookingDatesFormComponent extends Component {
             fetchLineItemsError,
           } = fieldRenderProps;
 
-          console.log('type of timeSlots: ', typeof timeSlots);
-
           const { startDate, endDate } = values && values.bookingDates ? values.bookingDates : {};
 
           const bookingStartLabel = intl.formatMessage({
