@@ -29,7 +29,7 @@ const EditTeacherListingGeneralPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { title, publicData } = currentListing.attributes;
-  publicData.isTeacher = true;
+  //publicData.isTeacher = true;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -40,14 +40,6 @@ const EditTeacherListingGeneralPanel = props => {
   ) : (
     <FormattedMessage id="EditTeacherListingGeneral.createListingTitle" />
   );
-
-  // const dataToTest = {
-  //   title: 'a',
-  //   teachingHour: 'fulltime',
-  //   gender: 'male',
-  //   subjects: ['math'],
-  //   levels: ['beginner'],
-  // };
 
   const teachingHourOptions = findOptionsForSelectFilter('teachTime', config.custom.filters);
   const genderOptions = findOptionsForSelectFilter('gender', config.custom.filters);
@@ -64,13 +56,12 @@ const EditTeacherListingGeneralPanel = props => {
           levels: publicData.levels,
           isTeacher: publicData.isTeacher,
         }}
-        //initialValues={{ ...dataToTest }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, teachingHour, gender, subjects, levels, isTeacher } = values;
+          const { title, teachingHour, gender, subjects, levels } = values;
           const updateValues = {
             title: title.trim(),
-            publicData: { teachingHour, gender, subjects, levels, isTeacher },
+            publicData: { teachingHour, gender, subjects, levels, isTeacher: true },
           };
 
           onSubmit(updateValues);
@@ -84,28 +75,6 @@ const EditTeacherListingGeneralPanel = props => {
         genderOptions={genderOptions}
         teachingHourOptions={teachingHourOptions}
       />
-      {/* <EditTeacherListingGeneralForm
-        className={css.form}
-        initialValues={{ title, description, category: publicData.category }}
-        saveActionMsg={submitButtonText}
-        onSubmit={values => {
-          const { title, description, category } = values;
-          const updateValues = {
-            title: title.trim(),
-            description,
-            publicData: { category },
-          };
-
-          onSubmit(updateValues);
-        }}
-        onChange={onChange}
-        disabled={disabled}
-        ready={ready}
-        updated={panelUpdated}
-        updateInProgress={updateInProgress}
-        fetchErrors={errors}
-        categories={genderOptions}
-      /> */}
     </div>
   );
 };

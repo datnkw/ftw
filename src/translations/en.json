@@ -226,6 +226,14 @@
   "EditTeacherListingGeneralForm.teachingHourRequired": "You need to select an option.",
   "EditTeacherListingGeneralForm.updateFailed": "Failed to update listing. Please try again.",
   "EditTeacherListingGeneralForm.createListingDraftError": "Failed to create a draft listing. Please try again.",
+  "EditTeacherListingGeneralForm.subjectSelectLabel": "Subjects",
+  "EditTeacherListingGeneralForm.levelSelectLabel": "Levels",
+  "EditTeacherListingGeneralForm.mathSubjectLabel": "Math",
+  "EditTeacherListingGeneralForm.physicsSubjectLabel": "Physics",
+  "EditTeacherListingGeneralForm.chemistrySubjectLabel": "Chemistry",
+  "EditTeacherListingGeneralForm.beginnerLevelLabel": "Beginner",
+  "EditTeacherListingGeneralForm.intermediateLevelLabel": "Intermediate",
+  "EditTeacherListingGeneralForm.expertLevelLabel": "Expert",
 
   "EditTeacherListingPricingPanel.createListingTitle": "How much is the teacher's hourly price",
 

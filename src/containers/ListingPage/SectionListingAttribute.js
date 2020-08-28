@@ -1,14 +1,19 @@
 import React from 'react';
-import { FormattedMessage } from '../../util/reactIntl';
+import { FormattedMessage, injectIntl } from '../../util/reactIntl';
 import { PropertyGroup } from '../../components';
 
 import css from './ListingPage.css';
 
 const SectionListingAttribute = props => {
-  const { options, publicData, type } = props;
+  const { options, publicData, type, intl } = props;
   if (!publicData) {
     return null;
   }
+
+  const optionsMappingLabel = options.map(op => ({
+    ...op,
+    label: intl.formatMessage({ id: op.label }),
+  }));
 
   const selectedOptions = publicData && publicData[type] ? publicData[type] : [];
 
@@ -19,7 +24,7 @@ const SectionListingAttribute = props => {
       </h2>
       <PropertyGroup
         id={`ListingPage.${type}`}
-        options={options}
+        options={optionsMappingLabel}
         selectedOptions={selectedOptions}
         twoColumns={true}
       />
@@ -27,4 +32,4 @@ const SectionListingAttribute = props => {
   );
 };
 
-export default SectionListingAttribute;
+export default injectIntl(SectionListingAttribute);

@@ -24,6 +24,7 @@ import {
   StyleguidePage,
   TermsOfServicePage,
   TransactionPage,
+  TeacherListingPage,
 } from './containers';
 
 // routeConfiguration needs to initialize containers first
@@ -116,12 +117,15 @@ const routeConfiguration = () => {
       loadData: EditListingPage.loadData,
     },
     {
+      path: '/l/teacher/:slug/:id',
+      name: 'TeacherListingPage',
+      component: props => <TeacherListingPage {...props} />,
+      loadData: ListingPage.loadData,
+    },
+    {
       path: '/l/:slug/:id',
       name: 'ListingPage',
-      component: props => {
-        console.log('props when routing: ', props);
-        return <ListingPage {...props} />;
-      },
+      component: props => <ListingPage {...props} />,
       loadData: ListingPage.loadData,
     },
     {

@@ -189,15 +189,15 @@ export const filters = [
       options: [
         {
           key: 'math',
-          label: 'Math',
+          label: 'EditTeacherListingGeneralForm.mathSubjectLabel',
         },
         {
-          key: 'Physics',
-          label: 'physics',
+          key: 'physics',
+          label: 'EditTeacherListingGeneralForm.physicsSubjectLabel',
         },
         {
-          key: 'Chemistry',
-          label: 'chemistry',
+          key: 'chemistry',
+          label: 'EditTeacherListingGeneralForm.chemistrySubjectLabel',
         },
       ],
     },
@@ -220,15 +220,15 @@ export const filters = [
       options: [
         {
           key: 'beginner',
-          label: 'Beginner',
+          label: 'EditTeacherListingGeneralForm.beginnerLevelLabel',
         },
         {
           key: 'intermediate',
-          label: 'Intermediate',
+          label: 'EditTeacherListingGeneralForm.intermediateLevelLabel',
         },
         {
           key: 'expert',
-          label: 'Expert',
+          label: 'EditTeacherListingGeneralForm.expertLevelLabel',
         },
       ],
     },

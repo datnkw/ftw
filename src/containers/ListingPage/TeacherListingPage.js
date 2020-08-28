@@ -51,11 +51,8 @@ import {
 import SectionImages from './SectionImages';
 import SectionAvatar from './SectionAvatar';
 import SectionHeading from './SectionHeading';
-import SectionDescriptionMaybe from './SectionDescriptionMaybe';
-import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
 import SectionHostMaybe from './SectionHostMaybe';
-import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import SectionGender from './SectionGender';
 import SectionTeachingHour from './SectionTeachingHour';
@@ -84,7 +81,7 @@ const categoryLabel = (categories, key) => {
   return cat ? cat.label : key;
 };
 
-export class ListingPageComponent extends Component {
+export class TeacherListingPageComponent extends Component {
   constructor(props) {
     super(props);
     const { enquiryModalOpenForListingId, params } = props;
@@ -220,12 +217,6 @@ export class ListingPageComponent extends Component {
       : LISTING_PAGE_PARAM_TYPE_EDIT;
     const listingTab = isDraftVariant ? 'photos' : 'description';
 
-    // const finalListingTab = publicData
-    //   ? publicData.isTeacher
-    //     ? 'general'
-    //     : listingTab
-    //   : listingTab;
-
     const isApproved =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_PENDING_APPROVAL;
 
@@ -243,7 +234,7 @@ export class ListingPageComponent extends Component {
     const shouldShowPublicListingPage = pendingIsApproved || pendingOtherUsersListing;
 
     if (shouldShowPublicListingPage) {
-      return <NamedRedirect name="ListingPage" params={params} search={location.search} />;
+      return <NamedRedirect name="TeacherListingPage" params={params} search={location.search} />;
     }
 
     const {
@@ -388,7 +379,6 @@ export class ListingPageComponent extends Component {
       </NamedLink>
     );
 
-    const amenityOptions = findOptionsForSelectFilter('amenities', filterConfig);
     const categoryOptions = findOptionsForSelectFilter('category', filterConfig);
     const subjectOptions = findOptionsForSelectFilter('subjects', filterConfig);
     const levelOptions = findOptionsForSelectFilter('levels', filterConfig);
@@ -451,33 +441,18 @@ export class ListingPageComponent extends Component {
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
                   />
-                  {(() => {
-                    if (publicData && publicData.isTeacher) {
-                      return (
-                        <div>
-                          <SectionGender publicData={publicData} />
-                          <SectionTeachingHour publicData={publicData} />
-                          <SectionListingAttribute
-                            publicData={publicData}
-                            type="subjects"
-                            options={subjectOptions}
-                          />
-                          <SectionListingAttribute
-                            publicData={publicData}
-                            type="levels"
-                            options={levelOptions}
-                          />
-                        </div>
-                      );
-                    }
-                    return (
-                      <div>
-                        <SectionDescriptionMaybe description={description} />
-                        <SectionFeaturesMaybe options={amenityOptions} publicData={publicData} />
-                        <SectionRulesMaybe publicData={publicData} />
-                      </div>
-                    );
-                  })()}
+                  <SectionGender publicData={publicData} />
+                  <SectionTeachingHour publicData={publicData} />
+                  <SectionListingAttribute
+                    publicData={publicData}
+                    type="subjects"
+                    options={subjectOptions}
+                  />
+                  <SectionListingAttribute
+                    publicData={publicData}
+                    type="levels"
+                    options={levelOptions}
+                  />
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
@@ -528,7 +503,7 @@ export class ListingPageComponent extends Component {
   }
 }
 
-ListingPageComponent.defaultProps = {
+TeacherListingPageComponent.defaultProps = {
   unitType: config.bookingUnitType,
   currentUser: null,
   enquiryModalOpenForListingId: null,
@@ -543,7 +518,7 @@ ListingPageComponent.defaultProps = {
   fetchLineItemsError: null,
 };
 
-ListingPageComponent.propTypes = {
+TeacherListingPageComponent.propTypes = {
   // from withRouter
   history: shape({
     push: func.isRequired,
@@ -651,16 +626,16 @@ const mapDispatchToProps = dispatch => ({
 // lifecycle hook.
 //
 // See: https://github.com/ReactTraining/react-router/issues/4671
-const ListingPage = compose(
+const TeacherListingPage = compose(
   withRouter,
   connect(
     mapStateToProps,
     mapDispatchToProps
   ),
   injectIntl
-)(ListingPageComponent);
+)(TeacherListingPageComponent);
 
-ListingPage.setInitialValues = initialValues => setInitialValues(initialValues);
-ListingPage.loadData = loadData;
+TeacherListingPage.setInitialValues = initialValues => setInitialValues(initialValues);
+TeacherListingPage.loadData = loadData;
 
-export default ListingPage;
+export default TeacherListingPage;

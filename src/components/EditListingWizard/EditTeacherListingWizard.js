@@ -26,6 +26,9 @@ import EditTeacherListingWizardTab, {
 } from './EditTeacherListingWizardTab';
 import css from './EditListingWizard.css';
 
+// Show availability calendar only if environment variable availabilityEnabled is true
+const availabilityMaybe = config.enableAvailability ? [TEACHER_AVAILABILITY] : [];
+
 // You can reorder these panels.
 // Note 1: You need to change save button translations for new listing flow
 // Note 2: Ensure that draft listing is created after the first panel
@@ -34,8 +37,8 @@ export const TABS = [
   GENERAL,
   TEACHER_LOCATION,
   TEACHER_PRICING,
-  TEACHER_AVAILABILITY,
-  //...availabilityMaybe,
+  //TEACHER_AVAILABILITY,
+  ...availabilityMaybe,
 ];
 
 // Tabs are horizontal in small screens

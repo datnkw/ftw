@@ -8,7 +8,7 @@ import arrayMutators from 'final-form-arrays';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput, FieldCheckboxGroup } from '../../components';
+import { Form, Button, FieldTextInput, FieldCheckboxGroupMappingLabel } from '../../components';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 import config from '../../config';
 
@@ -92,6 +92,13 @@ const EditTeacherListingGeneralFormComponent = props => (
       const subjectOptions = findOptionsForSelectFilter('subjects', filterConfig);
       const levelOptions = findOptionsForSelectFilter('levels', filterConfig);
 
+      const subjectSelectLabel = intl.formatMessage({
+        id: 'EditTeacherListingGeneralForm.subjectSelectLabel',
+      });
+      const levelSelectLabel = intl.formatMessage({
+        id: 'EditTeacherListingGeneralForm.levelSelectLabel',
+      });
+
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessageCreateListingDraft}
@@ -125,19 +132,19 @@ const EditTeacherListingGeneralFormComponent = props => (
             intl={intl}
           />
 
-          <FieldCheckboxGroup
+          <FieldCheckboxGroupMappingLabel
             className={css.features}
             id={'subjects'}
             name={'subjects'}
-            label={'Subjects'}
+            label={subjectSelectLabel}
             options={subjectOptions}
           />
 
-          <FieldCheckboxGroup
+          <FieldCheckboxGroupMappingLabel
             className={css.features}
             id={'levels'}
             name={'levels'}
-            label={'Levels'}
+            label={levelSelectLabel}
             options={levelOptions}
           />
 
