@@ -77,9 +77,6 @@ const tabLabel = (intl, tab) => {
 const tabCompleted = (tab, listing) => {
   const { images } = listing;
   const { publicData, title, geolocation, price, availabilityPlan } = listing.attributes;
-  console.log('listing: ', listing);
-  console.log('attribute: ', listing.attributes);
-  console.log('images: ', images);
 
   switch (tab) {
     case GENERAL:

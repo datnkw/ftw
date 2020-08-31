@@ -19,6 +19,8 @@ const FieldSelectComponent = props => {
     ...rest
   } = props;
 
+  console.log('input in fieldSelect: ', input);
+
   if (label && !id) {
     throw new Error('id required when a label is given');
   }

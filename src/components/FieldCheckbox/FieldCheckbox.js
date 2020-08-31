@@ -36,6 +36,7 @@ IconCheckbox.propTypes = { className: string, checkedClassName: string, boxClass
 
 const FieldCheckboxComponent = props => {
   const {
+    onChangeSelect,
     rootClassName,
     className,
     svgClassName,
@@ -53,6 +54,10 @@ const FieldCheckboxComponent = props => {
     component: 'input',
     type: 'checkbox',
     ...rest,
+    // onChange: e => {
+    //   input.onChange(e);
+    //   onChangeSelect && onChangeSelect(e.target.value);
+    // },
   };
 
   const successColorVariantMaybe = useSuccessColor
@@ -65,7 +70,14 @@ const FieldCheckboxComponent = props => {
   return (
     <span className={classes}>
       <Field {...checkboxProps} />
-      <label htmlFor={id} className={css.label}>
+      <label
+        htmlFor={id}
+        className={css.label}
+        // onChange={e => {
+        //   console.log('click: ', e);
+        //   onChangeSelect(e);
+        // }}
+      >
         <span className={css.checkboxWrapper}>
           <IconCheckbox className={svgClassName} {...successColorVariantMaybe} />
         </span>

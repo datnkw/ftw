@@ -17,9 +17,24 @@ import { injectIntl } from '../../util/reactIntl';
 import css from './FieldCheckboxGroup.css';
 
 const FieldCheckboxRenderer = props => {
-  const { className, rootClassName, label, twoColumns, id, fields, options, meta, intl } = props;
+  const {
+    className,
+    rootClassName,
+    label,
+    twoColumns,
+    id,
+    fields,
+    options,
+    meta,
+    intl,
+    onSelectSubject,
+  } = props;
 
-  const classes = classNames(rootClassName || css.root, className);
+  // console.log('props FieldCheckboxRenderer: ', props);
+
+  const classes = classNames(rootClassName || css.root, className, {
+    [css.hidden]: !options.length,
+  });
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
 
   return (
@@ -29,12 +44,21 @@ const FieldCheckboxRenderer = props => {
         {options.map((option, index) => {
           const fieldId = `${id}.${option.key}`;
           return (
-            <li key={fieldId} className={css.item}>
+            <li
+              key={fieldId}
+              className={css.item}
+              onClick={e => {
+                // input.onClick(e);
+                // console.log('e target: ', e.target);
+                onSelectSubject && onSelectSubject(e);
+              }}
+            >
               <FieldCheckbox
                 id={fieldId}
                 name={fields.name}
                 label={intl.formatMessage({ id: option.label })}
                 value={option.key}
+                // onChangeSelect={onSelectSubject}
               />
             </li>
           );
