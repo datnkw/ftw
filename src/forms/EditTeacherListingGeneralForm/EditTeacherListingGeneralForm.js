@@ -66,14 +66,8 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
   }
 
   onSelectSubject = event => {
-    //console.log('event: ', event);
     const { subjectSelected } = this.state;
     const subject = event.target.value;
-
-    console.log('subjectSelected before: ', subjectSelected);
-
-    //const finalSubjectSelect = [...subjectSelected];
-    console.log('subject: ', subject);
 
     const index = subjectSelected.indexOf(subject);
     if (index != -1) {
@@ -82,8 +76,6 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
       subjectSelected.push(subject);
     }
 
-    console.log('subjectSelected after: ', subjectSelected);
-
     this.setState({
       subjectSelected: [...subjectSelected],
     });
@@ -91,11 +83,8 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
 
   getSelectableLevel = input => {
     let result = [];
-    //const { subjectSelected } = this.state;
 
     const subjectSelected = [...(input || [])];
-
-    console.log('subjectSelected: ', subjectSelected);
 
     const getLevelsArray = subject => {
       for (let i = 0; i < configLevel.length; i++) {
@@ -109,7 +98,6 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
 
     for (let i = 0; i < subjectSelected.length; i++) {
       result = [...result, ...getLevelsArray(subjectSelected[i])];
-      //console.log('get level array: ', getLevelsArray(subjectSelected[i]));
     }
 
     result = _.sortedUniqBy(result, 'key');

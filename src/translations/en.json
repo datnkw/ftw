@@ -206,7 +206,7 @@
   "EditListingPricingForm.pricePerDay": "Price per day in euros",
   "EditListingPricingForm.pricePerNight": "Price per night in euros",
   "EditListingPricingForm.pricePerUnit": "Price per unit in euros",
-  "EditListingPricingForm.pricePerHour": "Price per hour in euros",
+  "EditListingPricingForm.pricePerHour": "Price per hour in USD",
   "EditListingPricingForm.priceRequired": "You need to add a valid price.",
   "EditListingPricingForm.priceTooLow": "Price should be at least {minPrice}.",
   "EditListingPricingForm.showListingFailed": "Fetching listing data failed",

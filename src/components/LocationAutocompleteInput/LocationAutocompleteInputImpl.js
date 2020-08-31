@@ -156,6 +156,8 @@ class LocationAutocompleteInputImpl extends Component {
   constructor(props) {
     super(props);
 
+    console.log('props in LocationAutocompleteInputImpl: ', props);
+
     this._isMounted = false;
 
     this.state = {
