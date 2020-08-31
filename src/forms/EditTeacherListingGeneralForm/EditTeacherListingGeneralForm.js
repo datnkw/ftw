@@ -100,7 +100,7 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
       result = [...result, ...getLevelsArray(subjectSelected[i])];
     }
 
-    result = _.sortedUniqBy(result, 'key');
+    result = _.uniqBy(result, 'key');
 
     return result;
   };
