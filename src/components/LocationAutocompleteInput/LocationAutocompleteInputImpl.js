@@ -156,8 +156,6 @@ class LocationAutocompleteInputImpl extends Component {
   constructor(props) {
     super(props);
 
-    console.log('props in LocationAutocompleteInputImpl: ', props);
-
     this._isMounted = false;
 
     this.state = {
@@ -210,13 +208,11 @@ class LocationAutocompleteInputImpl extends Component {
 
   currentPredictions() {
     const { search, predictions: fetchedPredictions } = currentValue(this.props);
-    console.log('fetchedPredictions: ', fetchedPredictions);
     const { useDefaultPredictions } = this.props;
     const hasFetchedPredictions = fetchedPredictions && fetchedPredictions.length > 0;
     const showDefaultPredictions = !search && !hasFetchedPredictions && useDefaultPredictions;
 
     const result = showDefaultPredictions ? defaultPredictions : fetchedPredictions;
-    console.log('result currentPredictions: ', result);
     return result;
   }
 

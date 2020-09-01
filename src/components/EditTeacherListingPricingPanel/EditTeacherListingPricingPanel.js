@@ -32,6 +32,14 @@ const EditTeacherListingPricingPanel = props => {
   const currentListing = ensureOwnListing(listing);
   const { price } = currentListing.attributes;
 
+  console.log('price: ', price);
+
+  const dataToTest = {
+    amount: 2000,
+    currency: 'USD',
+    _sdkType: 'Money',
+  };
+
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
@@ -47,6 +55,7 @@ const EditTeacherListingPricingPanel = props => {
     <EditTeacherListingPricingForm
       className={css.form}
       initialValues={{ price }}
+      // initialValues={{ dataToTest }}
       onSubmit={onSubmit}
       onChange={onChange}
       saveActionMsg={submitButtonText}

@@ -180,8 +180,19 @@ const renderDayContents = (calendar, availabilityPlan) => date => {
     [css.exceptionError]: isFailed,
   });
 
+  const setSeatSingleDate = e => {
+    e.stopPropagation();
+
+    alert('click');
+  };
+
   return (
     <div className={css.dayWrapper}>
+      {!isOutsideRange ? (
+        <div className={css.btnSeatWrapper}>
+          <button onClick={setSeatSingleDate}>Seats</button>
+        </div>
+      ) : null}
       <span className={dayClasses}>
         {isInProgress ? (
           <IconSpinner rootClassName={css.inProgress} />

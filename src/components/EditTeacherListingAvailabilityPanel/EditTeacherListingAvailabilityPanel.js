@@ -5,9 +5,10 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { ensureOwnListing } from '../../util/data';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ListingLink } from '../../components';
-import { EditListingAvailabilityForm } from '../../forms';
+import { EditListingAvailabilityForm, EditAllSeatForm } from '../../forms';
 
 import css from '../EditListingAvailabilityPanel/EditListingAvailabilityPanel.css';
+//import cssSeat from './EditTeacherListingAvaiability.css';
 
 const EditListingAvailabilityPanel = props => {
   const {
@@ -18,6 +19,7 @@ const EditListingAvailabilityPanel = props => {
     disabled,
     ready,
     onSubmit,
+    onSubmitCustomAvailabilityPlan,
     onChange,
     submitButtonText,
     panelUpdated,
@@ -40,6 +42,20 @@ const EditListingAvailabilityPanel = props => {
       { dayOfWeek: 'sun', seats: 0 },
     ],
   };
+
+  const customAvailabilityPlan = seats => ({
+    type: 'availability-plan/day',
+    entries: [
+      { dayOfWeek: 'mon', seats },
+      { dayOfWeek: 'tue', seats },
+      { dayOfWeek: 'wed', seats },
+      { dayOfWeek: 'thu', seats },
+      { dayOfWeek: 'fri', seats },
+      { dayOfWeek: 'sat', seats },
+      { dayOfWeek: 'sun', seats },
+    ],
+  });
+
   const availabilityPlan = currentListing.attributes.availabilityPlan || defaultAvailabilityPlan;
   return (
     <div className={classes}>
@@ -53,6 +69,15 @@ const EditListingAvailabilityPanel = props => {
           <FormattedMessage id="EditListingAvailabilityPanel.createListingTitle" />
         )}
       </h1>
+      <EditAllSeatForm
+        onSubmit={values => {
+          console.log('value: ', values);
+          alert('onSubmit editAllSeat: ', values.allSeat);
+          onSubmitCustomAvailabilityPlan({
+            availabilityPlan: customAvailabilityPlan(parseInt(values.allSeat)),
+          });
+        }}
+      />
       <EditListingAvailabilityForm
         isTeacher={true}
         className={css.form}

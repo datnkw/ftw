@@ -11,53 +11,12 @@ import { maxLength, required, composeValidators } from '../../util/validators';
 import { Form, Button, FieldTextInput, FieldCheckboxGroupMappingLabel } from '../../components';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 import config from '../../config';
+import configLevel from '../../config-level';
 import _ from 'lodash';
 
 import css from '../EditListingDescriptionForm/EditListingDescriptionForm.css';
 
 const TITLE_MAX_LENGTH = 60;
-
-const configLevel = [
-  {
-    subject: 'math',
-    level: [
-      {
-        key: 'beginner',
-        label: 'EditTeacherListingGeneralForm.beginnerLevelLabel',
-      },
-    ],
-  },
-  {
-    subject: 'physics',
-    level: [
-      {
-        key: 'beginner',
-        label: 'EditTeacherListingGeneralForm.beginnerLevelLabel',
-      },
-      {
-        key: 'intermediate',
-        label: 'EditTeacherListingGeneralForm.intermediateLevelLabel',
-      },
-    ],
-  },
-  {
-    subject: 'chemistry',
-    level: [
-      {
-        key: 'beginner',
-        label: 'EditTeacherListingGeneralForm.beginnerLevelLabel',
-      },
-      {
-        key: 'intermediate',
-        label: 'EditTeacherListingGeneralForm.intermediateLevelLabel',
-      },
-      {
-        key: 'expert',
-        label: 'EditTeacherListingGeneralForm.expertLevelLabel',
-      },
-    ],
-  },
-];
 
 class EditTeacherListingGeneralFormComponent extends React.Component {
   constructor(props) {

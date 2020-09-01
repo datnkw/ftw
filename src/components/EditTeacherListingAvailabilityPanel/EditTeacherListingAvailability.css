@@ -1,0 +1,7 @@
+.formSeat {
+  flex-direction: row;
+}
+
+.btnSeatSubmit {
+  margin: 0;
+}

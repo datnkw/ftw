@@ -112,6 +112,8 @@ const EditTeacherListingWizardTab = props => {
       typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
     const updateValuesWithImages = { ...otherValues, ...imageProperty };
 
+    console.log('updateValues: ', updateValues);
+
     if (isNewListingFlow) {
       const onUpsertListingDraft = isNewURI
         ? (tab, updateValues) => onCreateListingDraft(updateValues)
@@ -123,7 +125,9 @@ const EditTeacherListingWizardTab = props => {
 
       onUpsertListingDraft(tab, upsertValues)
         .then(r => {
-          if (tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
+          if (tab === 'updateAllSeat') {
+            return;
+          } else if (tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
             // Create listing flow: smooth scrolling polyfill to scroll to correct tab
             handleCreateFlowTabScrolling(false);
 
@@ -183,6 +187,9 @@ const EditTeacherListingWizardTab = props => {
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
+          }}
+          onSubmitCustomAvailabilityPlan={values => {
+            onCompleteEditListingWizardTab('updateAllSeat', values);
           }}
         />
       );
