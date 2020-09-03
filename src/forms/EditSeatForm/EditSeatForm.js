@@ -44,11 +44,11 @@ export const EditListingPricingFormComponent = props => (
             </p>
           ) : null}
           <FieldTextInput
-            id="allSeat"
-            name="allSeat"
+            id="seat"
+            name="seat"
             className={css.seatNumberInput}
             type="text"
-            label="set seat for all date"
+            label="set seat for a date"
             placeholder="input number of seat"
             maxLength="10"
             // validate={validators.composeValidators(validators.required(titleRequiredMessage), maxLength60Message)}

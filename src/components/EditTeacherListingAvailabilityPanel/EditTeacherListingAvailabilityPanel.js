@@ -72,7 +72,7 @@ const EditListingAvailabilityPanel = props => {
       <EditAllSeatForm
         onSubmit={values => {
           console.log('value: ', values);
-          alert('onSubmit editAllSeat: ', values.allSeat);
+          //alert('onSubmit editAllSeat: ', values.allSeat);
           onSubmitCustomAvailabilityPlan({
             availabilityPlan: customAvailabilityPlan(parseInt(values.allSeat)),
           });

@@ -17,7 +17,8 @@ import {
 } from '../../util/data';
 import { DAYS_OF_WEEK, propTypes } from '../../util/types';
 import { monthIdString, monthIdStringInUTC } from '../../util/dates';
-import { IconArrowHead, IconSpinner } from '../../components';
+import { IconArrowHead, IconSpinner, Modal } from '../../components';
+import { EditSeatForm } from '../';
 import css from './ManageAvailabilityCalendar.css';
 
 // Constants
@@ -161,7 +162,7 @@ const dateModifiers = (availabilityPlan, exceptions, bookings, date) => {
   };
 };
 
-const renderDayContents = (calendar, availabilityPlan) => date => {
+const renderDayContents = (calendar, availabilityPlan, toggleModal) => date => {
   // This component is for day/night based processes. If time-based process is used,
   // you might want to deal with local dates using monthIdString instead of monthIdStringInUTC.
   const { exceptions = [], bookings = [] } = calendar[monthIdStringInUTC(date)] || {};
@@ -182,8 +183,10 @@ const renderDayContents = (calendar, availabilityPlan) => date => {
 
   const setSeatSingleDate = e => {
     e.stopPropagation();
+    e.preventDefault();
 
-    alert('click');
+    console.log('e target: ', e.target);
+    toggleModal(date);
   };
 
   return (
@@ -231,6 +234,7 @@ class ManageAvailabilityCalendar extends Component {
     this.onDateChange = this.onDateChange.bind(this);
     this.onFocusChange = this.onFocusChange.bind(this);
     this.onMonthClick = this.onMonthClick.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentDidMount() {
@@ -239,6 +243,39 @@ class ManageAvailabilityCalendar extends Component {
     // Fetch next month too.
     this.fetchMonthData(nextMonthFn(this.state.currentMonth));
   }
+
+  ModalSetSeat = props => {
+    const { isOpen, onClose, availability, date } = props;
+
+    const calendar = availability.calendar;
+    // This component is for day/night based processes. If time-based process is used,
+    // you might want to deal with local dates using monthIdString instead of monthIdStringInUTC.
+    const { exceptions = [] } = calendar[monthIdStringInUTC(date)] || {};
+
+    console.log('date: ', date);
+    console.log('exceptions: ', exceptions);
+
+    return (
+      <Modal
+        id="SetSeatModal"
+        // containerClassName={containerClassName}
+        isOpen={isOpen}
+        onClose={() => {
+          onClose();
+        }}
+        onManageDisableScrolling={() => {}}
+        // closeButtonMessage={closeButtonMessage}
+      >
+        <EditSeatForm
+          onSubmit={values => {
+            console.log('value: ', values);
+            //alert('onSubmit editAllSeat: ', values.allSeat);
+            this.onDayAvailabilityChange(date, parseInt(values.seat), exceptions);
+          }}
+        />
+      </Modal>
+    );
+  };
 
   fetchMonthData(monthMoment) {
     const { availability, listingId } = this.props;
@@ -319,6 +356,8 @@ class ManageAvailabilityCalendar extends Component {
   onDateChange(date) {
     this.setState({ date });
 
+    console.log('date: ', date);
+
     const { availabilityPlan, availability } = this.props;
     const calendar = availability.calendar;
     // This component is for day/night based processes. If time-based process is used,
@@ -330,6 +369,8 @@ class ManageAvailabilityCalendar extends Component {
       bookings,
       date
     );
+
+    console.log('exception: ', exceptions);
 
     if (isBooked || isPast || isInProgress) {
       // Cannot allow or block a reserved or a past date or inProgress
@@ -374,6 +415,13 @@ class ManageAvailabilityCalendar extends Component {
     );
   }
 
+  toggleModal(date) {
+    this.setState({
+      isOpen: !this.state.isOpen,
+      date,
+    });
+  }
+
   render() {
     const {
       className,
@@ -407,7 +455,7 @@ class ManageAvailabilityCalendar extends Component {
 
     const monthName = currentMonth.format('MMMM');
     const classes = classNames(rootClassName || css.root, className);
-
+    const ModalSetSeat = this.ModalSetSeat;
     return (
       <div
         className={classes}
@@ -415,6 +463,12 @@ class ManageAvailabilityCalendar extends Component {
           this.dayPickerWrapper = c;
         }}
       >
+        <ModalSetSeat
+          isOpen={this.state.isOpen}
+          onClose={this.toggleModal}
+          availability={this.props.availability}
+          date={this.state.date}
+        />
         {width > 0 ? (
           <div style={{ width: `${calendarGridWidth}px` }}>
             <DayPickerSingleDateController
@@ -427,7 +481,7 @@ class ManageAvailabilityCalendar extends Component {
               navNext={<IconArrowHead direction="right" />}
               weekDayFormat="ddd"
               daySize={daySize}
-              renderDayContents={renderDayContents(calendar, availabilityPlan)}
+              renderDayContents={renderDayContents(calendar, availabilityPlan, this.toggleModal)}
               focused={focused}
               date={date}
               onDateChange={this.onDateChange}

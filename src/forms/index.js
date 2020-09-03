@@ -11,6 +11,7 @@ export { default as EditTeacherListingPricingForm } from './EditTeacherListingPr
 export { default as EditTeacherListingPhotosForm } from './EditListingPhotosForm/EditTeacherListingPhotosForm';
 export { default as EditTeacherListingGeneralForm } from './EditTeacherListingGeneralForm/EditTeacherListingGeneralForm';
 export { default as EditAllSeatForm } from './EditAllSeatForm/EditAllSeatForm';
+export { default as EditSeatForm } from './EditSeatForm/EditSeatForm';
 
 export { default as EmailVerificationForm } from './EmailVerificationForm/EmailVerificationForm';
 export { default as EnquiryForm } from './EnquiryForm/EnquiryForm';
