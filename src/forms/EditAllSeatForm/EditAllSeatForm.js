@@ -4,17 +4,18 @@ import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
+import * as validators from '../../util/validators';
 import { propTypes } from '../../util/types';
-import { Button, Form, FieldTextInput } from '../../components';
-import css from '../EditListingPricingForm/EditListingPricingForm.css';
+import { Button, Form, FieldNumberInput } from '../../components';
+import css from '../EditAllSeatForm/EditAllSeatForm.css';
 
-export const EditListingPricingFormComponent = props => (
+export const EditAllSeatFormComponent = props => (
   <FinalForm
     {...props}
     render={formRenderProps => {
       const {
         className,
-        disabled,
+        // disabled,
         ready,
         handleSubmit,
         invalid,
@@ -23,27 +24,34 @@ export const EditListingPricingFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
+        intl,
       } = formRenderProps;
 
       const classes = classNames(css.root, className);
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
-      const submitDisabled = invalid || disabled || submitInProgress;
+      const submitDisabled = invalid || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
+
+      const inputRequired = validators.required(
+        intl.formatMessage({
+          id: 'EditSeatForm.inputRequired',
+        })
+      );
 
       return (
         <Form onSubmit={handleSubmit} className={classes}>
           {updateListingError ? (
             <p className={css.error}>
-              <FormattedMessage id="EditListingPricingForm.updateFailed" />
+              <FormattedMessage id="EditAllSeatForm.updateFailed" />
             </p>
           ) : null}
           {showListingsError ? (
             <p className={css.error}>
-              <FormattedMessage id="EditListingPricingForm.showListingFailed" />
+              <FormattedMessage id="EditAllSeatForm.showListingFailed" />
             </p>
           ) : null}
-          <FieldTextInput
+          <FieldNumberInput
             id="allSeat"
             name="allSeat"
             className={css.seatNumberInput}
@@ -51,8 +59,7 @@ export const EditListingPricingFormComponent = props => (
             label="set seat for all date"
             placeholder="input number of seat"
             maxLength="10"
-            // validate={validators.composeValidators(validators.required(titleRequiredMessage), maxLength60Message)}
-            //autoFocus
+            validate={inputRequired}
           />
 
           <Button
@@ -70,14 +77,14 @@ export const EditListingPricingFormComponent = props => (
   />
 );
 
-EditListingPricingFormComponent.defaultProps = { fetchErrors: null };
+EditAllSeatFormComponent.defaultProps = { fetchErrors: null };
 
-EditListingPricingFormComponent.propTypes = {
+EditAllSeatFormComponent.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: func.isRequired,
   saveActionMsg: string.isRequired,
-  disabled: bool.isRequired,
-  ready: bool.isRequired,
+  // disabled: bool.isRequired,
+  // ready: bool.isRequired,
   updated: bool.isRequired,
   updateInProgress: bool.isRequired,
   fetchErrors: shape({
@@ -86,4 +93,4 @@ EditListingPricingFormComponent.propTypes = {
   }),
 };
 
-export default compose(injectIntl)(EditListingPricingFormComponent);
+export default compose(injectIntl)(EditAllSeatFormComponent);

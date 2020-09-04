@@ -174,6 +174,7 @@ export { default as EditTeacherListingPhotosPanel } from './EditTeacherListingPh
 
 export { default as EditListingWizard } from './EditListingWizard/EditListingWizard';
 export { default as EditTeacherListingWizard } from './EditListingWizard/EditTeacherListingWizard';
+export { default as FieldNumberInput } from './FieldNumberInput/FieldNumberInput';
 
 export { default as Footer } from './Footer/Footer';
 export { default as SectionHero } from './SectionHero/SectionHero';

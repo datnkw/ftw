@@ -19,6 +19,8 @@ const isNonEmptyString = val => {
 const VALID = undefined;
 
 export const required = message => value => {
+  console.log('value in required: ', value);
+
   if (typeof value === 'undefined' || value === null) {
     // undefined or null values are invalid
     return message;

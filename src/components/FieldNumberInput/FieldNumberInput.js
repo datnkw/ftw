@@ -2,13 +2,99 @@ import React, { Component } from 'react';
 import { bool, func, object, shape, string } from 'prop-types';
 import { Field } from 'react-final-form';
 import classNames from 'classnames';
-import { ValidationError, ExpandingTextarea } from '../../components';
+import { ValidationError } from '../../components';
 
-import css from './FieldTextInput.css';
+import css from './FieldNumberInput.css';
 
-const CONTENT_MAX_LENGTH = 5000;
+class NumberInput extends Component {
+  constructor(props) {
+    super(props);
 
-class FieldTextInputComponent extends Component {
+    this.state = {
+      value: '',
+    };
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onInputBlur = this.onInputBlur.bind(this);
+    this.onInputFocus = this.onInputFocus.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.isClosed === prevProps.isClosed) {
+      return;
+    }
+
+    if (this.props.isClosed) {
+      this.setState({ value: '' });
+      this.props.onChange('');
+    }
+  }
+
+  onInputChange(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const value = event.target.value;
+
+    if (isNaN(value) || value.charAt(value.length - 1) === '.') {
+      return;
+    }
+
+    this.props.onChange(value);
+    this.setState({ value });
+  }
+
+  onInputBlur(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const value = event.target.value;
+
+    if (isNaN(value) || value.charAt(value.length - 1) === '.') {
+      return;
+    }
+
+    this.props.onBlur(value);
+    this.setState({
+      value,
+    });
+  }
+
+  onInputFocus(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const value = event.target.value;
+
+    if (isNaN(value) || value.charAt(value.length - 1) === '.') {
+      return;
+    }
+
+    this.props.onFocus(value);
+    this.setState({
+      value,
+    });
+  }
+
+  render() {
+    const { className, placeholder, ...rest } = this.props;
+
+    return (
+      <input
+        {...rest}
+        className={className}
+        value={this.state.value}
+        type="text"
+        placeholder={placeholder}
+        onChange={this.onInputChange}
+        onBlur={this.onInputBlur}
+        onFocus={this.onInputFocus}
+      />
+    );
+  }
+}
+
+class FieldNumberInputComponent extends Component {
   render() {
     /* eslint-disable no-unused-vars */
     const {
@@ -32,7 +118,6 @@ class FieldTextInputComponent extends Component {
     }
 
     const { valid, invalid, touched, error } = meta;
-    const isTextarea = input.type === 'textarea';
 
     const errorText = customErrorText || error;
 
@@ -40,7 +125,7 @@ class FieldTextInputComponent extends Component {
     // field has been touched and the validation has failed.
     const hasError = !!customErrorText || !!(touched && invalid && error);
 
-    const fieldMeta = { touched: hasError, error: errorText };
+    const fieldMeta = { touched: hasError, error: errorText, valid, invalid };
 
     // Textarea doesn't need type.
     const { type, ...inputWithoutType } = input;
@@ -54,20 +139,8 @@ class FieldTextInputComponent extends Component {
       classNames(css.input, {
         [css.inputSuccess]: valid,
         [css.inputError]: hasError,
-        [css.textarea]: isTextarea,
       });
-    const maxLength = CONTENT_MAX_LENGTH;
-    const inputProps = isTextarea
-      ? {
-          className: inputClasses,
-          id,
-          rows: 1,
-          maxLength,
-          ...refMaybe,
-          ...inputWithoutType,
-          ...rest,
-        }
-      : isUncontrolled
+    const inputProps = isUncontrolled
       ? {
           className: inputClasses,
           id,
@@ -81,18 +154,18 @@ class FieldTextInputComponent extends Component {
 
     const classes = classNames(rootClassName || css.root, className);
 
-    console.log('inputProps: ', inputProps);
     return (
       <div className={classes}>
         {label ? <label htmlFor={id}>{label}</label> : null}
-        {isTextarea ? <ExpandingTextarea {...inputProps} /> : <input {...inputProps} />}
+        {/* {isTextarea ? <ExpandingTextarea {...inputProps} /> : <input {...inputProps} />} */}
+        <NumberInput {...inputProps} />
         <ValidationError fieldMeta={fieldMeta} />
       </div>
     );
   }
 }
 
-FieldTextInputComponent.defaultProps = {
+FieldNumberInputComponent.defaultProps = {
   rootClassName: null,
   className: null,
   inputRootClass: null,
@@ -104,7 +177,7 @@ FieldTextInputComponent.defaultProps = {
   inputRef: null,
 };
 
-FieldTextInputComponent.propTypes = {
+FieldNumberInputComponent.propTypes = {
   rootClassName: string,
   className: string,
   inputRootClass: string,
@@ -135,7 +208,7 @@ FieldTextInputComponent.propTypes = {
   meta: object.isRequired,
 };
 
-class FieldTextInput extends Component {
+class FieldNumberInput extends Component {
   componentWillUnmount() {
     // Unmounting happens too late if it is done inside Field component
     // (Then Form has already registered its (new) fields and
@@ -146,8 +219,8 @@ class FieldTextInput extends Component {
   }
 
   render() {
-    return <Field component={FieldTextInputComponent} {...this.props} />;
+    return <Field component={FieldNumberInputComponent} {...this.props} />;
   }
 }
 
-export default FieldTextInput;
+export default FieldNumberInput;

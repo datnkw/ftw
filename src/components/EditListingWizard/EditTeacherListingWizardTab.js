@@ -105,7 +105,7 @@ const EditTeacherListingWizardTab = props => {
     return images ? images.map(img => img.imageId || img.id) : null;
   };
 
-  const onCompleteEditListingWizardTab = (tab, updateValues) => {
+  const onCompleteEditListingWizardTab = async (tab, updateValues) => {
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
     const imageProperty =
@@ -123,7 +123,7 @@ const EditTeacherListingWizardTab = props => {
         ? updateValuesWithImages
         : { ...updateValuesWithImages, id: currentListing.id };
 
-      onUpsertListingDraft(tab, upsertValues)
+      await onUpsertListingDraft(tab, upsertValues)
         .then(r => {
           if (tab === 'updateAllSeat') {
             return;
@@ -141,7 +141,7 @@ const EditTeacherListingWizardTab = props => {
           // No need for extra actions
         });
     } else {
-      onUpdateListing(tab, { ...updateValuesWithImages, id: currentListing.id });
+      await onUpdateListing(tab, { ...updateValuesWithImages, id: currentListing.id });
     }
   };
 
@@ -188,8 +188,8 @@ const EditTeacherListingWizardTab = props => {
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
-          onSubmitCustomAvailabilityPlan={values => {
-            onCompleteEditListingWizardTab('updateAllSeat', values);
+          onSubmitCustomAvailabilityPlan={async values => {
+            await onCompleteEditListingWizardTab('updateAllSeat', values);
           }}
         />
       );

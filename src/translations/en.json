@@ -237,6 +237,14 @@
   "EditTeacherListingGeneralForm.intermediateLevelLabel": "Intermediate",
   "EditTeacherListingGeneralForm.expertLevelLabel": "Expert",
 
+  "EditAllSeatForm.showListingFailed": "Fetching listing data failed",
+  "EditAllSeatForm.updateFailed": "Failed to update listing. Please try again.",
+  "EditAllSeatForm.submitButtonText": "Submit",
+  "EditAllSeatForm.inputRequired": "You need to add a number",
+
+  "EditSeatForm.submitButtonText": "Submit",
+  "EditSeatForm.inputRequired": "You need to add a number",
+
   "EditTeacherListingPricingPanel.createListingTitle": "How much is the teacher's hourly price",
 
   "EditTeacherListingGeneralForm.maxLength": "Must be {maxLength} characters or less",

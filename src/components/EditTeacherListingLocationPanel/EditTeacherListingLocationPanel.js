@@ -61,23 +61,6 @@ class EditTeacherListingLocationPanel extends Component {
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureOwnListing(listing);
 
-    const dataToTest = {
-      building: '12 a',
-      location: {
-        search: 'Trần Phú, Quảng Ngãi, Quảng Ngãi, Vietnam',
-        selectedPlace: {
-          address: 'Trần Phú, Quảng Ngãi, Quảng Ngãi, Vietnam',
-          origin: {
-            lat: 15.1275,
-            lng: 108.78917,
-            _sdkType: 'LatLng',
-          },
-        },
-      },
-    };
-
-    console.log('initValue location: ', this.state.initialValues);
-
     const isPublished =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
     const panelTitle = isPublished ? (
@@ -94,8 +77,8 @@ class EditTeacherListingLocationPanel extends Component {
         <h1 className={css.title}>{panelTitle}</h1>
         <EditListingLocationForm
           className={css.form}
-          // initialValues={this.state.initialValues}
-          initialValues={dataToTest}
+          initialValues={this.state.initialValues}
+          // initialValues={dataToTest}
           onSubmit={values => {
             const { building = '', location } = values;
             const {

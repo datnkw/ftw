@@ -20,6 +20,8 @@ import { monthIdString, monthIdStringInUTC } from '../../util/dates';
 import { IconArrowHead, IconSpinner, Modal } from '../../components';
 import { EditSeatForm } from '../';
 import css from './ManageAvailabilityCalendar.css';
+import { IconContext } from 'react-icons';
+import { FaChalkboardTeacher } from 'react-icons/fa';
 
 // Constants
 
@@ -193,7 +195,9 @@ const renderDayContents = (calendar, availabilityPlan, toggleModal) => date => {
     <div className={css.dayWrapper}>
       {!isOutsideRange ? (
         <div className={css.btnSeatWrapper}>
-          <button onClick={setSeatSingleDate}>Seats</button>
+          <button onClick={setSeatSingleDate}>
+            <FaChalkboardTeacher />
+          </button>
         </div>
       ) : null}
       <span className={dayClasses}>
@@ -227,6 +231,7 @@ class ManageAvailabilityCalendar extends Component {
       currentMonth: moment().startOf('month'),
       focused: true,
       date: null,
+      updateInProgress: false,
     };
 
     this.fetchMonthData = this.fetchMonthData.bind(this);
@@ -245,15 +250,20 @@ class ManageAvailabilityCalendar extends Component {
   }
 
   ModalSetSeat = props => {
-    const { isOpen, onClose, availability, date } = props;
+    const {
+      isOpen,
+      onClose,
+      availability,
+      date,
+      updateInProgress,
+      onSetUpdateInProgress,
+      isClosed,
+    } = props;
 
     const calendar = availability.calendar;
     // This component is for day/night based processes. If time-based process is used,
     // you might want to deal with local dates using monthIdString instead of monthIdStringInUTC.
     const { exceptions = [] } = calendar[monthIdStringInUTC(date)] || {};
-
-    console.log('date: ', date);
-    console.log('exceptions: ', exceptions);
 
     return (
       <Modal
@@ -267,10 +277,15 @@ class ManageAvailabilityCalendar extends Component {
         // closeButtonMessage={closeButtonMessage}
       >
         <EditSeatForm
+          isClosed={isClosed}
+          date={date}
+          updateInProgress={updateInProgress}
           onSubmit={values => {
-            console.log('value: ', values);
-            //alert('onSubmit editAllSeat: ', values.allSeat);
-            this.onDayAvailabilityChange(date, parseInt(values.seat), exceptions);
+            onSetUpdateInProgress(true);
+            this.onDayAvailabilityChange(date, parseInt(values.seat), exceptions).then(() => {
+              onSetUpdateInProgress(false);
+              onClose();
+            });
           }}
         />
       </Modal>
@@ -310,7 +325,7 @@ class ManageAvailabilityCalendar extends Component {
     }
   }
 
-  onDayAvailabilityChange(date, seats, exceptions) {
+  async onDayAvailabilityChange(date, seats, exceptions) {
     const { availabilityPlan, listingId } = this.props;
     const { start, end } = dateStartAndEndInUTC(date);
 
@@ -331,7 +346,7 @@ class ManageAvailabilityCalendar extends Component {
       if (isResetToPlanSeats) {
         // Delete the exception, if the exception is redundant
         // (it has the same content as what user has in the plan).
-        this.props.availability.onDeleteAvailabilityException({
+        await this.props.availability.onDeleteAvailabilityException({
           id,
           currentException: exception,
           seats: seatsFromPlan,
@@ -339,7 +354,7 @@ class ManageAvailabilityCalendar extends Component {
       } else {
         // If availability exception exists, delete it first and then create a new one.
         // NOTE: currently, API does not support update (only deleting and creating)
-        this.props.availability
+        await this.props.availability
           .onDeleteAvailabilityException({ id, currentException: exception, seats: seatsFromPlan })
           .then(r => {
             const params = { listingId, start, end, seats, currentException: exception };
@@ -349,14 +364,12 @@ class ManageAvailabilityCalendar extends Component {
     } else {
       // If there is no existing AvailabilityExceptions, just create a new one
       const params = { listingId, start, end, seats, currentException: exception };
-      this.props.availability.onCreateAvailabilityException(params);
+      await this.props.availability.onCreateAvailabilityException(params);
     }
   }
 
   onDateChange(date) {
     this.setState({ date });
-
-    console.log('date: ', date);
 
     const { availabilityPlan, availability } = this.props;
     const calendar = availability.calendar;
@@ -466,8 +479,15 @@ class ManageAvailabilityCalendar extends Component {
         <ModalSetSeat
           isOpen={this.state.isOpen}
           onClose={this.toggleModal}
+          isClosed={!this.state.isOpen}
           availability={this.props.availability}
           date={this.state.date}
+          updateInProgress={this.state.updateInProgress}
+          onSetUpdateInProgress={isInProgress => {
+            this.setState({
+              updateInProgress: isInProgress,
+            });
+          }}
         />
         {width > 0 ? (
           <div style={{ width: `${calendarGridWidth}px` }}>
