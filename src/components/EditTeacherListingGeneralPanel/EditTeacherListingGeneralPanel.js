@@ -41,14 +41,6 @@ const EditTeacherListingGeneralPanel = props => {
     <FormattedMessage id="EditTeacherListingGeneral.createListingTitle" />
   );
 
-  const dataToTest = {
-    title: 'a',
-    teachingHour: 'fulltime',
-    gender: 'male',
-    subjects: ['math'],
-    levels: ['beginner'],
-  };
-
   const teachingHourOptions = findOptionsForSelectFilter('teachTime', config.custom.filters);
   const genderOptions = findOptionsForSelectFilter('gender', config.custom.filters);
   return (
@@ -56,15 +48,14 @@ const EditTeacherListingGeneralPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditTeacherListingGeneralForm
         className={css.form}
-        // initialValues={{
-        //   title,
-        //   teachingHour: publicData.teachingHour,
-        //   gender: publicData.gender,
-        //   subjects: publicData.subjects,
-        //   levels: publicData.levels,
-        //   isTeacher: publicData.isTeacher,
-        // }}
-        initialValues={{ ...dataToTest }}
+        initialValues={{
+          title,
+          teachingHour: publicData.teachingHour,
+          gender: publicData.gender,
+          subjects: publicData.subjects,
+          levels: publicData.levels,
+          isTeacher: publicData.isTeacher,
+        }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
           const { title, teachingHour, gender, subjects, levels } = values;

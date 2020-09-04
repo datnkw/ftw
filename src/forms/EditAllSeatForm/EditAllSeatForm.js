@@ -82,10 +82,6 @@ EditAllSeatFormComponent.defaultProps = { fetchErrors: null };
 EditAllSeatFormComponent.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: func.isRequired,
-  saveActionMsg: string.isRequired,
-  // disabled: bool.isRequired,
-  // ready: bool.isRequired,
-  updated: bool.isRequired,
   updateInProgress: bool.isRequired,
   fetchErrors: shape({
     showListingsError: propTypes.error,

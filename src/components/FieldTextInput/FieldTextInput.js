@@ -81,7 +81,6 @@ class FieldTextInputComponent extends Component {
 
     const classes = classNames(rootClassName || css.root, className);
 
-    console.log('inputProps: ', inputProps);
     return (
       <div className={classes}>
         {label ? <label htmlFor={id}>{label}</label> : null}

@@ -78,41 +78,26 @@ const tabCompleted = (tab, listing) => {
   const { images } = listing;
   const { publicData, title, geolocation, price, availabilityPlan } = listing.attributes;
 
-  // switch (tab) {
-  //   case GENERAL:
-  //     return !!(
-  //       title &&
-  //       publicData &&
-  //       publicData.gender &&
-  //       publicData.teachingHour &&
-  //       publicData.subjects &&
-  //       publicData.subjects.length > 0 &&
-  //       publicData.levels &&
-  //       publicData.levels.length > 0
-  //     );
-  //   case TEACHER_LOCATION:
-  //     return !!(geolocation && publicData && publicData.location && publicData.location.address);
-  //   case TEACHER_PRICING:
-  //     return !!price;
-  //   case TEACHER_PHOTOS:
-  //     return images && images.length > 0;
-  //   case TEACHER_AVAILABILITY:
-  //     return !!availabilityPlan;
-  //   default:
-  //     return false;
-  // }
-
   switch (tab) {
     case GENERAL:
-      return true;
+      return !!(
+        title &&
+        publicData &&
+        publicData.gender &&
+        publicData.teachingHour &&
+        publicData.subjects &&
+        publicData.subjects.length > 0 &&
+        publicData.levels &&
+        publicData.levels.length > 0
+      );
     case TEACHER_LOCATION:
-      return true;
+      return !!(geolocation && publicData && publicData.location && publicData.location.address);
     case TEACHER_PRICING:
-      return true;
+      return !!price;
     case TEACHER_PHOTOS:
-      return true;
+      return images && images.length > 0;
     case TEACHER_AVAILABILITY:
-      return false;
+      return !!availabilityPlan;
     default:
       return false;
   }

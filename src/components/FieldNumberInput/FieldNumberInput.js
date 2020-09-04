@@ -20,11 +20,11 @@ class NumberInput extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.isClosed === prevProps.isClosed) {
+    if (this.props.isOpenModal === prevProps.isOpenModal) {
       return;
     }
 
-    if (this.props.isClosed) {
+    if (!this.props.isOpenModal) {
       this.setState({ value: '' });
       this.props.onChange('');
     }
@@ -77,7 +77,7 @@ class NumberInput extends Component {
   }
 
   render() {
-    const { className, placeholder, ...rest } = this.props;
+    const { className, placeholder, isOpenModal, ...rest } = this.props;
 
     return (
       <input
@@ -128,7 +128,7 @@ class FieldNumberInputComponent extends Component {
     const fieldMeta = { touched: hasError, error: errorText, valid, invalid };
 
     // Textarea doesn't need type.
-    const { type, ...inputWithoutType } = input;
+    const { type } = input;
     // Uncontrolled input uses defaultValue instead of value.
     const { value: defaultValue, ...inputWithoutValue } = input;
     // Use inputRef if it is passed as prop.

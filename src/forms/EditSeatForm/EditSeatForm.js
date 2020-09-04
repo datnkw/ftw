@@ -25,7 +25,7 @@ export const EditSeatFormComponent = props => (
         fetchErrors,
         date,
         intl,
-        isClosed,
+        isOpenModal,
       } = formRenderProps;
 
       const classes = classNames(css.root, className);
@@ -56,7 +56,7 @@ export const EditSeatFormComponent = props => (
             Set seats for <span>{!date ? '' : date.format('DD/MM/YYYY')}</span>
           </h1>
           <FieldNumberInput
-            isClosed={isClosed}
+            isOpenModal={isOpenModal}
             id="seat"
             name="seat"
             className={css.seatNumberInput}
@@ -88,10 +88,6 @@ EditSeatFormComponent.defaultProps = { fetchErrors: null };
 EditSeatFormComponent.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: func.isRequired,
-  saveActionMsg: string.isRequired,
-  disabled: bool.isRequired,
-  ready: bool.isRequired,
-  updated: bool.isRequired,
   updateInProgress: bool.isRequired,
   fetchErrors: shape({
     showListingsError: propTypes.error,

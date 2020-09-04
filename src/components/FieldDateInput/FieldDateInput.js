@@ -10,7 +10,7 @@ import { Field } from 'react-final-form';
 import classNames from 'classnames';
 import { ValidationError, FieldSelect } from '../../components';
 import { propTypes } from '../../util/types';
-import { intlShape, injectIntl } from '../../util/reactIntl';
+import { injectIntl } from '../../util/reactIntl';
 import DateInput from './DateInput';
 import css from './FieldDateInput.css';
 

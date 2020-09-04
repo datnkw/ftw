@@ -32,14 +32,6 @@ const EditTeacherListingPricingPanel = props => {
   const currentListing = ensureOwnListing(listing);
   const { price } = currentListing.attributes;
 
-  console.log('price: ', price);
-
-  const dataToTest = {
-    amount: 2000,
-    currency: 'USD',
-    _sdkType: 'Money',
-  };
-
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage

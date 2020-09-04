@@ -29,7 +29,7 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
     const subject = event.target.value;
 
     const index = subjectSelected.indexOf(subject);
-    if (index != -1) {
+    if (index !== -1) {
       subjectSelected.splice(index, 1);
     } else {
       subjectSelected.push(subject);
@@ -144,7 +144,6 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
           };
 
           const subjectOptions = findOptionsForSelectFilter('subjects', filterConfig);
-          const levelOptions = findOptionsForSelectFilter('levels', filterConfig);
 
           const subjectSelectLabel = intl.formatMessage({
             id: 'EditTeacherListingGeneralForm.subjectSelectLabel',
