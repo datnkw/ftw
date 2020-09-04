@@ -8,15 +8,39 @@ import React, { Component } from 'react';
 import { bool, object, string, arrayOf } from 'prop-types';
 import { Field } from 'react-final-form';
 import classNames from 'classnames';
-import { ValidationError } from '../../components';
+import { ValidationError, FieldSelect } from '../../components';
 import { propTypes } from '../../util/types';
-
+import { intlShape, injectIntl } from '../../util/reactIntl';
 import DateInput from './DateInput';
 import css from './FieldDateInput.css';
 
 const MAX_MOBILE_SCREEN_WIDTH = 768;
 
 class FieldDateInputComponent extends Component {
+  //setState fromHour
+  constructor(props) {
+    super(props);
+    this.state = {
+      timeBegin: 0,
+    };
+  }
+
+  generateHourOptions(isBegin, hourBegin = -1) {
+    let hourSelection = [];
+
+    const lastHour = isBegin ? 22 : 23;
+
+    for (let i = parseInt(hourBegin) + 1; i < lastHour; i++) {
+      hourSelection.push({
+        key: i,
+        //render hour format: hh:mm
+        label: `${i < 10 ? '0' + i : i}:00`,
+      });
+    }
+
+    return hourSelection;
+  }
+
   render() {
     const {
       className,
@@ -26,6 +50,7 @@ class FieldDateInputComponent extends Component {
       input,
       meta,
       useMobileMargins,
+      intl,
       ...rest
     } = this.props;
 
@@ -48,6 +73,7 @@ class FieldDateInputComponent extends Component {
     });
 
     const { onBlur, onFocus, type, checked, ...restOfInput } = input;
+
     const inputProps = {
       onBlur: input.onBlur,
       onFocus: input.onFocus,
@@ -57,6 +83,13 @@ class FieldDateInputComponent extends Component {
       ...restOfInput,
       ...rest,
     };
+
+    if (!inputProps.value) {
+      inputProps.value = {
+        date: null,
+      };
+    }
+
     const classes = classNames(rootClassName || css.fieldRoot, className);
     const errorClasses = classNames({ [css.mobileMargins]: useMobileMargins });
 
@@ -67,8 +100,43 @@ class FieldDateInputComponent extends Component {
             {label}
           </label>
         ) : null}
-        <DateInput className={inputClasses} {...inputProps} />
+        <DateInput className={JSON.stringify(inputClasses)} {...inputProps} />
         <ValidationError className={errorClasses} fieldMeta={meta} />
+        <div className={css.hourSelectorWrapper}>
+          <FieldSelect
+            name="FromHour"
+            id="from"
+            label={intl.formatMessage({ id: 'FieldDateInput.fromLabel' })}
+            onChangeCustomEvent={event => {
+              this.setState({
+                timeBegin: event.target.value,
+              });
+            }}
+          >
+            <option disabled value="">
+              {intl.formatMessage({ id: 'FieldDateInput.selectHour' })}
+            </option>
+            {this.generateHourOptions(true).map(c => (
+              <option key={c.key} value={c.key}>
+                {c.label}
+              </option>
+            ))}
+          </FieldSelect>
+          <FieldSelect
+            name="ToHour"
+            id="to"
+            label={intl.formatMessage({ id: 'FieldDateInput.toLabel' })}
+          >
+            <option disabled value="">
+              {intl.formatMessage({ id: 'FieldDateInput.selectHour' })}
+            </option>
+            {this.generateHourOptions(false, this.state.timeBegin).map(c => (
+              <option key={c.key} value={c.key}>
+                {c.label}
+              </option>
+            ))}
+          </FieldSelect>
+        </div>
       </div>
     );
   }
@@ -101,4 +169,4 @@ const FieldDateInput = props => {
 };
 
 export { DateInput };
-export default FieldDateInput;
+export default injectIntl(FieldDateInput);

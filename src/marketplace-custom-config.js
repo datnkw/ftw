@@ -93,6 +93,34 @@ export const filters = [
     },
   },
   {
+    id: 'gender',
+    label: 'Gender',
+    type: 'SelectSingleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_gender'],
+    config: {
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for the UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [{ key: 'male', label: 'Male' }, { key: 'female', label: 'Female' }],
+    },
+  },
+  {
+    id: 'teachTime',
+    label: 'Teach time',
+    type: 'SelectSingleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_teacheTime'],
+    config: {
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for the UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [{ key: 'fulltime', label: 'Fulltime' }, { key: 'parttime', label: 'Parttime' }],
+    },
+  },
+  {
     id: 'amenities',
     label: 'Amenities',
     type: 'SelectMultipleFilter',
@@ -139,6 +167,68 @@ export const filters = [
         {
           key: 'own_food_allowed',
           label: 'Own food allowed',
+        },
+      ],
+    },
+  },
+  {
+    id: 'subjects',
+    label: 'Subjects',
+    type: 'SelectMultipleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_subjects'],
+    config: {
+      // Optional modes: 'has_all', 'has_any'
+      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+      searchMode: 'has_all',
+
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        {
+          key: 'math',
+          label: 'EditTeacherListingGeneralForm.mathSubjectLabel',
+        },
+        {
+          key: 'physics',
+          label: 'EditTeacherListingGeneralForm.physicsSubjectLabel',
+        },
+        {
+          key: 'chemistry',
+          label: 'EditTeacherListingGeneralForm.chemistrySubjectLabel',
+        },
+      ],
+    },
+  },
+  {
+    id: 'levels',
+    label: 'Levels',
+    type: 'SelectMultipleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_levels'],
+    config: {
+      // Optional modes: 'has_all', 'has_any'
+      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+      searchMode: 'has_all',
+
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        {
+          key: 'beginner',
+          label: 'EditTeacherListingGeneralForm.beginnerLevelLabel',
+        },
+        {
+          key: 'intermediate',
+          label: 'EditTeacherListingGeneralForm.intermediateLevelLabel',
+        },
+        {
+          key: 'expert',
+          label: 'EditTeacherListingGeneralForm.expertLevelLabel',
         },
       ],
     },

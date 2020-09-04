@@ -36,6 +36,7 @@ IconCheckbox.propTypes = { className: string, checkedClassName: string, boxClass
 
 const FieldCheckboxComponent = props => {
   const {
+    onChangeSelect,
     rootClassName,
     className,
     svgClassName,
@@ -53,6 +54,10 @@ const FieldCheckboxComponent = props => {
     component: 'input',
     type: 'checkbox',
     ...rest,
+    // onChange: e => {
+    //   input.onChange(e);
+    //   onChangeSelect && onChangeSelect(e.target.value);
+    // },
   };
 
   const successColorVariantMaybe = useSuccessColor

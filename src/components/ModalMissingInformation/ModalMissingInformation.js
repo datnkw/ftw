@@ -35,6 +35,13 @@ class ModalMissingInformation extends Component {
     this.handleMissingInformationReminder = this.handleMissingInformationReminder.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({
+      showMissingInformationReminder: null,
+      hasSeenMissingInformationReminder: true,
+    });
+  }
+
   componentDidUpdate() {
     const { currentUser, currentUserHasListings, currentUserHasOrders, location } = this.props;
     const user = ensureCurrentUser(currentUser);

@@ -8,6 +8,7 @@ import { propTypes } from '../../util/types';
 import { Form, Button } from '../../components';
 
 import ManageAvailabilityCalendar from './ManageAvailabilityCalendar';
+import ManageAvailabilityTeacherCalendar from './ManageAvailabilityTeacherCalendar';
 import css from './EditListingAvailabilityForm.css';
 
 export class EditListingAvailabilityFormComponent extends Component {
@@ -49,11 +50,26 @@ export class EditListingAvailabilityFormComponent extends Component {
             <Form className={classes} onSubmit={handleSubmit}>
               {errorMessage}
               <div className={css.calendarWrapper}>
-                <ManageAvailabilityCalendar
-                  availability={availability}
-                  availabilityPlan={availabilityPlan}
-                  listingId={listingId}
-                />
+                {(() => {
+                  const { isTeacher } = this.props;
+                  if (isTeacher) {
+                    return (
+                      <ManageAvailabilityTeacherCalendar
+                        availability={availability}
+                        availabilityPlan={availabilityPlan}
+                        listingId={listingId}
+                      />
+                    );
+                  }
+
+                  return (
+                    <ManageAvailabilityCalendar
+                      availability={availability}
+                      availabilityPlan={availabilityPlan}
+                      listingId={listingId}
+                    />
+                  );
+                })()}
               </div>
 
               <Button

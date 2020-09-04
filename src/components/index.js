@@ -99,6 +99,7 @@ export { default as FieldTextInput } from './FieldTextInput/FieldTextInput';
 // Fields that use other Fields
 export { default as FieldBoolean } from './FieldBoolean/FieldBoolean';
 export { default as FieldCheckboxGroup } from './FieldCheckboxGroup/FieldCheckboxGroup';
+export { default as FieldCheckboxGroupMappingLabel } from './FieldCheckboxGroup/FieldCheckboxGroupMappingLabel';
 export { default as FieldPhoneNumberInput } from './FieldPhoneNumberInput/FieldPhoneNumberInput';
 // Fields and inputs using old naming pattern
 export { default as LocationAutocompleteInput, LocationAutocompleteInputField } from './LocationAutocompleteInput/LocationAutocompleteInput';
@@ -164,7 +165,17 @@ export { default as EditListingLocationPanel } from './EditListingLocationPanel/
 export { default as EditListingPhotosPanel } from './EditListingPhotosPanel/EditListingPhotosPanel';
 export { default as EditListingPoliciesPanel } from './EditListingPoliciesPanel/EditListingPoliciesPanel';
 export { default as EditListingPricingPanel } from './EditListingPricingPanel/EditListingPricingPanel';
+
+export { default as EditTeacherListingGeneralPanel } from './EditTeacherListingGeneralPanel/EditTeacherListingGeneralPanel';
+export { default as EditTeacherListingAvailabilityPanel } from './EditTeacherListingAvailabilityPanel/EditTeacherListingAvailabilityPanel';
+export { default as EditTeacherListingLocationPanel } from './EditTeacherListingLocationPanel/EditTeacherListingLocationPanel';
+export { default as EditTeacherListingPricingPanel } from './EditTeacherListingPricingPanel/EditTeacherListingPricingPanel';
+export { default as EditTeacherListingPhotosPanel } from './EditTeacherListingPhotosPanel/EditTeacherListingPhotosPanel';
+
 export { default as EditListingWizard } from './EditListingWizard/EditListingWizard';
+export { default as EditTeacherListingWizard } from './EditListingWizard/EditTeacherListingWizard';
+export { default as FieldNumberInput } from './FieldNumberInput/FieldNumberInput';
+
 export { default as Footer } from './Footer/Footer';
 export { default as SectionHero } from './SectionHero/SectionHero';
 export { default as SectionHowItWorks } from './SectionHowItWorks/SectionHowItWorks';

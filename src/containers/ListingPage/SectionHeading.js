@@ -8,6 +8,7 @@ import css from './ListingPage.css';
 
 const SectionHeading = props => {
   const {
+    isTeacher,
     priceTitle,
     formattedPrice,
     richTitle,
@@ -21,7 +22,9 @@ const SectionHeading = props => {
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
 
-  const unitTranslationKey = isNightly
+  const unitTranslationKey = isTeacher
+    ? 'ListingPage.perHour'
+    : isNightly
     ? 'ListingPage.perNight'
     : isDaily
     ? 'ListingPage.perDay'

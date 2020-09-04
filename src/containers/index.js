@@ -3,10 +3,12 @@ export { default as AuthenticationPage } from './AuthenticationPage/Authenticati
 export { default as CheckoutPage } from './CheckoutPage/CheckoutPage';
 export { default as ContactDetailsPage } from './ContactDetailsPage/ContactDetailsPage';
 export { default as EditListingPage } from './EditListingPage/EditListingPage';
+export { default as EditTeacherListingPage } from './EditListingPage/EditTeacherListingPage';
 export { default as EmailVerificationPage } from './EmailVerificationPage/EmailVerificationPage';
 export { default as InboxPage } from './InboxPage/InboxPage';
 export { default as LandingPage } from './LandingPage/LandingPage';
 export { default as ListingPage } from './ListingPage/ListingPage';
+export { default as TeacherListingPage } from './ListingPage/TeacherListingPage';
 export { default as ManageListingsPage } from './ManageListingsPage/ManageListingsPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
 export { default as PasswordChangePage } from './PasswordChangePage/PasswordChangePage';

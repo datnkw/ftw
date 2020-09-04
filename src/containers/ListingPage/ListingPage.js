@@ -57,6 +57,9 @@ import SectionReviews from './SectionReviews';
 import SectionHostMaybe from './SectionHostMaybe';
 import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
+import SectionGender from './SectionGender';
+import SectionTeachingHour from './SectionTeachingHour';
+import SectionListingAttribute from './SectionListingAttribute';
 import css from './ListingPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -216,6 +219,12 @@ export class ListingPageComponent extends Component {
       ? LISTING_PAGE_PARAM_TYPE_DRAFT
       : LISTING_PAGE_PARAM_TYPE_EDIT;
     const listingTab = isDraftVariant ? 'photos' : 'description';
+
+    // const finalListingTab = publicData
+    //   ? publicData.isTeacher
+    //     ? 'general'
+    //     : listingTab
+    //   : listingTab;
 
     const isApproved =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_PENDING_APPROVAL;
@@ -381,6 +390,9 @@ export class ListingPageComponent extends Component {
 
     const amenityOptions = findOptionsForSelectFilter('amenities', filterConfig);
     const categoryOptions = findOptionsForSelectFilter('category', filterConfig);
+    const subjectOptions = findOptionsForSelectFilter('subjects', filterConfig);
+    const levelOptions = findOptionsForSelectFilter('levels', filterConfig);
+
     const category =
       publicData && publicData.category ? (
         <span>
@@ -411,6 +423,7 @@ export class ListingPageComponent extends Component {
           <LayoutWrapperMain>
             <div>
               <SectionImages
+                isTeacher={publicData && publicData.isTeacher}
                 title={title}
                 listing={currentListing}
                 isOwnListing={isOwnListing}
@@ -418,7 +431,7 @@ export class ListingPageComponent extends Component {
                   id: listingId.uuid,
                   slug: listingSlug,
                   type: listingType,
-                  tab: listingTab,
+                  tab: publicData && publicData.isTeacher ? 'general' : listingTab,
                 }}
                 imageCarouselOpen={this.state.imageCarouselOpen}
                 onImageCarouselClose={() => this.setState({ imageCarouselOpen: false })}
@@ -429,6 +442,7 @@ export class ListingPageComponent extends Component {
                 <SectionAvatar user={currentAuthor} params={params} />
                 <div className={css.mainContent}>
                   <SectionHeading
+                    isTeacher={publicData && publicData.isTeacher}
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
@@ -437,9 +451,33 @@ export class ListingPageComponent extends Component {
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
                   />
-                  <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={amenityOptions} publicData={publicData} />
-                  <SectionRulesMaybe publicData={publicData} />
+                  {(() => {
+                    if (publicData && publicData.isTeacher) {
+                      return (
+                        <div>
+                          <SectionGender publicData={publicData} />
+                          <SectionTeachingHour publicData={publicData} />
+                          <SectionListingAttribute
+                            publicData={publicData}
+                            type="subjects"
+                            options={subjectOptions}
+                          />
+                          <SectionListingAttribute
+                            publicData={publicData}
+                            type="levels"
+                            options={levelOptions}
+                          />
+                        </div>
+                      );
+                    }
+                    return (
+                      <div>
+                        <SectionDescriptionMaybe description={description} />
+                        <SectionFeaturesMaybe options={amenityOptions} publicData={publicData} />
+                        <SectionRulesMaybe publicData={publicData} />
+                      </div>
+                    );
+                  })()}
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
@@ -461,6 +499,7 @@ export class ListingPageComponent extends Component {
                   />
                 </div>
                 <BookingPanel
+                  isTeacher={publicData && publicData.isTeacher}
                   className={css.bookingPanel}
                   listing={currentListing}
                   isOwnListing={isOwnListing}

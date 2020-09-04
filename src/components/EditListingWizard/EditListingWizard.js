@@ -126,6 +126,7 @@ const tabsActive = (isNew, listing) => {
     const previousTabIndex = TABS.findIndex(t => t === tab) - 1;
     const isActive =
       previousTabIndex >= 0 ? !isNew || tabCompleted(TABS[previousTabIndex], listing) : true;
+
     return { ...acc, [tab]: isActive };
   }, {});
 };
@@ -481,6 +482,7 @@ EditListingWizard.defaultProps = {
   stripeAccountLinkError: null,
 };
 
+//check validate
 EditListingWizard.propTypes = {
   id: string.isRequired,
   className: string,

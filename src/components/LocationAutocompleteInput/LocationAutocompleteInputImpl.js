@@ -212,7 +212,8 @@ class LocationAutocompleteInputImpl extends Component {
     const hasFetchedPredictions = fetchedPredictions && fetchedPredictions.length > 0;
     const showDefaultPredictions = !search && !hasFetchedPredictions && useDefaultPredictions;
 
-    return showDefaultPredictions ? defaultPredictions : fetchedPredictions;
+    const result = showDefaultPredictions ? defaultPredictions : fetchedPredictions;
+    return result;
   }
 
   // Interpret input key event

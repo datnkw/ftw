@@ -63,7 +63,10 @@ const priceData = (price, intl) => {
 };
 
 const createListingURL = (routes, listing) => {
+  console.log('routes in createListingURL: ', routes);
+
   const id = listing.id.uuid;
+  const { isTeacher } = listing.attributes.publicData;
   const slug = createSlug(listing.attributes.title);
   const isPendingApproval = listing.attributes.state === LISTING_STATE_PENDING_APPROVAL;
   const isDraft = listing.attributes.state === LISTING_STATE_DRAFT;
@@ -82,6 +85,11 @@ const createListingURL = (routes, listing) => {
             slug,
             variant,
           },
+        }
+      : isTeacher
+      ? {
+          name: 'TeacherListingPage',
+          params: { id, slug },
         }
       : {
           name: 'ListingPage',
@@ -127,6 +135,7 @@ export const ManageListingCardComponent = props => {
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
+  const isTeacher = currentListing.attributes.publicData.isTeacher;
   const id = currentListing.id.uuid;
   const { title = '', price, state } = currentListing.attributes;
   const slug = createSlug(title);
@@ -159,7 +168,9 @@ export const ManageListingCardComponent = props => {
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
 
-  const unitTranslationKey = isNightly
+  const unitTranslationKey = isTeacher
+    ? 'ManageListingCard.perHour'
+    : isNightly
     ? 'ManageListingCard.perNight'
     : isDaily
     ? 'ManageListingCard.perDay'
@@ -330,8 +341,13 @@ export const ManageListingCardComponent = props => {
         <div className={css.manageLinks}>
           <NamedLink
             className={css.manageLink}
-            name="EditListingPage"
-            params={{ id, slug, type: editListingLinkType, tab: 'description' }}
+            name={isTeacher ? 'EditTeacherListingPage' : 'EditListingPage'}
+            params={{
+              id,
+              slug,
+              type: editListingLinkType,
+              tab: isTeacher ? 'general' : 'description',
+            }}
           >
             <FormattedMessage id="ManageListingCard.editListing" />
           </NamedLink>

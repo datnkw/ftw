@@ -1,0 +1,42 @@
+@import '../../marketplace.css';
+
+.root {
+  /* Dimensions */
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  flex-grow: 1;
+
+  @media (--viewportMedium) {
+    padding-top: 2px;
+  }
+}
+
+.error {
+  color: var(--failColor);
+}
+
+.seatNumberInput {
+  flex-shrink: 0;
+  margin-bottom: 40px;
+  /* width: 100%; */
+}
+
+.submitButton {
+  margin-top: auto;
+  width: 100%;
+
+  @media (--viewportLarge) {
+    display: inline-block;
+  }
+}
+
+.titleEditSeat {
+  font-size: 40px;
+}
+
+.titleEditSeat span {
+  color: #f04747;
+}

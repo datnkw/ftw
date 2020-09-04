@@ -5,6 +5,7 @@ import {
   CheckoutPage,
   ContactDetailsPage,
   EditListingPage,
+  EditTeacherListingPage,
   EmailVerificationPage,
   InboxPage,
   LandingPage,
@@ -23,6 +24,7 @@ import {
   StyleguidePage,
   TermsOfServicePage,
   TransactionPage,
+  TeacherListingPage,
 } from './containers';
 
 // routeConfiguration needs to initialize containers first
@@ -93,6 +95,34 @@ const routeConfiguration = () => {
       component: RedirectToLandingPage,
     },
     {
+      path: '/l/teacher/new',
+      name: 'NewTeacherListingPage',
+      auth: true,
+      component: () => {
+        return (
+          <NamedRedirect
+            name="EditTeacherListingPage"
+            params={{ slug: draftSlug, id: draftId, type: 'new', tab: 'general' }}
+          />
+        );
+      },
+    },
+    {
+      path: '/l/teacher/:slug/:id/:type/:tab',
+      name: 'EditTeacherListingPage',
+      auth: true,
+      component: props => {
+        return <EditTeacherListingPage {...props} />;
+      },
+      loadData: EditListingPage.loadData,
+    },
+    {
+      path: '/l/teacher/:slug/:id',
+      name: 'TeacherListingPage',
+      component: props => <TeacherListingPage {...props} />,
+      loadData: ListingPage.loadData,
+    },
+    {
       path: '/l/:slug/:id',
       name: 'ListingPage',
       component: props => <ListingPage {...props} />,
@@ -117,12 +147,14 @@ const routeConfiguration = () => {
       path: '/l/new',
       name: 'NewListingPage',
       auth: true,
-      component: () => (
-        <NamedRedirect
-          name="EditListingPage"
-          params={{ slug: draftSlug, id: draftId, type: 'new', tab: 'description' }}
-        />
-      ),
+      component: () => {
+        return (
+          <NamedRedirect
+            name="EditListingPage"
+            params={{ slug: draftSlug, id: draftId, type: 'new', tab: 'description' }}
+          />
+        );
+      },
     },
     {
       path: '/l/:slug/:id/:type/:tab',
@@ -144,7 +176,10 @@ const routeConfiguration = () => {
     {
       path: '/l/:id',
       name: 'ListingPageCanonical',
-      component: props => <ListingPage {...props} />,
+      component: props => {
+        console.log('props when routing: ', props);
+        return <ListingPage {...props} />;
+      },
       loadData: ListingPage.loadData,
     },
     {

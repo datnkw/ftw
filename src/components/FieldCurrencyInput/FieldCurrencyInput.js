@@ -31,6 +31,9 @@ const allowedInputProps = allProps => {
   // Strip away props that are not passed to input element (or are overwritten)
   // eslint-disable-next-line no-unused-vars
   const { currencyConfig, defaultValue, intl, input, meta, ...inputProps } = allProps;
+
+  console.log('input props in FieldCurrentcyInput: ', inputProps);
+
   return inputProps;
 };
 
@@ -153,6 +156,7 @@ class CurrencyInputComponent extends Component {
     try {
       const { currencyConfig, intl } = this.props;
       const targetValue = event.target.value.trim();
+      console.log('target: ', targetValue);
       const isEmptyString = targetValue === '';
       const valueOrZero = isEmptyString ? '0' : targetValue;
 
@@ -243,6 +247,8 @@ export const CurrencyInput = injectIntl(CurrencyInputComponent);
 const FieldCurrencyInputComponent = props => {
   const { rootClassName, className, id, label, input, meta, ...rest } = props;
 
+  console.log('prop price field: ', props);
+
   if (label && !id) {
     throw new Error('id required when a label is given');
   }
@@ -260,6 +266,8 @@ const FieldCurrencyInputComponent = props => {
 
   const inputProps = { className: inputClasses, id, input, ...rest };
   const classes = classNames(rootClassName, className);
+
+  console.log('meta in FieldCurrencyInput: ', meta);
   return (
     <div className={classes}>
       {label ? <label htmlFor={id}>{label}</label> : null}

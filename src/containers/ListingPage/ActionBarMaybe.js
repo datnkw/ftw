@@ -14,7 +14,8 @@ import EditIcon from './EditIcon';
 import css from './ListingPage.css';
 
 export const ActionBarMaybe = props => {
-  const { isOwnListing, listing, editParams } = props;
+  const { isOwnListing, listing, editParams, isTeacher } = props;
+
   const state = listing.attributes.state;
   const isPendingApproval = state === LISTING_STATE_PENDING_APPROVAL;
   const isClosed = state === LISTING_STATE_CLOSED;
@@ -42,7 +43,11 @@ export const ActionBarMaybe = props => {
         <p className={ownListingTextClasses}>
           <FormattedMessage id={ownListingTextTranslationId} />
         </p>
-        <NamedLink className={css.editListingLink} name="EditListingPage" params={editParams}>
+        <NamedLink
+          className={css.editListingLink}
+          name={isTeacher ? 'EditTeacherListingPage' : 'EditListingPage'}
+          params={editParams}
+        >
           <EditIcon className={css.editIcon} />
           <FormattedMessage id={message} />
         </NamedLink>
