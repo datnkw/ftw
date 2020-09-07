@@ -25,10 +25,7 @@ export const EditAllSeatFormComponent = props => (
         updateInProgress,
         fetchErrors,
         intl,
-        initialValues,
       } = formRenderProps;
-
-      console.log('initialValues: ', initialValues);
 
       const classes = classNames(css.root, className);
       const submitReady = (updated && pristine) || ready;

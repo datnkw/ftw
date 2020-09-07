@@ -280,7 +280,6 @@ class ManageAvailabilityCalendar extends Component {
 
   async onDayAvailabilityChange(date, seats, exceptions) {
     const { availabilityPlan, listingId } = this.props;
-    console.log('availabilityPlan: ', availabilityPlan);
     const { start, end } = dateStartAndEndInUTC(date);
 
     const planEntries = ensureDayAvailabilityPlan(availabilityPlan).entries;
