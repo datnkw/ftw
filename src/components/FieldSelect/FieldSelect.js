@@ -38,10 +38,10 @@ const FieldSelectComponent = props => {
     id,
     ...input,
     ...rest,
-    onChange: e => {
-      input.onChange(e);
-      onChangeCustomEvent && onChangeCustomEvent(e);
-    },
+    // onChange: e => {
+    //   input.onChange(e);
+    //   onChangeCustomEvent && onChangeCustomEvent(e);
+    // },
   };
   const classes = classNames(rootClassName || css.root, className);
   return (

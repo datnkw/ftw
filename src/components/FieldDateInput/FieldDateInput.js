@@ -12,6 +12,7 @@ import { ValidationError, FieldSelect } from '../../components';
 import { propTypes } from '../../util/types';
 import { injectIntl } from '../../util/reactIntl';
 import DateInput from './DateInput';
+import { OnChange } from 'react-final-form-listeners';
 import css from './FieldDateInput.css';
 
 const MAX_MOBILE_SCREEN_WIDTH = 768;
@@ -107,11 +108,11 @@ class FieldDateInputComponent extends Component {
             name="FromHour"
             id="from"
             label={intl.formatMessage({ id: 'FieldDateInput.fromLabel' })}
-            onChangeCustomEvent={event => {
-              this.setState({
-                timeBegin: event.target.value,
-              });
-            }}
+            // onChangeCustomEvent={event => {
+            //   this.setState({
+            //     timeBegin: event.target.value,
+            //   });
+            // }}
           >
             <option disabled value="">
               {intl.formatMessage({ id: 'FieldDateInput.selectHour' })}
@@ -122,6 +123,13 @@ class FieldDateInputComponent extends Component {
               </option>
             ))}
           </FieldSelect>
+          <OnChange name="FromHour">
+            {(value, previous) => {
+              this.setState({
+                timeBegin: value,
+              });
+            }}
+          </OnChange>
           <FieldSelect
             name="ToHour"
             id="to"
