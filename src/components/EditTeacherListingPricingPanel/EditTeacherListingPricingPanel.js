@@ -47,7 +47,6 @@ const EditTeacherListingPricingPanel = props => {
     <EditTeacherListingPricingForm
       className={css.form}
       initialValues={{ price }}
-      // initialValues={{ dataToTest }}
       onSubmit={onSubmit}
       onChange={onChange}
       saveActionMsg={submitButtonText}

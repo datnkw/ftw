@@ -157,7 +157,6 @@ class FieldNumberInputComponent extends Component {
     return (
       <div className={classes}>
         {label ? <label htmlFor={id}>{label}</label> : null}
-        {/* {isTextarea ? <ExpandingTextarea {...inputProps} /> : <input {...inputProps} />} */}
         <NumberInput {...inputProps} />
         <ValidationError fieldMeta={fieldMeta} />
       </div>

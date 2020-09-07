@@ -78,7 +78,6 @@ class EditTeacherListingLocationPanel extends Component {
         <EditListingLocationForm
           className={css.form}
           initialValues={this.state.initialValues}
-          // initialValues={dataToTest}
           onSubmit={values => {
             const { building = '', location } = values;
             const {

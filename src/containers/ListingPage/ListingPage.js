@@ -220,12 +220,6 @@ export class ListingPageComponent extends Component {
       : LISTING_PAGE_PARAM_TYPE_EDIT;
     const listingTab = isDraftVariant ? 'photos' : 'description';
 
-    // const finalListingTab = publicData
-    //   ? publicData.isTeacher
-    //     ? 'general'
-    //     : listingTab
-    //   : listingTab;
-
     const isApproved =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_PENDING_APPROVAL;
 

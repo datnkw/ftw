@@ -242,7 +242,7 @@ const EditTeacherListingWizardTab = props => {
       );
     }
     default:
-      return <div>null</div>;
+      return null;
   }
 };
 
