@@ -1,7 +1,9 @@
 import React from 'react';
 import { shape, string } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { FaMale, FaFemale } from 'react-icons/fa';
+//import { FaMale, FaFemale } from 'react-icons/fa';
+import { ReactComponent as MaleIcon } from '../../logos/man.svg';
+import { ReactComponent as FemaleIcon } from '../../logos/woman.svg';
 
 import css from './ListingPage.css';
 
@@ -18,12 +20,12 @@ const SectionGender = props => {
       <p className={css.gender}>
         {gender === 'male' ? (
           <span>
-            <FaMale />
+            <MaleIcon />
             <FormattedMessage id="ListingPage.maleGender" />
           </span>
         ) : (
           <span>
-            <FaFemale />
+            <FemaleIcon />
             <FormattedMessage id="ListingPage.femaleGender" />
           </span>
         )}
