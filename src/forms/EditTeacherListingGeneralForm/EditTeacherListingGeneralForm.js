@@ -21,7 +21,6 @@ const TITLE_MAX_LENGTH = 60;
 class EditTeacherListingGeneralFormComponent extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props in EditTeacherListing: ', props);
     this.state = { selectedSubjects: [] };
   }
 
@@ -34,8 +33,6 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
   onSelectSubject = event => {
     const { selectedSubjects } = this.state;
     const subject = event.target.value;
-
-    console.log('selectedSubjects: ', selectedSubjects);
 
     if (!subject) {
       return;
@@ -108,10 +105,7 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
             updateInProgress,
             fetchErrors,
             filterConfig,
-            initialValues,
           } = formRenderProps;
-
-          console.log('selectableLevel: ', selectableLevel);
 
           const titleMessage = intl.formatMessage({ id: 'EditTeacherListingGeneralForm.title' });
           const titlePlaceholderMessage = intl.formatMessage({
