@@ -167,7 +167,6 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
   return sdk.listings
     .query(params)
     .then(response => {
-      console.log('response: ', response);
       dispatch(addMarketplaceEntities(response));
       dispatch(searchListingsSuccess(response));
       return response;

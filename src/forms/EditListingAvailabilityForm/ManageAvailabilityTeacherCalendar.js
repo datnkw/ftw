@@ -414,8 +414,6 @@ class ManageAvailabilityCalendar extends Component {
     const monthName = currentMonth.format('MMMM');
     const classes = classNames(rootClassName || css.root, className);
 
-    console.log('availabilityPlan: ', availabilityPlan);
-
     return (
       <div>
         <div

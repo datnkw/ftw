@@ -30,10 +30,6 @@ const FieldCheckboxRenderer = props => {
     onSelectSubject,
   } = props;
 
-  console.log('props in FieldCheckboxRenderer: ', props);
-
-  // console.log('props FieldCheckboxRenderer: ', props);
-
   const classes = classNames(rootClassName || css.root, className, {
     [css.hidden]: !options.length,
   });
@@ -50,8 +46,6 @@ const FieldCheckboxRenderer = props => {
               key={fieldId}
               className={css.item}
               onClick={e => {
-                // input.onClick(e);
-                // console.log('e target: ', e.target);
                 onSelectSubject && onSelectSubject(e);
               }}
             >
@@ -60,7 +54,6 @@ const FieldCheckboxRenderer = props => {
                 name={fields.name}
                 label={intl.formatMessage({ id: option.label })}
                 value={option.key}
-                // onChangeSelect={onSelectSubject}
               />
             </li>
           );
@@ -93,7 +86,6 @@ FieldCheckboxRenderer.propTypes = {
 };
 
 const FieldCheckboxGroup = props => {
-  console.log('props: ', props);
   return <FieldArray component={FieldCheckboxRenderer} {...props} />;
 };
 

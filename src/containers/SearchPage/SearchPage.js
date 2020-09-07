@@ -280,7 +280,6 @@ const mapStateToProps = state => {
     state,
     unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
   );
-  //console.log('pageListings: ', pageListings);
   return {
     listings: pageListings,
     mapListings,
