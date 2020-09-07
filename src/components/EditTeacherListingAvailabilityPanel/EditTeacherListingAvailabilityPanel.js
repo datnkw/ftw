@@ -77,7 +77,6 @@ class EditTeacherListingAvailabilityPanel extends Component {
             this.setState({
               updateAllSeatInProgess: true,
             });
-            console.log('value: ', values);
             //alert('onSubmit editAllSeat: ', values.allSeat);
             onSubmitCustomAvailabilityPlan({
               availabilityPlan: customAvailabilityPlan(parseInt(values.allSeat)),

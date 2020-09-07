@@ -38,7 +38,6 @@ export const TABS = [
   GENERAL,
   TEACHER_LOCATION,
   TEACHER_PRICING,
-  //TEACHER_AVAILABILITY,
   TEACHER_PHOTOS,
   ...availabilityMaybe,
 ];
@@ -359,7 +358,7 @@ class EditTeacherListingWizard extends Component {
 
     // Redirect from success URL to basic path for StripePayoutPage
     if (returnedNormallyFromStripe && stripeConnected && !requirementsMissing) {
-      return <NamedRedirect name="EditListingPage" params={pathParams} />;
+      return <NamedRedirect name="EditTeacherListingPage" params={pathParams} />;
     }
 
     return (

@@ -30,6 +30,8 @@ const FieldCheckboxRenderer = props => {
     onSelectSubject,
   } = props;
 
+  console.log('props in FieldCheckboxRenderer: ', props);
+
   // console.log('props FieldCheckboxRenderer: ', props);
 
   const classes = classNames(rootClassName || css.root, className, {
@@ -90,7 +92,10 @@ FieldCheckboxRenderer.propTypes = {
   twoColumns: bool,
 };
 
-const FieldCheckboxGroup = props => <FieldArray component={FieldCheckboxRenderer} {...props} />;
+const FieldCheckboxGroup = props => {
+  console.log('props: ', props);
+  return <FieldArray component={FieldCheckboxRenderer} {...props} />;
+};
 
 // Name and component are required fields for FieldArray.
 // Component-prop we define in this file, name needs to be passed in

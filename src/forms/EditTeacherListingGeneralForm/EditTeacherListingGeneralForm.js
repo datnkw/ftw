@@ -21,29 +21,42 @@ const TITLE_MAX_LENGTH = 60;
 class EditTeacherListingGeneralFormComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { subjectSelected: [] };
+    console.log('props in EditTeacherListing: ', props);
+    this.state = { selectedSubjects: [] };
+  }
+
+  componentDidMount() {
+    this.setState({
+      selectedSubjects: this.props.initialValues.subjects || [],
+    });
   }
 
   onSelectSubject = event => {
-    const { subjectSelected } = this.state;
+    const { selectedSubjects } = this.state;
     const subject = event.target.value;
 
-    const index = subjectSelected.indexOf(subject);
+    console.log('selectedSubjects: ', selectedSubjects);
+
+    if (!subject) {
+      return;
+    }
+
+    const index = selectedSubjects.indexOf(subject);
     if (index !== -1) {
-      subjectSelected.splice(index, 1);
+      selectedSubjects.splice(index, 1);
     } else {
-      subjectSelected.push(subject);
+      selectedSubjects.push(subject);
     }
 
     this.setState({
-      subjectSelected: [...subjectSelected],
+      selectedSubjects: [...selectedSubjects],
     });
   };
 
   getSelectableLevel = input => {
     let result = [];
 
-    const subjectSelected = [...(input || [])];
+    const selectedSubjects = [...(input || [])];
 
     const getLevelsArray = subject => {
       for (let i = 0; i < configLevel.length; i++) {
@@ -55,8 +68,8 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
       return [];
     };
 
-    for (let i = 0; i < subjectSelected.length; i++) {
-      result = [...result, ...getLevelsArray(subjectSelected[i])];
+    for (let i = 0; i < selectedSubjects.length; i++) {
+      result = [...result, ...getLevelsArray(selectedSubjects[i])];
     }
 
     result = _.uniqBy(result, 'key');
@@ -65,12 +78,18 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
   };
 
   render() {
+    const setSelectedSubject = selectedSubjects => {
+      this.setState({
+        selectedSubjects,
+      });
+    };
     return (
       <FinalForm
         {...this.props}
         mutators={{ ...arrayMutators }}
-        selectableLevel={this.getSelectableLevel(this.state.subjectSelected)}
+        selectableLevel={this.getSelectableLevel(this.state.selectedSubjects)}
         onSelectSubject={this.onSelectSubject}
+        //initialValues={this}
         render={formRenderProps => {
           const {
             selectableLevel,
@@ -89,7 +108,10 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
             updateInProgress,
             fetchErrors,
             filterConfig,
+            initialValues,
           } = formRenderProps;
+
+          console.log('selectableLevel: ', selectableLevel);
 
           const titleMessage = intl.formatMessage({ id: 'EditTeacherListingGeneralForm.title' });
           const titlePlaceholderMessage = intl.formatMessage({

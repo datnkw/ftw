@@ -112,8 +112,6 @@ const EditTeacherListingWizardTab = props => {
       typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
     const updateValuesWithImages = { ...otherValues, ...imageProperty };
 
-    console.log('updateValues: ', updateValues);
-
     if (isNewListingFlow) {
       const onUpsertListingDraft = isNewURI
         ? (tab, updateValues) => onCreateListingDraft(updateValues)

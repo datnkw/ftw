@@ -4,10 +4,13 @@ import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
-import { propTypes } from '../../util/types';
+import { propTypes, DAYS_OF_WEEK } from '../../util/types';
 import { Form, Button, Modal } from '../../components';
 import { EditSeatForm } from '../';
+import moment from 'moment';
 import { monthIdStringInUTC } from '../../util/dates';
+import { ensureDayAvailabilityPlan, ensureAvailabilityException } from '../../util/data';
+import { isSameDay } from 'react-dates';
 import ManageAvailabilityCalendar from './ManageAvailabilityCalendar';
 import ManageAvailabilityTeacherCalendar from './ManageAvailabilityTeacherCalendar';
 import css from './EditListingAvailabilityForm.css';
@@ -35,10 +38,85 @@ export class EditListingAvailabilityFormComponent extends Component {
       onSetUpdateInProgress,
     } = props;
 
+    const dateStartAndEndInUTC = date => {
+      const start = moment(date)
+        .utc()
+        .startOf('day')
+        .toDate();
+      const end = moment(date)
+        .utc()
+        .add(1, 'days')
+        .startOf('day')
+        .toDate();
+      return { start, end };
+    };
+
+    const makeDraftException = (exceptions, start, end, seats) => {
+      const draft = ensureAvailabilityException({ attributes: { start, end, seats } });
+      return { availabilityException: draft };
+    };
+
+    const findException = (exceptions, day) => {
+      return exceptions.find(exception => {
+        const availabilityException = ensureAvailabilityException(exception.availabilityException);
+        const start = availabilityException.attributes.start;
+        const dayInUTC = day.clone().utc();
+        return isSameDay(moment(start).utc(), dayInUTC);
+      });
+    };
+
     const calendar = availability.calendar;
     // This component is for day/night based processes. If time-based process is used,
     // you might want to deal with local dates using monthIdString instead of monthIdStringInUTC.
     const { exceptions = [] } = calendar[monthIdStringInUTC(date)] || {};
+
+    const onDayAvailabilityChange = async (date, seats, exceptions) => {
+      const { availabilityPlan, listingId } = this.props;
+      const { start, end } = dateStartAndEndInUTC(date);
+
+      const planEntries = ensureDayAvailabilityPlan(availabilityPlan).entries;
+      const seatsFromPlan = planEntries.find(
+        weekDayEntry => weekDayEntry.dayOfWeek === DAYS_OF_WEEK[date.isoWeekday() - 1]
+      ).seats;
+
+      const currentException = findException(exceptions, date);
+      const draftException = makeDraftException(exceptions, start, end, seatsFromPlan);
+      const exception = currentException || draftException;
+      const hasAvailabilityException =
+        currentException && currentException.availabilityException.id;
+
+      if (hasAvailabilityException) {
+        const id = currentException.availabilityException.id;
+        const isResetToPlanSeats = seatsFromPlan === seats;
+
+        if (isResetToPlanSeats) {
+          // Delete the exception, if the exception is redundant
+          // (it has the same content as what user has in the plan).
+          await this.props.availability.onDeleteAvailabilityException({
+            id,
+            currentException: exception,
+            seats: seatsFromPlan,
+          });
+        } else {
+          // If availability exception exists, delete it first and then create a new one.
+          // NOTE: currently, API does not support update (only deleting and creating)
+          await this.props.availability
+            .onDeleteAvailabilityException({
+              id,
+              currentException: exception,
+              seats: seatsFromPlan,
+            })
+            .then(r => {
+              const params = { listingId, start, end, seats, currentException: exception };
+              this.props.availability.onCreateAvailabilityException(params);
+            });
+        }
+      } else {
+        // If there is no existing AvailabilityExceptions, just create a new one
+        const params = { listingId, start, end, seats, currentException: exception };
+        await this.props.availability.onCreateAvailabilityException(params);
+      }
+    };
 
     return (
       <Modal
@@ -57,7 +135,7 @@ export class EditListingAvailabilityFormComponent extends Component {
           updateInProgress={updateInProgress}
           onSubmit={values => {
             onSetUpdateInProgress(true);
-            this.onDayAvailabilityChange(date, parseInt(values.seat), exceptions).then(() => {
+            onDayAvailabilityChange(date, parseInt(values.seat), exceptions).then(() => {
               onSetUpdateInProgress(false);
               onClose();
             });
