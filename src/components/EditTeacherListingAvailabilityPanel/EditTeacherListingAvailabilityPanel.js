@@ -58,6 +58,7 @@ class EditTeacherListingAvailabilityPanel extends Component {
 
     const availabilityPlan =
       currentListing.attributes.availabilityPlan || customAvailabilityPlan(0);
+    console.log('availabilityPlan seat: ', availabilityPlan.entries[0].seats);
     return (
       <div className={classes}>
         <h1 className={css.title}>
@@ -73,6 +74,9 @@ class EditTeacherListingAvailabilityPanel extends Component {
         <EditAllSeatForm
           saveActionMsg={intl.formatMessage({ id: 'EditAllSeatForm.submitButtonText' })}
           updateInProgress={this.state.updateAllSeatInProgess}
+          initialValues={{
+            allSeat: availabilityPlan.entries[0].seats,
+          }}
           onSubmit={values => {
             this.setState({
               updateAllSeatInProgess: true,
