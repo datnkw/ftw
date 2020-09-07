@@ -20,7 +20,7 @@ import { monthIdString, monthIdStringInUTC } from '../../util/dates';
 import { IconArrowHead, IconSpinner } from '../../components';
 
 import css from './ManageAvailabilityCalendar.css';
-import { FaChalkboardTeacher } from 'react-icons/fa';
+import { ReactComponent as Logo } from '../../logos/chalkboard_teacher.svg';
 
 // Constants
 
@@ -194,7 +194,7 @@ const renderDayContents = (calendar, availabilityPlan, toggleModal) => date => {
       {!isOutsideRange ? (
         <div className={css.btnSeatWrapper}>
           <button onClick={setSeatSingleDate}>
-            <FaChalkboardTeacher />
+            <Logo />
           </button>
         </div>
       ) : null}
