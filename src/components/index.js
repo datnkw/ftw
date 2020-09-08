@@ -90,6 +90,7 @@ export { default as FieldBirthdayInput } from './FieldBirthdayInput/FieldBirthda
 export { default as FieldCheckbox } from './FieldCheckbox/FieldCheckbox';
 export { default as FieldCurrencyInput } from './FieldCurrencyInput/FieldCurrencyInput';
 export { default as FieldDateInput } from './FieldDateInput/FieldDateInput';
+export { default as FieldTimeInput } from './FieldTimeInput/FieldTimeInput';
 export { default as FieldDateRangeController } from './FieldDateRangeController/FieldDateRangeController';
 export { default as FieldDateRangeInput } from './FieldDateRangeInput/FieldDateRangeInput';
 export { default as FieldRadioButton } from './FieldRadioButton/FieldRadioButton';

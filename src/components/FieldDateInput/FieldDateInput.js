@@ -8,11 +8,10 @@ import React, { Component } from 'react';
 import { bool, object, string, arrayOf } from 'prop-types';
 import { Field } from 'react-final-form';
 import classNames from 'classnames';
-import { ValidationError, FieldSelect } from '../../components';
+import { ValidationError } from '../../components';
 import { propTypes } from '../../util/types';
 import { injectIntl } from '../../util/reactIntl';
 import DateInput from './DateInput';
-import { OnChange } from 'react-final-form-listeners';
 import css from './FieldDateInput.css';
 
 const MAX_MOBILE_SCREEN_WIDTH = 768;
@@ -103,43 +102,6 @@ class FieldDateInputComponent extends Component {
         ) : null}
         <DateInput className={JSON.stringify(inputClasses)} {...inputProps} />
         <ValidationError className={errorClasses} fieldMeta={meta} />
-        <div className={css.hourSelectorWrapper}>
-          <FieldSelect
-            name="FromHour"
-            id="from"
-            label={intl.formatMessage({ id: 'FieldDateInput.fromLabel' })}
-          >
-            <option disabled value="">
-              {intl.formatMessage({ id: 'FieldDateInput.selectHour' })}
-            </option>
-            {this.generateHourOptions(true).map(c => (
-              <option key={c.key} value={c.key}>
-                {c.label}
-              </option>
-            ))}
-          </FieldSelect>
-          <OnChange name="FromHour">
-            {value => {
-              this.setState({
-                timeBegin: value,
-              });
-            }}
-          </OnChange>
-          <FieldSelect
-            name="ToHour"
-            id="to"
-            label={intl.formatMessage({ id: 'FieldDateInput.toLabel' })}
-          >
-            <option disabled value="">
-              {intl.formatMessage({ id: 'FieldDateInput.selectHour' })}
-            </option>
-            {this.generateHourOptions(false, this.state.timeBegin).map(c => (
-              <option key={c.key} value={c.key}>
-                {c.label}
-              </option>
-            ))}
-          </FieldSelect>
-        </div>
       </div>
     );
   }
