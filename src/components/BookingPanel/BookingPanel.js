@@ -69,7 +69,7 @@ const BookingPanel = props => {
     lineItems,
     fetchLineItemsInProgress,
     fetchLineItemsError,
-    isTeacher,
+    listingType,
   } = props;
 
   const price = listing.attributes.price;
@@ -121,7 +121,7 @@ const BookingPanel = props => {
         </div>
         {showBookingDatesForm ? (
           <BookingDatesForm
-            isTeacher={isTeacher}
+            listingType={listingType}
             className={css.bookingForm}
             formId="BookingPanel"
             submitButtonWrapperClassName={css.bookingDatesSubmitButtonWrapper}

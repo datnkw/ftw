@@ -8,7 +8,7 @@ import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ListingLink } from '../../components';
 import { EditTeacherListingGeneralForm } from '../../forms';
 import config from '../../config';
-
+import { TEACHER } from '../../util/listingTypes';
 import css from '../EditListingDescriptionPanel/EditListingDescriptionPanel.css';
 
 const EditTeacherListingGeneralPanel = props => {
@@ -53,14 +53,14 @@ const EditTeacherListingGeneralPanel = props => {
           gender: publicData.gender,
           subjects: publicData.subjects,
           levels: publicData.levels,
-          isTeacher: publicData.isTeacher,
+          listingType: publicData.listingType,
         }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
           const { title, teachingHour, gender, subjects, levels } = values;
           const updateValues = {
             title: title.trim(),
-            publicData: { teachingHour, gender, subjects, levels, isTeacher: true },
+            publicData: { teachingHour, gender, subjects, levels, listingType: TEACHER },
           };
 
           onSubmit(updateValues);

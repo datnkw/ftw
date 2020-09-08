@@ -10,7 +10,7 @@ import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { NamedLink, ResponsiveImage } from '../../components';
-
+import { TEACHER } from '../../util/listingTypes';
 import css from './ListingCard.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS = 10;
@@ -46,7 +46,7 @@ export const ListingCardComponent = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const publicData = currentListing.attributes.publicData;
-  const isTeacher = publicData && publicData.isTeacher ? publicData.isTeacher : false;
+  const listingType = publicData && publicData.listingType ? publicData.listingType : null;
   const id = currentListing.id.uuid;
   const { title = '', price } = currentListing.attributes;
   const slug = createSlug(title);
@@ -61,18 +61,19 @@ export const ListingCardComponent = props => {
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
 
-  const unitTranslationKey = isTeacher
-    ? 'ListingCard.perHour'
-    : isNightly
-    ? 'ListingCard.perNight'
-    : isDaily
-    ? 'ListingCard.perDay'
-    : 'ListingCard.perUnit';
+  const unitTranslationKey =
+    listingType === TEACHER
+      ? 'ListingCard.perHour'
+      : isNightly
+      ? 'ListingCard.perNight'
+      : isDaily
+      ? 'ListingCard.perDay'
+      : 'ListingCard.perUnit';
 
   return (
     <NamedLink
       className={classes}
-      name={isTeacher ? 'TeacherListingPage' : 'ListingPage'}
+      name={listingType === TEACHER ? 'TeacherListingPage' : 'ListingPage'}
       params={{ id, slug }}
     >
       <div

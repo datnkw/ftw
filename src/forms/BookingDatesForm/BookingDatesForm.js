@@ -17,7 +17,7 @@ import {
   FieldDateInput,
 } from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
-
+import { TEACHER } from '../../util/listingTypes';
 import css from './BookingDatesForm.css';
 
 const identity = v => v;
@@ -74,7 +74,7 @@ export class BookingDatesFormComponent extends Component {
   }
 
   render() {
-    const { rootClassName, className, price: unitPrice, isTeacher, ...rest } = this.props;
+    const { rootClassName, className, price: unitPrice, listingType, ...rest } = this.props;
 
     const classes = classNames(rootClassName || css.root, className);
 
@@ -208,7 +208,7 @@ export class BookingDatesFormComponent extends Component {
                   this.handleOnChange(values);
                 }}
               />
-              {isTeacher ? (
+              {listingType === TEACHER ? (
                 <FieldDateInput
                   name="test date input"
                   placeholderText={intl.formatMessage({

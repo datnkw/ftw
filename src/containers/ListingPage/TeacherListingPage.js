@@ -41,7 +41,7 @@ import {
   BookingPanel,
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
-
+import { TEACHER } from '../../util/listingTypes';
 import {
   sendEnquiry,
   loadData,
@@ -212,7 +212,7 @@ export class TeacherListingPageComponent extends Component {
     const listingSlug = rawParams.slug || createSlug(currentListing.attributes.title || '');
     const params = { slug: listingSlug, ...rawParams };
 
-    const listingType = isDraftVariant
+    const listingTypeProp = isDraftVariant
       ? LISTING_PAGE_PARAM_TYPE_DRAFT
       : LISTING_PAGE_PARAM_TYPE_EDIT;
     const listingTab = isDraftVariant ? 'photos' : 'description';
@@ -391,6 +391,8 @@ export class TeacherListingPageComponent extends Component {
         </span>
       ) : null;
 
+    const listingType = publicData ? publicData.listingType : '';
+
     return (
       <Page
         title={schemaTitle}
@@ -413,15 +415,15 @@ export class TeacherListingPageComponent extends Component {
           <LayoutWrapperMain>
             <div>
               <SectionImages
-                isTeacher={publicData && publicData.isTeacher}
+                listingType={publicData && publicData.listingType}
                 title={title}
                 listing={currentListing}
                 isOwnListing={isOwnListing}
                 editParams={{
                   id: listingId.uuid,
                   slug: listingSlug,
-                  type: listingType,
-                  tab: publicData && publicData.isTeacher ? 'general' : listingTab,
+                  type: listingTypeProp,
+                  tab: listingType === TEACHER ? 'general' : listingTab,
                 }}
                 imageCarouselOpen={this.state.imageCarouselOpen}
                 onImageCarouselClose={() => this.setState({ imageCarouselOpen: false })}
@@ -432,7 +434,7 @@ export class TeacherListingPageComponent extends Component {
                 <SectionAvatar user={currentAuthor} params={params} />
                 <div className={css.mainContent}>
                   <SectionHeading
-                    isTeacher={publicData && publicData.isTeacher}
+                    listingType={listingType}
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
@@ -474,7 +476,7 @@ export class TeacherListingPageComponent extends Component {
                   />
                 </div>
                 <BookingPanel
-                  isTeacher={publicData && publicData.isTeacher}
+                  listingType={listingType}
                   className={css.bookingPanel}
                   listing={currentListing}
                   isOwnListing={isOwnListing}

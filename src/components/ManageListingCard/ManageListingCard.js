@@ -34,7 +34,7 @@ import {
   IconSpinner,
   ResponsiveImage,
 } from '../../components';
-
+import { TEACHER } from '../../util/listingTypes';
 import MenuIcon from './MenuIcon';
 import Overlay from './Overlay';
 import css from './ManageListingCard.css';
@@ -64,7 +64,7 @@ const priceData = (price, intl) => {
 
 const createListingURL = (routes, listing) => {
   const id = listing.id.uuid;
-  const { isTeacher } = listing.attributes.publicData;
+  const { listingType } = listing.attributes.publicData;
   const slug = createSlug(listing.attributes.title);
   const isPendingApproval = listing.attributes.state === LISTING_STATE_PENDING_APPROVAL;
   const isDraft = listing.attributes.state === LISTING_STATE_DRAFT;
@@ -84,7 +84,7 @@ const createListingURL = (routes, listing) => {
             variant,
           },
         }
-      : isTeacher
+      : TEACHER
       ? {
           name: 'TeacherListingPage',
           params: { id, slug },
@@ -133,7 +133,7 @@ export const ManageListingCardComponent = props => {
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
-  const isTeacher = currentListing.attributes.publicData.isTeacher;
+  const { listingType } = currentListing.attributes.publicData;
   const id = currentListing.id.uuid;
   const { title = '', price, state } = currentListing.attributes;
   const slug = createSlug(title);
@@ -166,13 +166,14 @@ export const ManageListingCardComponent = props => {
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
 
-  const unitTranslationKey = isTeacher
-    ? 'ManageListingCard.perHour'
-    : isNightly
-    ? 'ManageListingCard.perNight'
-    : isDaily
-    ? 'ManageListingCard.perDay'
-    : 'ManageListingCard.perUnit';
+  const unitTranslationKey =
+    listingType === TEACHER
+      ? 'ManageListingCard.perHour'
+      : isNightly
+      ? 'ManageListingCard.perNight'
+      : isDaily
+      ? 'ManageListingCard.perDay'
+      : 'ManageListingCard.perUnit';
 
   return (
     <div className={classes}>
@@ -339,12 +340,12 @@ export const ManageListingCardComponent = props => {
         <div className={css.manageLinks}>
           <NamedLink
             className={css.manageLink}
-            name={isTeacher ? 'EditTeacherListingPage' : 'EditListingPage'}
+            name={listingType === TEACHER ? 'EditTeacherListingPage' : 'EditListingPage'}
             params={{
               id,
               slug,
               type: editListingLinkType,
-              tab: isTeacher ? 'general' : 'description',
+              tab: listingType === TEACHER ? 'general' : 'description',
             }}
           >
             <FormattedMessage id="ManageListingCard.editListing" />

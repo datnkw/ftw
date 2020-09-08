@@ -7,7 +7,7 @@ import css from './ListingPage.css';
 
 const SectionImages = props => {
   const {
-    isTeacher,
+    listingType,
     title,
     listing,
     isOwnListing,
@@ -26,7 +26,7 @@ const SectionImages = props => {
   const actionBar = listing.id ? (
     <div onClick={e => e.stopPropagation()}>
       <ActionBarMaybe
-        isTeacher={isTeacher}
+        listingType={listingType}
         isOwnListing={isOwnListing}
         listing={listing}
         editParams={editParams}

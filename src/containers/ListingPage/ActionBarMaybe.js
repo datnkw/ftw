@@ -10,11 +10,11 @@ import {
 } from '../../util/types';
 import { NamedLink } from '../../components';
 import EditIcon from './EditIcon';
-
+import { TEACHER } from '../../util/listingTypes';
 import css from './ListingPage.css';
 
 export const ActionBarMaybe = props => {
-  const { isOwnListing, listing, editParams, isTeacher } = props;
+  const { isOwnListing, listing, editParams, listingType } = props;
 
   const state = listing.attributes.state;
   const isPendingApproval = state === LISTING_STATE_PENDING_APPROVAL;
@@ -45,7 +45,7 @@ export const ActionBarMaybe = props => {
         </p>
         <NamedLink
           className={css.editListingLink}
-          name={isTeacher ? 'EditTeacherListingPage' : 'EditListingPage'}
+          name={listingType === TEACHER ? 'EditTeacherListingPage' : 'EditListingPage'}
           params={editParams}
         >
           <EditIcon className={css.editIcon} />
