@@ -13,7 +13,7 @@ import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 import config from '../../config';
 import configLevel from '../../config-level';
 import _ from 'lodash';
-
+import { OnBlur, OnChange } from 'react-final-form-listeners';
 import css from '../EditListingDescriptionForm/EditListingDescriptionForm.css';
 
 const TITLE_MAX_LENGTH = 60;
@@ -30,23 +30,9 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
     });
   }
 
-  onSelectSubject = event => {
-    const { selectedSubjects } = this.state;
-    const subject = event.target.value;
-
-    if (!subject) {
-      return;
-    }
-
-    const index = selectedSubjects.indexOf(subject);
-    if (index !== -1) {
-      selectedSubjects.splice(index, 1);
-    } else {
-      selectedSubjects.push(subject);
-    }
-
+  onSelectSubject = subject => {
     this.setState({
-      selectedSubjects: [...selectedSubjects],
+      selectedSubjects: subject,
     });
   };
 
@@ -205,13 +191,20 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
 
               <FieldCheckboxGroup
                 className={css.features}
-                id={'subjects'}
-                name={'subjects'}
+                id="subjects"
+                name="subjects"
                 label={subjectSelectLabel}
                 options={subjectOptions}
-                onSelectSubject={onSelectSubject}
+                //onSelectSubject={onSelectSubject}
                 isNeedMapping={true}
               />
+
+              <OnChange name="subjects">
+                {value => {
+                  console.log('value: ', value);
+                  onSelectSubject(value);
+                }}
+              </OnChange>
 
               <FieldCheckboxGroup
                 className={css.features}
