@@ -15,7 +15,11 @@ const SectionTeachingHour = props => {
         <FormattedMessage id="ListingPage.teachingHourTitle" />
       </h2>
       <p className={css.teachingHour}>
-        <FormattedMessage id="ListingPage.teachingHourFulltime" />
+        {teachingHour === 'fulltime' ? (
+          <FormattedMessage id="ListingPage.teachingHourFulltime" />
+        ) : (
+          <FormattedMessage id="ListingPage.teachingHourParttime" />
+        )}
       </p>
     </div>
   );
