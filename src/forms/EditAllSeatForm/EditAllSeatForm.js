@@ -56,8 +56,8 @@ export const EditAllSeatFormComponent = props => (
             name="allSeat"
             className={css.seatNumberInput}
             type="text"
-            label="set seat for all date"
-            placeholder="input number of seat"
+            label={intl.formatMessage({ id: 'EditAllSeatForm.labelFieldNumberInput' })}
+            placeholder={intl.formatMessage({ id: 'EditAllSeatForm.placeholderFieldNumberInput' })}
             maxLength="10"
             validate={inputRequired}
           />

@@ -108,11 +108,6 @@ class FieldDateInputComponent extends Component {
             name="FromHour"
             id="from"
             label={intl.formatMessage({ id: 'FieldDateInput.fromLabel' })}
-            // onChangeCustomEvent={event => {
-            //   this.setState({
-            //     timeBegin: event.target.value,
-            //   });
-            // }}
           >
             <option disabled value="">
               {intl.formatMessage({ id: 'FieldDateInput.selectHour' })}
@@ -124,7 +119,7 @@ class FieldDateInputComponent extends Component {
             ))}
           </FieldSelect>
           <OnChange name="FromHour">
-            {(value, previous) => {
+            {value => {
               this.setState({
                 timeBegin: value,
               });
