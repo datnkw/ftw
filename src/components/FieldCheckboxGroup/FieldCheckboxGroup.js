@@ -12,11 +12,23 @@ import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
 import { FieldCheckbox, ValidationError } from '../../components';
+import { injectIntl } from '../../util/reactIntl';
 
 import css from './FieldCheckboxGroup.css';
 
 const FieldCheckboxRenderer = props => {
-  const { className, rootClassName, label, twoColumns, id, fields, options, meta } = props;
+  const {
+    className,
+    rootClassName,
+    label,
+    twoColumns,
+    id,
+    fields,
+    options,
+    meta,
+    intl,
+    isNeedMapping,
+  } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
@@ -32,7 +44,7 @@ const FieldCheckboxRenderer = props => {
               <FieldCheckbox
                 id={fieldId}
                 name={fields.name}
-                label={option.label}
+                label={isNeedMapping ? intl.formatMessage({ id: option.label }) : option.label}
                 value={option.key}
               />
             </li>
@@ -73,4 +85,4 @@ FieldCheckboxGroup.propTypes = {
   name: string.isRequired,
 };
 
-export default FieldCheckboxGroup;
+export default injectIntl(FieldCheckboxGroup);
