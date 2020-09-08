@@ -241,9 +241,14 @@
   "EditAllSeatForm.updateFailed": "Failed to update listing. Please try again.",
   "EditAllSeatForm.submitButtonText": "Submit",
   "EditAllSeatForm.inputRequired": "You need to add a number",
+  "EditAllSeatForm.labelFieldNumberInput": "Set seat for all date",
+  "EditAllSeatForm.placeholderFieldNumberInput": "Input number of seat",
 
   "EditSeatForm.submitButtonText": "Submit",
   "EditSeatForm.inputRequired": "You need to add a number",
+  "EditSeatForm.labelFieldNumberInput": "Seat",
+  "EditSeatForm.placeholderFieldNumberInput": "Input number of seat",
+  "EditSeatForm.setSeatTitle": "Set seat for ",
 
   "EditTeacherListingPricingPanel.createListingTitle": "How much is the teacher's hourly price",
 

@@ -53,7 +53,8 @@ export const EditSeatFormComponent = props => (
             </p>
           ) : null}
           <h1 className={css.titleEditSeat}>
-            Set seats for <span>{!date ? '' : date.format('DD/MM/YYYY')}</span>
+            <FormattedMessage id="EditSeatForm.setSeatTitle" />{' '}
+            <span>{!date ? '' : date.format('DD/MM/YYYY')}</span>
           </h1>
           <FieldNumberInput
             isOpenModal={isOpenModal}
@@ -61,11 +62,10 @@ export const EditSeatFormComponent = props => (
             name="seat"
             className={css.seatNumberInput}
             type="number"
-            label="Seat"
-            placeholder="input number of seat"
+            label={intl.formatMessage({ id: 'EditSeatForm.labelFieldNumberInput' })}
+            placeholder={intl.formatMessage({ id: 'EditSeatForm.placeholderFieldNumberInput' })}
             maxLength="10"
             validate={inputRequired}
-            //autoFocus
           />
 
           <Button
