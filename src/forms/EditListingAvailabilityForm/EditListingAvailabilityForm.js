@@ -14,6 +14,7 @@ import { isSameDay } from 'react-dates';
 import ManageAvailabilityCalendar from './ManageAvailabilityCalendar';
 import ManageAvailabilityTeacherCalendar from './ManageAvailabilityTeacherCalendar';
 import css from './EditListingAvailabilityForm.css';
+import { TEACHER } from '../../util/listingTypes';
 
 export class EditListingAvailabilityFormComponent extends Component {
   constructor(props) {
@@ -195,8 +196,8 @@ export class EditListingAvailabilityFormComponent extends Component {
                 {errorMessage}
                 <div className={css.calendarWrapper}>
                   {(() => {
-                    const { isTeacher } = this.props;
-                    if (isTeacher) {
+                    const { listingType } = this.props;
+                    if (listingType === TEACHER) {
                       return (
                         <ManageAvailabilityTeacherCalendar
                           availability={availability}

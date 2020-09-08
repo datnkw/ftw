@@ -54,6 +54,7 @@ import SectionHeading from './SectionHeading';
 import SectionReviews from './SectionReviews';
 import SectionHostMaybe from './SectionHostMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
+import { TEACHER } from '../../util/listingTypes';
 import css from './ListingPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -212,7 +213,8 @@ export class ListingPageComponent extends Component {
     const listingType = isDraftVariant
       ? LISTING_PAGE_PARAM_TYPE_DRAFT
       : LISTING_PAGE_PARAM_TYPE_EDIT;
-    const listingTab = isTeacher ? 'general' : isDraftVariant ? 'photos' : 'description';
+    const listingTab =
+      listingType === TEACHER ? 'general' : isDraftVariant ? 'photos' : 'description';
 
     const isApproved =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_PENDING_APPROVAL;
@@ -408,7 +410,7 @@ export class ListingPageComponent extends Component {
           <LayoutWrapperMain>
             <div>
               <SectionImages
-                isTeacher={isTeacher}
+                listingType={listingType}
                 title={title}
                 listing={currentListing}
                 isOwnListing={isOwnListing}

@@ -3,12 +3,12 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { InlineTextButton } from '../../components';
 import { LINE_ITEM_NIGHT, LINE_ITEM_DAY } from '../../util/types';
 import config from '../../config';
-
+import { TEACHER } from '../../util/listingTypes';
 import css from './ListingPage.css';
 
 const SectionHeading = props => {
   const {
-    isTeacher,
+    listingType,
     priceTitle,
     formattedPrice,
     richTitle,
@@ -22,13 +22,14 @@ const SectionHeading = props => {
   const isNightly = unitType === LINE_ITEM_NIGHT;
   const isDaily = unitType === LINE_ITEM_DAY;
 
-  const unitTranslationKey = isTeacher
-    ? 'ListingPage.perHour'
-    : isNightly
-    ? 'ListingPage.perNight'
-    : isDaily
-    ? 'ListingPage.perDay'
-    : 'ListingPage.perUnit';
+  const unitTranslationKey =
+    listingType === TEACHER
+      ? 'ListingPage.perHour'
+      : isNightly
+      ? 'ListingPage.perNight'
+      : isDaily
+      ? 'ListingPage.perDay'
+      : 'ListingPage.perUnit';
 
   return (
     <div className={css.sectionHeading}>

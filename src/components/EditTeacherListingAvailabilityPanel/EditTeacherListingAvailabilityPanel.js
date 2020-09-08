@@ -7,6 +7,7 @@ import { ensureOwnListing } from '../../util/data';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ListingLink } from '../../components';
 import { EditListingAvailabilityForm, EditAllSeatForm } from '../../forms';
+import { TEACHER } from '../../util/listingTypes';
 
 import css from '../EditListingAvailabilityPanel/EditListingAvailabilityPanel.css';
 
@@ -78,7 +79,7 @@ const EditTeacherListingAvailabilityPanel = props => {
         }}
       />
       <EditListingAvailabilityForm
-        isTeacher={true}
+        listingType={TEACHER}
         className={css.form}
         listingId={currentListing.id}
         initialValues={{ availabilityPlan }}
