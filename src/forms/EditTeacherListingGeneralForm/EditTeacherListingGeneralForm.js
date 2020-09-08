@@ -53,12 +53,20 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
   getSelectableLevel = input => {
     let result = [];
 
+    const filterConfig = config.custom.filters;
+
+    const allLevelOptions = findOptionsForSelectFilter('levels', filterConfig);
+
     const selectedSubjects = [...(input || [])];
 
     const getLevelsArray = subject => {
       for (let i = 0; i < configLevel.length; i++) {
         if (configLevel[i].subject === subject) {
-          return configLevel[i].level;
+          configLevel[i].level.forEach(el => {
+            result.push(allLevelOptions.find(item => item.key === el));
+          });
+
+          return result;
         }
       }
 
@@ -75,18 +83,12 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
   };
 
   render() {
-    const setSelectedSubject = selectedSubjects => {
-      this.setState({
-        selectedSubjects,
-      });
-    };
     return (
       <FinalForm
         {...this.props}
         mutators={{ ...arrayMutators }}
         selectableLevel={this.getSelectableLevel(this.state.selectedSubjects)}
         onSelectSubject={this.onSelectSubject}
-        //initialValues={this}
         render={formRenderProps => {
           const {
             selectableLevel,
