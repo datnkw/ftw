@@ -15,6 +15,7 @@ import {
   PrimaryButton,
   FieldDateRangeInput,
   FieldDateInput,
+  FieldTimeInput,
 } from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import { TEACHER } from '../../util/listingTypes';
@@ -209,14 +210,17 @@ export class BookingDatesFormComponent extends Component {
                 }}
               />
               {listingType === TEACHER ? (
-                <FieldDateInput
-                  name="testDateInput"
-                  placeholderText={intl.formatMessage({
-                    id: 'BookingDatesForm.placeholderInputSingleDate',
-                  })}
-                  id="bookingTeacher"
-                  timeSlots={timeSlots}
-                />
+                <div>
+                  <FieldDateInput
+                    name="bookingSingleDate"
+                    placeholderText={intl.formatMessage({
+                      id: 'BookingDatesForm.placeholderInputSingleDate',
+                    })}
+                    id="bookingTeacher"
+                    timeSlots={timeSlots}
+                  />
+                  <FieldTimeInput name="bookingHours" />
+                </div>
               ) : (
                 <FieldDateRangeInput
                   className={css.bookingDates}
