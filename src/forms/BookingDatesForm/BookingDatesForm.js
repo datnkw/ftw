@@ -210,7 +210,7 @@ export class BookingDatesFormComponent extends Component {
               />
               {listingType === TEACHER ? (
                 <FieldDateInput
-                  name="test date input"
+                  name="testDateInput"
                   placeholderText={intl.formatMessage({
                     id: 'BookingDatesForm.placeholderInputSingleDate',
                   })}
