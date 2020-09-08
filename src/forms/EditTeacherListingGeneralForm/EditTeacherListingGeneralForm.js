@@ -8,7 +8,7 @@ import arrayMutators from 'final-form-arrays';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput, FieldCheckboxGroupMappingLabel } from '../../components';
+import { Form, Button, FieldTextInput, FieldCheckboxGroup } from '../../components';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 import config from '../../config';
 import configLevel from '../../config-level';
@@ -203,21 +203,23 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
                 intl={intl}
               />
 
-              <FieldCheckboxGroupMappingLabel
+              <FieldCheckboxGroup
                 className={css.features}
                 id={'subjects'}
                 name={'subjects'}
                 label={subjectSelectLabel}
                 options={subjectOptions}
                 onSelectSubject={onSelectSubject}
+                isNeedMapping={true}
               />
 
-              <FieldCheckboxGroupMappingLabel
+              <FieldCheckboxGroup
                 className={css.features}
                 id={'levels'}
                 name={'levels'}
                 label={levelSelectLabel}
                 options={selectableLevel}
+                isNeedMapping={true}
               />
 
               <Button
