@@ -1,42 +1,15 @@
 const configLevel = [
   {
     subject: 'math',
-    level: [
-      {
-        key: 'beginner',
-        label: 'EditTeacherListingGeneralForm.beginnerLevelLabel',
-      },
-    ],
+    level: ['beginner'],
   },
   {
     subject: 'physics',
-    level: [
-      {
-        key: 'beginner',
-        label: 'EditTeacherListingGeneralForm.beginnerLevelLabel',
-      },
-      {
-        key: 'intermediate',
-        label: 'EditTeacherListingGeneralForm.intermediateLevelLabel',
-      },
-    ],
+    level: ['beginner', 'intermediate'],
   },
   {
     subject: 'chemistry',
-    level: [
-      {
-        key: 'beginner',
-        label: 'EditTeacherListingGeneralForm.beginnerLevelLabel',
-      },
-      {
-        key: 'intermediate',
-        label: 'EditTeacherListingGeneralForm.intermediateLevelLabel',
-      },
-      {
-        key: 'expert',
-        label: 'EditTeacherListingGeneralForm.expertLevelLabel',
-      },
-    ],
+    level: ['beginner', 'intermediate', 'expert'],
   },
 ];
 
