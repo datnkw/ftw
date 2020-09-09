@@ -13,7 +13,7 @@ import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 import config from '../../config';
 import configLevel from '../../config-level';
 import _ from 'lodash';
-import { OnBlur, OnChange } from 'react-final-form-listeners';
+import { OnChange } from 'react-final-form-listeners';
 import css from '../EditListingDescriptionForm/EditListingDescriptionForm.css';
 
 const TITLE_MAX_LENGTH = 60;
@@ -170,7 +170,7 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
                 placeholder={titlePlaceholderMessage}
                 maxLength={TITLE_MAX_LENGTH}
                 validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
-                autoFocus
+                //autoFocus
               />
 
               <CustomCategorySelectFieldMaybe
@@ -195,13 +195,11 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
                 name="subjects"
                 label={subjectSelectLabel}
                 options={subjectOptions}
-                //onSelectSubject={onSelectSubject}
                 isNeedMapping={true}
               />
 
               <OnChange name="subjects">
                 {value => {
-                  console.log('value: ', value);
                   onSelectSubject(value);
                 }}
               </OnChange>
@@ -219,7 +217,7 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
                 className={css.submitButton}
                 type="submit"
                 inProgress={submitInProgress}
-                disabled={submitDisabled}
+                //disabled={submitDisabled}
                 ready={submitReady}
               >
                 {saveActionMsg}
