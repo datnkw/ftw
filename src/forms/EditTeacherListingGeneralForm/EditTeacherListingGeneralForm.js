@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
@@ -18,25 +18,39 @@ import css from '../EditListingDescriptionForm/EditListingDescriptionForm.css';
 
 const TITLE_MAX_LENGTH = 60;
 
-class EditTeacherListingGeneralFormComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { selectedSubjects: [] };
-  }
+const EditTeacherListingGeneralFormComponent = props => {
+  const { intl, initialValues } = props;
 
-  componentDidMount() {
-    this.setState({
-      selectedSubjects: this.props.initialValues.subjects || [],
-    });
-  }
+  const errorMessageSubjectDefault = intl.formatMessage({
+    id: 'EditTeacherListingGeneralForm.subjectRequired',
+  });
+  const errorMessageLevelDefault = intl.formatMessage({
+    id: 'EditTeacherListingGeneralForm.levelRequired',
+  });
 
-  onSelectSubject = subject => {
-    this.setState({
-      selectedSubjects: subject,
-    });
+  const [selectedSubjects, setSelectedSubjects] = useState([]);
+  const [errorMessageSubject, setErrorMessageSubject] = useState(errorMessageSubjectDefault);
+  const [errorMessageLevel, setErrorMessageLevel] = useState(errorMessageLevelDefault);
+
+  useEffect(() => {
+    setSelectedSubjects(initialValues.subjects || []);
+  }, []);
+
+  const onSelectSubject = subject => {
+    if (subject === []) {
+      setErrorMessageSubject(errorMessageSubjectDefault);
+      setErrorMessageLevel(errorMessageLevelDefault);
+    } else {
+      setErrorMessageSubject(null);
+      setErrorMessageLevel(null);
+    }
+
+    setSelectedSubjects(subject);
   };
 
-  getSelectableLevel = input => {
+  //const
+
+  const getSelectableLevel = input => {
     let result = [];
 
     const filterConfig = config.custom.filters;
@@ -68,167 +82,168 @@ class EditTeacherListingGeneralFormComponent extends React.Component {
     return result;
   };
 
-  render() {
-    return (
-      <FinalForm
-        {...this.props}
-        mutators={{ ...arrayMutators }}
-        selectableLevel={this.getSelectableLevel(this.state.selectedSubjects)}
-        onSelectSubject={this.onSelectSubject}
-        render={formRenderProps => {
-          const {
-            selectableLevel,
-            onSelectSubject,
-            genderOptions,
-            teachingHourOptions,
-            className,
-            disabled,
-            ready,
-            handleSubmit,
-            intl,
-            invalid,
-            pristine,
-            saveActionMsg,
-            updated,
-            updateInProgress,
-            fetchErrors,
-            filterConfig,
-          } = formRenderProps;
+  return (
+    <FinalForm
+      {...props}
+      mutators={{ ...arrayMutators }}
+      selectableLevel={getSelectableLevel(selectedSubjects)}
+      onSelectSubject={onSelectSubject}
+      render={formRenderProps => {
+        const {
+          selectableLevel,
+          onSelectSubject,
+          genderOptions,
+          teachingHourOptions,
+          className,
+          ready,
+          handleSubmit,
+          intl,
+          pristine,
+          saveActionMsg,
+          updated,
+          updateInProgress,
+          fetchErrors,
+          filterConfig,
+        } = formRenderProps;
 
-          const titleMessage = intl.formatMessage({ id: 'EditTeacherListingGeneralForm.title' });
-          const titlePlaceholderMessage = intl.formatMessage({
-            id: 'EditTeacherListingGeneralForm.titlePlaceholder',
-          });
-          const titleRequiredMessage = intl.formatMessage({
-            id: 'EditTeacherListingGeneralForm.titleRequired',
-          });
-          const maxLengthMessage = intl.formatMessage(
-            { id: 'EditTeacherListingGeneralForm.maxLength' },
-            {
-              maxLength: TITLE_MAX_LENGTH,
-            }
-          );
+        const titleMessage = intl.formatMessage({ id: 'EditTeacherListingGeneralForm.title' });
+        const titlePlaceholderMessage = intl.formatMessage({
+          id: 'EditTeacherListingGeneralForm.titlePlaceholder',
+        });
+        const titleRequiredMessage = intl.formatMessage({
+          id: 'EditTeacherListingGeneralForm.titleRequired',
+        });
+        const maxLengthMessage = intl.formatMessage(
+          { id: 'EditTeacherListingGeneralForm.maxLength' },
+          {
+            maxLength: TITLE_MAX_LENGTH,
+          }
+        );
 
-          const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);
+        const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);
 
-          const { updateListingError, createListingDraftError, showListingsError } =
-            fetchErrors || {};
-          const errorMessageUpdateListing = updateListingError ? (
-            <p className={css.error}>
-              <FormattedMessage id="EditTeacherListingGeneralForm.updateFailed" />
-            </p>
-          ) : null;
+        const { updateListingError, createListingDraftError, showListingsError } =
+          fetchErrors || {};
+        const errorMessageUpdateListing = updateListingError ? (
+          <p className={css.error}>
+            <FormattedMessage id="EditTeacherListingGeneralForm.updateFailed" />
+          </p>
+        ) : null;
 
-          // This error happens only on first tab (of EditListingWizard)
-          const errorMessageCreateListingDraft = createListingDraftError ? (
-            <p className={css.error}>
-              <FormattedMessage id="EditTeacherListingGeneralForm.createListingDraftError" />
-            </p>
-          ) : null;
+        // This error happens only on first tab (of EditListingWizard)
+        const errorMessageCreateListingDraft = createListingDraftError ? (
+          <p className={css.error}>
+            <FormattedMessage id="EditTeacherListingGeneralForm.createListingDraftError" />
+          </p>
+        ) : null;
 
-          const errorMessageShowListing = showListingsError ? (
-            <p className={css.error}>
-              <FormattedMessage id="EditTeacherListingGeneralForm.showListingFailed" />
-            </p>
-          ) : null;
+        const errorMessageShowListing = showListingsError ? (
+          <p className={css.error}>
+            <FormattedMessage id="EditTeacherListingGeneralForm.showListingFailed" />
+          </p>
+        ) : null;
 
-          const classes = classNames(css.root, className);
-          const submitReady = (updated && pristine) || ready;
-          const submitInProgress = updateInProgress;
-          const submitDisabled = invalid || disabled || submitInProgress;
-          const allTextGenderSelect = {
-            label: 'EditTeacherListingGeneralForm.genderLabel',
-            placeholder: 'EditTeacherListingGeneralForm.genderPlaceholder',
-            required: 'EditTeacherListingGeneralForm.genderRequired',
-          };
-          const allTextTeachingHourSelect = {
-            label: 'EditTeacherListingGeneralForm.teachingHourLabel',
-            placeholder: 'EditTeacherListingGeneralForm.teachingHourPlaceholder',
-            required: 'EditTeacherListingGeneralForm.teachingHourRequired',
-          };
+        const classes = classNames(css.root, className);
+        const submitReady = (updated && pristine) || ready;
+        const submitInProgress = updateInProgress;
+        const allTextGenderSelect = {
+          label: 'EditTeacherListingGeneralForm.genderLabel',
+          placeholder: 'EditTeacherListingGeneralForm.genderPlaceholder',
+          required: 'EditTeacherListingGeneralForm.genderRequired',
+        };
+        const allTextTeachingHourSelect = {
+          label: 'EditTeacherListingGeneralForm.teachingHourLabel',
+          placeholder: 'EditTeacherListingGeneralForm.teachingHourPlaceholder',
+          required: 'EditTeacherListingGeneralForm.teachingHourRequired',
+        };
 
-          const subjectOptions = findOptionsForSelectFilter('subjects', filterConfig);
+        const subjectOptions = findOptionsForSelectFilter('subjects', filterConfig);
 
-          const subjectSelectLabel = intl.formatMessage({
-            id: 'EditTeacherListingGeneralForm.subjectSelectLabel',
-          });
-          const levelSelectLabel = intl.formatMessage({
-            id: 'EditTeacherListingGeneralForm.levelSelectLabel',
-          });
+        const subjectSelectLabel = intl.formatMessage({
+          id: 'EditTeacherListingGeneralForm.subjectSelectLabel',
+        });
+        const levelSelectLabel = intl.formatMessage({
+          id: 'EditTeacherListingGeneralForm.levelSelectLabel',
+        });
 
-          return (
-            <Form className={classes} onSubmit={handleSubmit}>
-              {errorMessageCreateListingDraft}
-              {errorMessageUpdateListing}
-              {errorMessageShowListing}
-              <FieldTextInput
-                id="title"
-                name="title"
-                className={css.title}
-                type="text"
-                label={titleMessage}
-                placeholder={titlePlaceholderMessage}
-                maxLength={TITLE_MAX_LENGTH}
-                validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
-                //autoFocus
-              />
+        return (
+          <Form className={classes} onSubmit={handleSubmit}>
+            {errorMessageCreateListingDraft}
+            {errorMessageUpdateListing}
+            {errorMessageShowListing}
+            <FieldTextInput
+              id="title"
+              name="title"
+              className={css.title}
+              type="text"
+              label={titleMessage}
+              placeholder={titlePlaceholderMessage}
+              maxLength={TITLE_MAX_LENGTH}
+              validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
+            />
 
-              <CustomCategorySelectFieldMaybe
-                id="gender"
-                name="gender"
-                allText={allTextGenderSelect}
-                categories={genderOptions}
-                intl={intl}
-              />
+            <CustomCategorySelectFieldMaybe
+              id="gender"
+              name="gender"
+              allText={allTextGenderSelect}
+              categories={genderOptions}
+              intl={intl}
+            />
 
-              <CustomCategorySelectFieldMaybe
-                id="teachingHour"
-                name="teachingHour"
-                allText={allTextTeachingHourSelect}
-                categories={teachingHourOptions}
-                intl={intl}
-              />
+            <CustomCategorySelectFieldMaybe
+              id="teachingHour"
+              name="teachingHour"
+              allText={allTextTeachingHourSelect}
+              categories={teachingHourOptions}
+              intl={intl}
+            />
 
-              <FieldCheckboxGroup
-                className={css.features}
-                id="subjects"
-                name="subjects"
-                label={subjectSelectLabel}
-                options={subjectOptions}
-                isNeedMapping={true}
-              />
+            <FieldCheckboxGroup
+              className={css.features}
+              id="subjects"
+              name="subjects"
+              label={subjectSelectLabel}
+              options={subjectOptions}
+              isNeedMapping={true}
+              errorMessage={errorMessageSubject}
+            />
 
-              <OnChange name="subjects">
-                {value => {
-                  onSelectSubject(value);
-                }}
-              </OnChange>
+            <OnChange name="subjects">
+              {value => {
+                onSelectSubject(value);
+              }}
+            </OnChange>
 
-              <FieldCheckboxGroup
-                className={css.features}
-                id={'levels'}
-                name={'levels'}
-                label={levelSelectLabel}
-                options={selectableLevel}
-                isNeedMapping={true}
-              />
+            <FieldCheckboxGroup
+              className={css.features}
+              id={'levels'}
+              name={'levels'}
+              label={levelSelectLabel}
+              options={selectableLevel}
+              isNeedMapping={true}
+              errorMessage={errorMessageLevel}
+            />
 
-              <Button
-                className={css.submitButton}
-                type="submit"
-                inProgress={submitInProgress}
-                //disabled={submitDisabled}
-                ready={submitReady}
-              >
-                {saveActionMsg}
-              </Button>
-            </Form>
-          );
-        }}
-      />
-    );
-  }
-}
+            <OnChange name="levels">
+              {value => {
+                //onSelectSubject(value);
+              }}
+            </OnChange>
+
+            <Button
+              className={css.submitButton}
+              type="submit"
+              inProgress={submitInProgress}
+              ready={submitReady}
+            >
+              {saveActionMsg}
+            </Button>
+          </Form>
+        );
+      }}
+    />
+  );
+};
 
 EditTeacherListingGeneralFormComponent.defaultProps = {
   className: null,

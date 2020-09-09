@@ -28,6 +28,7 @@ const FieldCheckboxRenderer = props => {
     meta,
     intl,
     isNeedMapping,
+    errorMessage,
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -51,7 +52,7 @@ const FieldCheckboxRenderer = props => {
           );
         })}
       </ul>
-      <ValidationError fieldMeta={{ ...meta }} />
+      <ValidationError fieldMeta={{ ...meta, error: errorMessage }} />
     </fieldset>
   );
 };
