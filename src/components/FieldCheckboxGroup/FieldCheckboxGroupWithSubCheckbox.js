@@ -13,10 +13,11 @@ import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
 import { FieldCheckbox, ValidationError } from '../../components';
 import { injectIntl } from '../../util/reactIntl';
+import FieldCheckboxGroup from './FieldCheckboxGroup';
 
 import css from './FieldCheckboxGroup.css';
 
-const FieldCheckboxRenderer = props => {
+const FieldCheckboxWithSubCheckboxRenderer = props => {
   const {
     className,
     rootClassName,
@@ -29,14 +30,20 @@ const FieldCheckboxRenderer = props => {
     intl,
     isNeedMapping,
     errorMessage,
+    subLabel,
+    subOptions,
+    subErrorMsg,
   } = props;
 
+  console.log('subOptions: ', subOptions);
+
   const classes = classNames(rootClassName || css.root, className);
+  const classesSubCheckbox = classNames(classes, css.subCheckbox);
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
 
-  return options && options.length > 0 ? (
+  return (
     <fieldset className={classes}>
-      {label ? <legend>{label}</legend> : null}
+      {label && options && options.length > 0 ? <legend>{label}</legend> : null}
       <ul className={listClasses}>
         {options.map((option, index) => {
           const fieldId = `${id}.${option.key}`;
@@ -48,23 +55,31 @@ const FieldCheckboxRenderer = props => {
                 label={isNeedMapping ? intl.formatMessage({ id: option.label }) : option.label}
                 value={option.key}
               />
+              <FieldCheckboxGroup
+                className={classesSubCheckbox}
+                id={`level${fields.name}`}
+                name={`level${fields.name}`}
+                options={subOptions}
+                isNeedMapping={isNeedMapping}
+                errorMessage={subErrorMsg}
+              />
             </li>
           );
         })}
       </ul>
       <ValidationError fieldMeta={{ ...meta, error: errorMessage }} />
     </fieldset>
-  ) : null;
+  );
 };
 
-FieldCheckboxRenderer.defaultProps = {
+FieldCheckboxWithSubCheckboxRenderer.defaultProps = {
   rootClassName: null,
   className: null,
   label: null,
   twoColumns: false,
 };
 
-FieldCheckboxRenderer.propTypes = {
+FieldCheckboxWithSubCheckboxRenderer.propTypes = {
   rootClassName: string,
   className: string,
   id: string.isRequired,
@@ -78,12 +93,14 @@ FieldCheckboxRenderer.propTypes = {
   twoColumns: bool,
 };
 
-const FieldCheckboxGroup = props => <FieldArray component={FieldCheckboxRenderer} {...props} />;
+const FieldCheckboxGroupWithSubCheckbox = props => (
+  <FieldArray component={FieldCheckboxWithSubCheckboxRenderer} {...props} />
+);
 
 // Name and component are required fields for FieldArray.
 // Component-prop we define in this file, name needs to be passed in
-FieldCheckboxGroup.propTypes = {
+FieldCheckboxGroupWithSubCheckbox.propTypes = {
   name: string.isRequired,
 };
 
-export default injectIntl(FieldCheckboxGroup);
+export default injectIntl(FieldCheckboxGroupWithSubCheckbox);

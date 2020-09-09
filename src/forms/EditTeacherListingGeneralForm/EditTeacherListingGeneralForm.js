@@ -8,7 +8,14 @@ import arrayMutators from 'final-form-arrays';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput, FieldCheckboxGroup } from '../../components';
+import {
+  Form,
+  Button,
+  FieldTextInput,
+  FieldCheckboxGroup,
+  FieldCheckboxGroupWithSubCheckbox,
+  FieldRadioButton,
+} from '../../components';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 import config from '../../config';
 import configLevel from '../../config-level';
@@ -58,6 +65,8 @@ const EditTeacherListingGeneralFormComponent = props => {
     const allLevelOptions = findOptionsForSelectFilter('levels', filterConfig);
 
     const selectedSubjects = [...(input || [])];
+
+    console.log('selectedSubjects: ', selectedSubjects);
 
     const getLevelsArray = subject => {
       for (let i = 0; i < configLevel.length; i++) {
@@ -198,7 +207,7 @@ const EditTeacherListingGeneralFormComponent = props => {
               intl={intl}
             />
 
-            <FieldCheckboxGroup
+            <FieldCheckboxGroupWithSubCheckbox
               className={css.features}
               id="subjects"
               name="subjects"
@@ -206,15 +215,19 @@ const EditTeacherListingGeneralFormComponent = props => {
               options={subjectOptions}
               isNeedMapping={true}
               errorMessage={errorMessageSubject}
+              subLabel={levelSelectLabel}
+              subOptions={selectableLevel}
+              subErrorMsg={errorMessageLevel}
             />
 
             <OnChange name="subjects">
               {value => {
+                console.log('value');
                 onSelectSubject(value);
               }}
             </OnChange>
 
-            <FieldCheckboxGroup
+            {/* <FieldCheckboxGroup
               className={css.features}
               id={'levels'}
               name={'levels'}
@@ -222,13 +235,7 @@ const EditTeacherListingGeneralFormComponent = props => {
               options={selectableLevel}
               isNeedMapping={true}
               errorMessage={errorMessageLevel}
-            />
-
-            <OnChange name="levels">
-              {value => {
-                //onSelectSubject(value);
-              }}
-            </OnChange>
+            /> */}
 
             <Button
               className={css.submitButton}

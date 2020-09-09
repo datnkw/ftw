@@ -6,6 +6,10 @@
   border: none;
 }
 
+.subCheckbox {
+  margin-left: 20px;
+}
+
 .hidden {
   display: none;
 }
