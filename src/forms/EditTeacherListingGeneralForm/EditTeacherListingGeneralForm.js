@@ -171,9 +171,6 @@ const EditTeacherListingGeneralFormComponent = props => {
         const subjectSelectLabel = intl.formatMessage({
           id: 'EditTeacherListingGeneralForm.subjectSelectLabel',
         });
-        const levelSelectLabel = intl.formatMessage({
-          id: 'EditTeacherListingGeneralForm.levelSelectLabel',
-        });
 
         return (
           <Form className={classes} onSubmit={handleSubmit}>
@@ -215,8 +212,8 @@ const EditTeacherListingGeneralFormComponent = props => {
               options={subjectOptions}
               isNeedMapping={true}
               errorMessage={errorMessageSubject}
-              subLabel={levelSelectLabel}
-              subOptions={selectableLevel}
+              //subLabel={levelSelectLabel}
+              //subOptions={selectableLevel}
               subErrorMsg={errorMessageLevel}
             />
 

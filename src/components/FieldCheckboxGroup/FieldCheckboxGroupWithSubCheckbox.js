@@ -14,6 +14,9 @@ import { FieldArray } from 'react-final-form-arrays';
 import { FieldCheckbox, ValidationError } from '../../components';
 import { injectIntl } from '../../util/reactIntl';
 import FieldCheckboxGroup from './FieldCheckboxGroup';
+import { findOptionsForSelectFilter } from '../../util/search';
+import config from '../../config';
+import configLevel from '../../config-level';
 
 import css from './FieldCheckboxGroup.css';
 
@@ -30,7 +33,6 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
     intl,
     isNeedMapping,
     errorMessage,
-    subLabel,
     subOptions,
     subErrorMsg,
   } = props;
@@ -40,6 +42,30 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
   const classes = classNames(rootClassName || css.root, className);
   const classesSubCheckbox = classNames(classes, css.subCheckbox);
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
+
+  const getSelectableLevel = subject => {
+    console.log('subject: ', subject);
+
+    let result = [];
+
+    const filterConfig = config.custom.filters;
+
+    const allLevelOptions = findOptionsForSelectFilter('levels', filterConfig);
+
+    // const getLevelsArray = subject => {
+    for (let i = 0; i < configLevel.length; i++) {
+      if (configLevel[i].subject === subject) {
+        configLevel[i].level.forEach(el => {
+          result.push(allLevelOptions.find(item => item.key === el));
+        });
+
+        return result;
+      }
+    }
+
+    return [];
+    // };
+  };
 
   return (
     <fieldset className={classes}>
@@ -57,9 +83,9 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
               />
               <FieldCheckboxGroup
                 className={classesSubCheckbox}
-                id={`level${fields.name}`}
-                name={`level${fields.name}`}
-                options={subOptions}
+                id={`level${option.key}`}
+                name={`level${option.key}`}
+                options={getSelectableLevel(option.key)}
                 isNeedMapping={isNeedMapping}
                 errorMessage={subErrorMsg}
               />
