@@ -72,9 +72,7 @@ const EditTeacherListingAvailabilityPanel = props => {
           onSubmitCustomAvailabilityPlan({
             availabilityPlan: customAvailabilityPlan(parseInt(values.allSeat)),
           }).then(() => {
-            this.setState({
-              updateAllSeatInProgess: false,
-            });
+            setUpdateAllSeatInProgess(false);
           });
         }}
       />
