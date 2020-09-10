@@ -9,6 +9,7 @@ import { ListingLink } from '../../components';
 import { EditTeacherListingGeneralForm } from '../../forms';
 import config from '../../config';
 import { TEACHER } from '../../util/listingTypes';
+import { getObjectLevel } from '../../util/subjectLevelHelper';
 import css from '../EditListingDescriptionPanel/EditListingDescriptionPanel.css';
 
 const EditTeacherListingGeneralPanel = props => {
@@ -40,6 +41,27 @@ const EditTeacherListingGeneralPanel = props => {
     <FormattedMessage id="EditTeacherListingGeneral.createListingTitle" />
   );
 
+  const onSubmitGeneral = values => {
+    console.log('value in EditTeacherListingGeneralPanel: ', values);
+    const { title, teachingHour, gender, subjects, levels } = values;
+
+    const subjectsLevel = getObjectLevel(values);
+
+    const updateValues = {
+      title: title.trim(),
+      publicData: {
+        teachingHour,
+        gender,
+        subjects,
+        levels,
+        listingType: TEACHER,
+        ...subjectsLevel,
+      },
+    };
+
+    onSubmit(updateValues);
+  };
+
   const teachingHourOptions = findOptionsForSelectFilter('teachTime', config.custom.filters);
   const genderOptions = findOptionsForSelectFilter('gender', config.custom.filters);
   return (
@@ -54,18 +76,10 @@ const EditTeacherListingGeneralPanel = props => {
           subjects: publicData.subjects,
           levels: publicData.levels,
           listingType: publicData.listingType,
+          ...getObjectLevel(publicData),
         }}
         saveActionMsg={submitButtonText}
-        onSubmit={values => {
-          console.log('value in EditTeacherListingGeneralPanel: ', values);
-          const { title, teachingHour, gender, subjects, levels } = values;
-          const updateValues = {
-            title: title.trim(),
-            publicData: { teachingHour, gender, subjects, levels, listingType: TEACHER },
-          };
-
-          onSubmit(updateValues);
-        }}
+        onSubmit={onSubmitGeneral}
         onChange={onChange}
         disabled={disabled}
         ready={ready}
