@@ -40,11 +40,13 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
   const [choosenSubject, setChoosenSubject] = useState([]);
 
   useEffect(() => {
-    console.log('initialValues: ', initialValues);
     setChoosenSubject(initialValues.subjects);
   }, []);
 
   const getIsChoosen = subject => {
+    if (!choosenSubject) {
+      return false;
+    }
     return choosenSubject.includes(subject);
   };
 
@@ -70,7 +72,6 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
     }
 
     return [];
-    // };
   };
 
   return (
