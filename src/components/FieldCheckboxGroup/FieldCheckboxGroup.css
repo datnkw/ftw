@@ -6,8 +6,15 @@
   border: none;
 }
 
+.visible {
+  max-height: 500px !important;
+}
+
 .subCheckbox {
   margin-left: 20px;
+  max-height: 0px;
+  overflow: hidden;
+  transition: all 3s ease-in;
 }
 
 .hidden {

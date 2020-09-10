@@ -8,17 +8,9 @@ import arrayMutators from 'final-form-arrays';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import {
-  Form,
-  Button,
-  FieldTextInput,
-  FieldCheckboxGroup,
-  FieldCheckboxGroupWithSubCheckbox,
-  FieldRadioButton,
-} from '../../components';
+import { Form, Button, FieldTextInput, FieldCheckboxGroupWithSubCheckbox } from '../../components';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 import config from '../../config';
-import configLevel from '../../config-level';
 import _ from 'lodash';
 import { OnChange } from 'react-final-form-listeners';
 import css from '../EditListingDescriptionForm/EditListingDescriptionForm.css';
@@ -37,7 +29,6 @@ const EditTeacherListingGeneralFormComponent = props => {
 
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [errorMessageSubject, setErrorMessageSubject] = useState(errorMessageSubjectDefault);
-  const [errorMessageLevel, setErrorMessageLevel] = useState(errorMessageLevelDefault);
 
   useEffect(() => {
     setSelectedSubjects(initialValues.subjects || []);
@@ -46,60 +37,20 @@ const EditTeacherListingGeneralFormComponent = props => {
   const onSelectSubject = subject => {
     if (subject === []) {
       setErrorMessageSubject(errorMessageSubjectDefault);
-      setErrorMessageLevel(errorMessageLevelDefault);
     } else {
       setErrorMessageSubject(null);
-      setErrorMessageLevel(null);
     }
 
     setSelectedSubjects(subject);
-  };
-
-  //const
-
-  const getSelectableLevel = input => {
-    let result = [];
-
-    const filterConfig = config.custom.filters;
-
-    const allLevelOptions = findOptionsForSelectFilter('levels', filterConfig);
-
-    const selectedSubjects = [...(input || [])];
-
-    console.log('selectedSubjects: ', selectedSubjects);
-
-    const getLevelsArray = subject => {
-      for (let i = 0; i < configLevel.length; i++) {
-        if (configLevel[i].subject === subject) {
-          configLevel[i].level.forEach(el => {
-            result.push(allLevelOptions.find(item => item.key === el));
-          });
-
-          return result;
-        }
-      }
-
-      return [];
-    };
-
-    for (let i = 0; i < selectedSubjects.length; i++) {
-      result = [...result, ...getLevelsArray(selectedSubjects[i])];
-    }
-
-    result = _.uniqBy(result, 'key');
-
-    return result;
   };
 
   return (
     <FinalForm
       {...props}
       mutators={{ ...arrayMutators }}
-      selectableLevel={getSelectableLevel(selectedSubjects)}
       onSelectSubject={onSelectSubject}
       render={formRenderProps => {
         const {
-          selectableLevel,
           onSelectSubject,
           genderOptions,
           teachingHourOptions,
@@ -113,6 +64,7 @@ const EditTeacherListingGeneralFormComponent = props => {
           updateInProgress,
           fetchErrors,
           filterConfig,
+          values,
         } = formRenderProps;
 
         const titleMessage = intl.formatMessage({ id: 'EditTeacherListingGeneralForm.title' });
@@ -212,27 +164,15 @@ const EditTeacherListingGeneralFormComponent = props => {
               options={subjectOptions}
               isNeedMapping={true}
               errorMessage={errorMessageSubject}
-              //subLabel={levelSelectLabel}
-              //subOptions={selectableLevel}
-              subErrorMsg={errorMessageLevel}
+              subErrorMsg={errorMessageLevelDefault}
             />
 
             <OnChange name="subjects">
               {value => {
-                console.log('value');
+                console.log('values form: ', values);
                 onSelectSubject(value);
               }}
             </OnChange>
-
-            {/* <FieldCheckboxGroup
-              className={css.features}
-              id={'levels'}
-              name={'levels'}
-              label={levelSelectLabel}
-              options={selectableLevel}
-              isNeedMapping={true}
-              errorMessage={errorMessageLevel}
-            /> */}
 
             <Button
               className={css.submitButton}

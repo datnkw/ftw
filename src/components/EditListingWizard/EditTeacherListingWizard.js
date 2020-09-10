@@ -77,14 +77,40 @@ const tabCompleted = (tab, listing) => {
   const { images } = listing;
   const { publicData, title, geolocation, price, availabilityPlan } = listing.attributes;
 
+  const getSelectedLevel = subject => {
+    const nameField = `level${subject}`;
+    return publicData[nameField];
+  };
+
+  const isSelectedLevelValid = () => {
+    if (!(publicData && publicData.subject)) {
+      return false;
+    }
+    publicData.subjects.forEach(el => {
+      if (!getSelectedLevel(el).length) {
+        return false;
+      }
+    });
+
+    return true;
+  };
+
   switch (tab) {
     case GENERAL:
-      return !!(title && publicData && publicData.gender && publicData.teachingHour);
-      //&&
-      // publicData.subjects &&
-      // publicData.subjects.length > 0 &&
-      // publicData.levels &&
-      // publicData.levels.length > 0
+      return !!(
+        title &&
+        publicData &&
+        publicData.gender &&
+        publicData.teachingHour &&
+        publicData.subjects &&
+        publicData.subjects.length > 0 &&
+        isSelectedLevelValid()
+      );
+    //&&
+    // publicData.subjects &&
+    // publicData.subjects.length > 0 &&
+    // publicData.levels &&
+    // publicData.levels.length > 0
     case TEACHER_LOCATION:
       return !!(geolocation && publicData && publicData.location && publicData.location.address);
     case TEACHER_PRICING:

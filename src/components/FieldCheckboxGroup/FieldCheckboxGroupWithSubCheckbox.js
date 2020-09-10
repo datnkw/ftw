@@ -7,7 +7,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
@@ -17,7 +17,7 @@ import FieldCheckboxGroup from './FieldCheckboxGroup';
 import { findOptionsForSelectFilter } from '../../util/search';
 import config from '../../config';
 import configLevel from '../../config-level';
-
+import { OnChange } from 'react-final-form-listeners';
 import css from './FieldCheckboxGroup.css';
 
 const FieldCheckboxWithSubCheckboxRenderer = props => {
@@ -37,22 +37,25 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
     subErrorMsg,
   } = props;
 
-  console.log('subOptions: ', subOptions);
+  //const [isVisible, setIsVisible] = useState(new Array(options.length).fill(false));
+
+  const [choosenSubject, setChoosenSubject] = useState([]);
+
+  const getIsChoosen = subject => {
+    return choosenSubject.includes(subject);
+  };
 
   const classes = classNames(rootClassName || css.root, className);
   const classesSubCheckbox = classNames(classes, css.subCheckbox);
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
 
   const getSelectableLevel = subject => {
-    console.log('subject: ', subject);
-
     let result = [];
 
     const filterConfig = config.custom.filters;
 
     const allLevelOptions = findOptionsForSelectFilter('levels', filterConfig);
 
-    // const getLevelsArray = subject => {
     for (let i = 0; i < configLevel.length; i++) {
       if (configLevel[i].subject === subject) {
         configLevel[i].level.forEach(el => {
@@ -88,7 +91,13 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
                 options={getSelectableLevel(option.key)}
                 isNeedMapping={isNeedMapping}
                 errorMessage={subErrorMsg}
+                isVisible={getIsChoosen(option.key)}
               />
+              <OnChange name={fields.name}>
+                {value => {
+                  setChoosenSubject(value);
+                }}
+              </OnChange>
             </li>
           );
         })}
