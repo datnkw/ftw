@@ -57,6 +57,7 @@ const EditTeacherListingGeneralPanel = props => {
         }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
+          console.log('value in EditTeacherListingGeneralPanel: ', values);
           const { title, teachingHour, gender, subjects, levels } = values;
           const updateValues = {
             title: title.trim(),

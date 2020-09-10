@@ -7,7 +7,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
@@ -33,13 +33,16 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
     intl,
     isNeedMapping,
     errorMessage,
-    subOptions,
+    initialValues,
     subErrorMsg,
   } = props;
 
-  //const [isVisible, setIsVisible] = useState(new Array(options.length).fill(false));
-
   const [choosenSubject, setChoosenSubject] = useState([]);
+
+  useEffect(() => {
+    console.log('initialValues: ', initialValues);
+    setChoosenSubject(initialValues.subjects);
+  }, []);
 
   const getIsChoosen = subject => {
     return choosenSubject.includes(subject);

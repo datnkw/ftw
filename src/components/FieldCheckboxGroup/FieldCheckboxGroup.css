@@ -14,7 +14,7 @@
   margin-left: 20px;
   max-height: 0px;
   overflow: hidden;
-  transition: all 3s ease-in;
+  /* transition: all 1s ease-in; */
 }
 
 .hidden {

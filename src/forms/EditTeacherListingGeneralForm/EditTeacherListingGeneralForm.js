@@ -34,14 +34,15 @@ const EditTeacherListingGeneralFormComponent = props => {
     setSelectedSubjects(initialValues.subjects || []);
   }, []);
 
-  const onSelectSubject = subject => {
-    if (subject === []) {
+  const onSelectSubject = subjects => {
+    if (!(subjects && subjects.length)) {
+      console.log('error subject');
       setErrorMessageSubject(errorMessageSubjectDefault);
     } else {
       setErrorMessageSubject(null);
     }
 
-    setSelectedSubjects(subject);
+    setSelectedSubjects(subjects);
   };
 
   return (
@@ -65,6 +66,7 @@ const EditTeacherListingGeneralFormComponent = props => {
           fetchErrors,
           filterConfig,
           values,
+          initialValues,
         } = formRenderProps;
 
         const titleMessage = intl.formatMessage({ id: 'EditTeacherListingGeneralForm.title' });
@@ -165,12 +167,13 @@ const EditTeacherListingGeneralFormComponent = props => {
               isNeedMapping={true}
               errorMessage={errorMessageSubject}
               subErrorMsg={errorMessageLevelDefault}
+              initialValues={initialValues}
             />
 
             <OnChange name="subjects">
               {value => {
                 console.log('values form: ', values);
-                onSelectSubject(value);
+                onSelectSubject(value.subjects);
               }}
             </OnChange>
 

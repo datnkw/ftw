@@ -36,7 +36,7 @@ const FieldCheckboxRenderer = props => {
 
   //when component use this props doesn't need hidden option, set isVisibleFinal is true
   const isVisibleFinal = isVisible === null ? true : isVisible && options && options.length > 0;
-  console.log('isVisibleFinal: ', isVisibleFinal);
+
   const classes = classNames(rootClassName || css.root, className, {
     [css.visible]: isVisibleFinal,
   });

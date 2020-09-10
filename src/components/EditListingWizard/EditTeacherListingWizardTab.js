@@ -107,6 +107,8 @@ const EditTeacherListingWizardTab = props => {
 
   const onCompleteEditListingWizardTab = async (tab, updateValues) => {
     // Normalize images for API call
+    console.log('updateValues: ', updateValues);
+
     const { images: updatedImages, ...otherValues } = updateValues;
     const imageProperty =
       typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};

@@ -79,24 +79,41 @@ const tabCompleted = (tab, listing) => {
 
   const getSelectedLevel = subject => {
     const nameField = `level${subject}`;
+    console.log('publicData: ', publicData);
     return publicData[nameField];
   };
 
   const isSelectedLevelValid = () => {
-    if (!(publicData && publicData.subject)) {
+    if (!publicData.subjects) {
+      // console.log('false subjects');
       return false;
     }
+
+    let result = true;
+
     publicData.subjects.forEach(el => {
-      if (!getSelectedLevel(el).length) {
-        return false;
+      // console.log('getSelectedLevel: ', getSelectedLevel(el));
+      const selectedLevelBySubject = getSelectedLevel(el);
+      // console.log('!selectedLevelBySubject: ', !selectedLevelBySubject);
+      if (!selectedLevelBySubject) {
+        //console.log('return false');
+        result = false;
+        return;
+      }
+      if (!selectedLevelBySubject.length) {
+        result = false;
+        return;
       }
     });
 
-    return true;
+    return result;
   };
 
   switch (tab) {
     case GENERAL:
+      const resultIsSelectLevelValid = isSelectedLevelValid();
+
+      console.log('resultIsSelectLevelValid: ', resultIsSelectLevelValid);
       return !!(
         title &&
         publicData &&
@@ -104,7 +121,7 @@ const tabCompleted = (tab, listing) => {
         publicData.teachingHour &&
         publicData.subjects &&
         publicData.subjects.length > 0 &&
-        isSelectedLevelValid()
+        resultIsSelectLevelValid
       );
     //&&
     // publicData.subjects &&
