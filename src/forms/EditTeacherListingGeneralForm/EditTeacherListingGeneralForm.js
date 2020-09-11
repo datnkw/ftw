@@ -13,12 +13,15 @@ import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 import config from '../../config';
 import _ from 'lodash';
 import { OnChange } from 'react-final-form-listeners';
+import { getObjectLevel } from '../../util/subjectLevelHelper';
 import css from '../EditListingDescriptionForm/EditListingDescriptionForm.css';
 
 const TITLE_MAX_LENGTH = 60;
 
 const EditTeacherListingGeneralFormComponent = props => {
   const { intl, initialValues } = props;
+
+  console.log('initialValues: ', initialValues);
 
   const errorMessageSubjectDefault = intl.formatMessage({
     id: 'EditTeacherListingGeneralForm.subjectRequired',
@@ -27,32 +30,51 @@ const EditTeacherListingGeneralFormComponent = props => {
     id: 'EditTeacherListingGeneralForm.levelRequired',
   });
 
-  const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [errorMessageSubject, setErrorMessageSubject] = useState(errorMessageSubjectDefault);
 
-  useEffect(() => {
-    setSelectedSubjects(initialValues.subjects || []);
-  }, []);
-
-  const onSelectSubject = subjects => {
-    if (!(subjects && subjects.length)) {
-      console.log('error subject');
-      setErrorMessageSubject(errorMessageSubjectDefault);
-    } else {
-      setErrorMessageSubject(null);
-    }
-
-    setSelectedSubjects(subjects);
-  };
+  // useEffect(() => {
+  //   setSelectedSubjects(initialValues.subjects || []);
+  // }, []);
 
   return (
     <FinalForm
       {...props}
       mutators={{ ...arrayMutators }}
-      onSelectSubject={onSelectSubject}
+      validate={values => {
+        const errors = {};
+
+        const { initialValues } = props;
+
+        const subjectLevel = getObjectLevel(initialValues);
+
+        console.log('values.subjects: ', values.subjects);
+
+        if (!values.subjects) {
+          console.log('get in error subjects');
+          errors.subjects = 'Must select';
+
+          return;
+        }
+
+        console.log('values.subjects.length: ', values.subjects.length);
+
+        if (values.subjects.length === 0) {
+          errors.subjects = 'Must select';
+        } else {
+          values.subjects.forEach(el => {
+            const nameField = `level${el}`;
+            // console.log('nameField: ', nameField);
+            // console.log('subjectLevel: ', subjectLevel[nameField]);
+            return subjectLevel[nameField] && subjectLevel[nameField].length
+              ? null
+              : (errors[nameField] = 'Must select');
+          });
+        }
+
+        return errors;
+      }}
       render={formRenderProps => {
         const {
-          onSelectSubject,
           genderOptions,
           teachingHourOptions,
           className,
@@ -165,15 +187,16 @@ const EditTeacherListingGeneralFormComponent = props => {
               label={subjectSelectLabel}
               options={subjectOptions}
               isNeedMapping={true}
-              errorMessage={errorMessageSubject}
+              errorMessage={errorMessageSubjectDefault}
               subErrorMsg={errorMessageLevelDefault}
               initialValues={initialValues}
+              // subscription={{ touched: false }}
             />
 
             <OnChange name="subjects">
               {value => {
                 console.log('values form: ', values);
-                onSelectSubject(value.subjects);
+                //onSelectSubject(value.subjects);
               }}
             </OnChange>
 

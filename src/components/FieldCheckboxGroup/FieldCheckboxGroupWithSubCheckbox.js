@@ -99,14 +99,31 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
               />
               <OnChange name={fields.name}>
                 {value => {
+                  console.log('value: ', value);
                   setChoosenSubject(value);
+                  //console.log('choosenSubject.length: ', choosenSubject.length);
                 }}
               </OnChange>
             </li>
           );
         })}
       </ul>
-      <ValidationError fieldMeta={{ ...meta, error: errorMessage }} />
+      <ValidationError
+        name="selectSubject"
+        fieldMeta={{
+          ...meta,
+          error: (() => {
+            if (!choosenSubject) {
+              return errorMessage;
+            }
+            if (choosenSubject.length !== 0) {
+              return errorMessage;
+            }
+
+            return '';
+          })(),
+        }}
+      />
     </fieldset>
   );
 };
