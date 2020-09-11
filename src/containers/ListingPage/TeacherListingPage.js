@@ -56,7 +56,7 @@ import SectionHostMaybe from './SectionHostMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import SectionGender from './SectionGender';
 import SectionTeachingHour from './SectionTeachingHour';
-import SectionListingAttribute from './SectionListingAttribute';
+import SectionSubjects from './SectionSubjects';
 import css from './ListingPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -445,15 +445,10 @@ export class TeacherListingPageComponent extends Component {
                   />
                   <SectionGender publicData={publicData} />
                   <SectionTeachingHour publicData={publicData} />
-                  <SectionListingAttribute
+                  <SectionSubjects
                     publicData={publicData}
                     type="subjects"
                     options={subjectOptions}
-                  />
-                  <SectionListingAttribute
-                    publicData={publicData}
-                    type="levels"
-                    options={levelOptions}
                   />
                   <SectionMapMaybe
                     geolocation={geolocation}

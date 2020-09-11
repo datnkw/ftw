@@ -27,6 +27,19 @@
   }
 }
 
+.threeColumnsFlex {
+  @media (--viewportMedium) {
+    display: flex;
+    flex-flow: wrap;
+  }
+}
+
+.threeColumnsFlex div {
+  @media (--viewportMedium) {
+    width: 33%;
+  }
+}
+
 .item {
   display: flex;
   align-items: center;
@@ -69,6 +82,12 @@
 
 .selectedLabel {
   font-weight: var(--fontWeightSemiBold);
+}
+
+.subItemLabel {
+  font-size: 16px;
+  /* font-weight: var(--fontWeightSemiBold); */
+  margin-left: 40px;
 }
 
 .notSelectedLabel {

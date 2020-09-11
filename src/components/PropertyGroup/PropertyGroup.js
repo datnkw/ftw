@@ -51,6 +51,19 @@ const Item = props => {
   );
 };
 
+const SubItem = props => {
+  const { label } = props;
+  const labelClass = classNames(css.selectedLabel, css.subItemLabel);
+
+  return (
+    <li className={css.item}>
+      <div className={css.labelWrapper}>
+        <span className={labelClass}>{label}</span>
+      </div>
+    </li>
+  );
+};
+
 const PropertyGroup = props => {
   const { rootClassName, className, id, options, selectedOptions, twoColumns } = props;
   const classes = classNames(rootClassName || css.root, className);
@@ -63,6 +76,31 @@ const PropertyGroup = props => {
       {checked.map(option => (
         <Item key={`${id}.${option.key}`} label={option.label} isSelected={option.isSelected} />
       ))}
+    </ul>
+  );
+};
+
+export const PropertyGroupWithSubAttribute = props => {
+  const { rootClassName, className, id, options, selectedOptions, subSelectedOptions } = props;
+  const classes = classNames(rootClassName || css.root, className);
+  const listClasses = classNames(classes, css.threeColumnsFlex);
+
+  const checked = checkSelected(options, selectedOptions);
+
+  return (
+    <ul className={listClasses}>
+      {checked.map(option => {
+        return (
+          <div>
+            <Item key={`${id}.${option.key}`} label={option.label} isSelected={option.isSelected} />
+            {subSelectedOptions[option.key]
+              ? subSelectedOptions[option.key].map(subOption => {
+                  return <SubItem key={`${id}.${option.key}.${subOption}`} label={subOption} />;
+                })
+              : null}
+          </div>
+        );
+      })}
     </ul>
   );
 };

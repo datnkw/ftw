@@ -79,7 +79,6 @@ const tabCompleted = (tab, listing) => {
 
   const getSelectedLevel = subject => {
     const nameField = `level${subject}`;
-    console.log('publicData: ', publicData);
     return publicData[nameField];
   };
 
