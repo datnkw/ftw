@@ -236,6 +236,8 @@
   "EditTeacherListingGeneralForm.beginnerLevelLabel": "Beginner",
   "EditTeacherListingGeneralForm.intermediateLevelLabel": "Intermediate",
   "EditTeacherListingGeneralForm.expertLevelLabel": "Expert",
+  "EditTeacherListingGeneralForm.subjectRequired": "Must select at least one subject",
+  "EditTeacherListingGeneralForm.levelRequired": "Must select at least one level",
 
   "EditAllSeatForm.showListingFailed": "Fetching listing data failed",
   "EditAllSeatForm.updateFailed": "Failed to update listing. Please try again.",

@@ -11,8 +11,15 @@ import css from './ValidationError.css';
  * shown.
  */
 const ValidationError = props => {
-  const { rootClassName, className, fieldMeta } = props;
+  const { rootClassName, className, fieldMeta, name } = props;
+
   const { touched, error } = fieldMeta;
+
+  if (name === 'selectSubject') {
+    console.log('touched: ', touched);
+    console.log('error: ', error);
+  }
+
   const classes = classNames(rootClassName || css.root, className);
   return touched && error ? <div className={classes}>{error}</div> : null;
 };

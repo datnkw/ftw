@@ -77,14 +77,51 @@ const tabCompleted = (tab, listing) => {
   const { images } = listing;
   const { publicData, title, geolocation, price, availabilityPlan } = listing.attributes;
 
+  const getSelectedLevel = subject => {
+    const nameField = `level${subject}`;
+    console.log('publicData: ', publicData);
+    return publicData[nameField];
+  };
+
+  const isSelectedLevelValid = () => {
+    if (!publicData.subjects) {
+      // console.log('false subjects');
+      return false;
+    }
+
+    let result = true;
+
+    publicData.subjects.forEach(el => {
+      // console.log('getSelectedLevel: ', getSelectedLevel(el));
+      const selectedLevelBySubject = getSelectedLevel(el);
+      // console.log('!selectedLevelBySubject: ', !selectedLevelBySubject);
+      if (!selectedLevelBySubject) {
+        //console.log('return false');
+        result = false;
+        return;
+      }
+      if (!selectedLevelBySubject.length) {
+        result = false;
+        return;
+      }
+    });
+
+    return result;
+  };
+
   switch (tab) {
     case GENERAL:
-      return !!(title && publicData && publicData.gender && publicData.teachingHour);
-      //&&
-      // publicData.subjects &&
-      // publicData.subjects.length > 0 &&
-      // publicData.levels &&
-      // publicData.levels.length > 0
+      const resultIsSelectLevelValid = isSelectedLevelValid();
+
+      return !!(
+        title &&
+        publicData &&
+        publicData.gender &&
+        publicData.teachingHour &&
+        publicData.subjects &&
+        publicData.subjects.length > 0 &&
+        resultIsSelectLevelValid
+      );
     case TEACHER_LOCATION:
       return !!(geolocation && publicData && publicData.location && publicData.location.address);
     case TEACHER_PRICING:

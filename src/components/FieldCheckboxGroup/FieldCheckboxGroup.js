@@ -7,13 +7,13 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
 import { FieldCheckbox, ValidationError } from '../../components';
 import { injectIntl } from '../../util/reactIntl';
-
+import { OnChange } from 'react-final-form-listeners';
 import css from './FieldCheckboxGroup.css';
 
 const FieldCheckboxRenderer = props => {
@@ -28,30 +28,46 @@ const FieldCheckboxRenderer = props => {
     meta,
     intl,
     isNeedMapping,
+    errorMessage,
+    isVisible,
   } = props;
 
-  const classes = classNames(rootClassName || css.root, className);
+  const [selectedValue, setSelectedValue] = useState([]);
+
+  //when component use this props doesn't need hidden option, set isVisibleFinal is true
+  const isVisibleFinal = isVisible === null ? true : isVisible && options && options.length > 0;
+
+  const classes = classNames(rootClassName || css.root, className, {
+    [css.visible]: isVisibleFinal,
+  });
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
 
   return (
     <fieldset className={classes}>
-      {label && options && options.length > 0 ? <legend>{label}</legend> : null}
+      {label ? <legend>{label}</legend> : null}
       <ul className={listClasses}>
         {options.map((option, index) => {
           const fieldId = `${id}.${option.key}`;
           return (
-            <li key={fieldId} className={css.item}>
-              <FieldCheckbox
-                id={fieldId}
-                name={fields.name}
-                label={isNeedMapping ? intl.formatMessage({ id: option.label }) : option.label}
-                value={option.key}
-              />
-            </li>
+            <div key={fieldId}>
+              <li className={css.item}>
+                <FieldCheckbox
+                  id={fieldId}
+                  name={fields.name}
+                  label={isNeedMapping ? intl.formatMessage({ id: option.label }) : option.label}
+                  value={option.key}
+                />
+              </li>
+              <OnChange name={fields.name}>
+                {value => {
+                  setSelectedValue(value);
+                }}
+              </OnChange>
+            </div>
           );
         })}
       </ul>
-      <ValidationError fieldMeta={{ ...meta }} />
+      <ValidationError fieldMeta={{ ...meta, error: selectedValue.length ? null : errorMessage }} />
     </fieldset>
   );
 };
