@@ -40,39 +40,39 @@ const EditTeacherListingGeneralFormComponent = props => {
     <FinalForm
       {...props}
       mutators={{ ...arrayMutators }}
-      validate={values => {
-        const errors = {};
+      // validate={values => {
+      //   const errors = {};
 
-        const { initialValues } = props;
+      //   const { initialValues } = props;
 
-        const subjectLevel = getObjectLevel(initialValues);
+      //   const subjectLevel = getObjectLevel(initialValues);
 
-        console.log('values.subjects: ', values.subjects);
+      //   console.log('values.subjects: ', values.subjects);
 
-        if (!values.subjects) {
-          console.log('get in error subjects');
-          errors.subjects = 'Must select';
+      //   if (!values.subjects) {
+      //     console.log('get in error subjects');
+      //     errors.subjects = 'Must select';
 
-          return;
-        }
+      //     return;
+      //   }
 
-        console.log('values.subjects.length: ', values.subjects.length);
+      //   console.log('values.subjects.length: ', values.subjects.length);
 
-        if (values.subjects.length === 0) {
-          errors.subjects = 'Must select';
-        } else {
-          values.subjects.forEach(el => {
-            const nameField = `level${el}`;
-            // console.log('nameField: ', nameField);
-            // console.log('subjectLevel: ', subjectLevel[nameField]);
-            return subjectLevel[nameField] && subjectLevel[nameField].length
-              ? null
-              : (errors[nameField] = 'Must select');
-          });
-        }
+      //   if (values.subjects.length === 0) {
+      //     errors.subjects = 'Must select';
+      //   } else {
+      //     values.subjects.forEach(el => {
+      //       const nameField = `level${el}`;
+      //       // console.log('nameField: ', nameField);
+      //       // console.log('subjectLevel: ', subjectLevel[nameField]);
+      //       return subjectLevel[nameField] && subjectLevel[nameField].length
+      //         ? null
+      //         : (errors[nameField] = 'Must select');
+      //     });
+      //   }
 
-        return errors;
-      }}
+      //   return errors;
+      // }}
       render={formRenderProps => {
         const {
           genderOptions,

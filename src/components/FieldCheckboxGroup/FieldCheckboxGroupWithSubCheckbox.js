@@ -113,10 +113,11 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
         fieldMeta={{
           ...meta,
           error: (() => {
+            console.log('choosenSubject: ', choosenSubject);
             if (!choosenSubject) {
               return errorMessage;
             }
-            if (choosenSubject.length !== 0) {
+            if (choosenSubject.length === 0) {
               return errorMessage;
             }
 
