@@ -14,3 +14,7 @@ export const getObjectLevel = values => {
 
   return result;
 };
+
+export const getFieldLevelName = subject => {
+  return `level${subject}`;
+};
