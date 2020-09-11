@@ -99,9 +99,7 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
               />
               <OnChange name={fields.name}>
                 {value => {
-                  console.log('value: ', value);
                   setChoosenSubject(value);
-                  //console.log('choosenSubject.length: ', choosenSubject.length);
                 }}
               </OnChange>
             </li>
@@ -113,7 +111,6 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
         fieldMeta={{
           ...meta,
           error: (() => {
-            console.log('choosenSubject: ', choosenSubject);
             if (!choosenSubject) {
               return errorMessage;
             }

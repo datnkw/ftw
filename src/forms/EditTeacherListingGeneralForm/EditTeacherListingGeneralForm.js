@@ -19,8 +19,6 @@ const TITLE_MAX_LENGTH = 60;
 const EditTeacherListingGeneralFormComponent = props => {
   const { intl, initialValues } = props;
 
-  console.log('initialValues: ', initialValues);
-
   const errorMessageSubjectDefault = intl.formatMessage({
     id: 'EditTeacherListingGeneralForm.subjectRequired',
   });
