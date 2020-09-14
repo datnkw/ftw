@@ -64,7 +64,6 @@ const priceData = (price, intl) => {
 
 const createListingURL = (routes, listing) => {
   const id = listing.id.uuid;
-  const { listingType } = listing.attributes.publicData;
   const slug = createSlug(listing.attributes.title);
   const isPendingApproval = listing.attributes.state === LISTING_STATE_PENDING_APPROVAL;
   const isDraft = listing.attributes.state === LISTING_STATE_DRAFT;

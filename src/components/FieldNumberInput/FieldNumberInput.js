@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { bool, func, object, shape, string } from 'prop-types';
 import { Field } from 'react-final-form';
 import classNames from 'classnames';
@@ -6,31 +6,41 @@ import { ValidationError } from '../../components';
 
 import css from './FieldNumberInput.css';
 
-class NumberInput extends Component {
-  constructor(props) {
-    super(props);
+const NumberInput = props => {
+  const [value, setValue] = useState('');
 
-    this.state = {
-      value: '',
-    };
+  const {
+    isNeedReset,
+    setIsNeedReset,
+    isOpenModal,
+    onChange,
+    className,
+    placeholder,
+    ...rest
+  } = props;
 
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onInputBlur = this.onInputBlur.bind(this);
-    this.onInputFocus = this.onInputFocus.bind(this);
-  }
+  useEffect(() => {
+    if (!isOpenModal) {
+      setValue('');
 
-  componentDidUpdate(prevProps) {
-    if (this.props.isOpenModal === prevProps.isOpenModal) {
+      onChange('');
+    }
+  }, [isOpenModal]);
+
+  useEffect(() => {
+    console.log('set value field');
+
+    if (!isNeedReset) {
+      console.log('return');
       return;
     }
 
-    if (!this.props.isOpenModal) {
-      this.setState({ value: '' });
-      this.props.onChange('');
-    }
-  }
+    console.log('set value ');
+    setValue('');
+    setIsNeedReset(false);
+  }, [isNeedReset]);
 
-  onInputChange(event) {
+  const onInputChange = event => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -40,11 +50,11 @@ class NumberInput extends Component {
       return;
     }
 
-    this.props.onChange(value);
-    this.setState({ value });
-  }
+    props.onChange(value);
+    setValue(value);
+  };
 
-  onInputBlur(event) {
+  const onInputBlur = event => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -54,115 +64,111 @@ class NumberInput extends Component {
       return;
     }
 
-    this.props.onBlur(value);
-    this.setState({
-      value,
+    props.onBlur(value);
+
+    setValue(value);
+  };
+
+  const onInputFocus = event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const value = event.target.value;
+
+    if (isNaN(value) || value.charAt(value.length - 1) === '.') {
+      return;
+    }
+
+    props.onFocus(value);
+
+    setValue(value);
+  };
+
+  return (
+    <input
+      {...rest}
+      className={className}
+      value={value}
+      type="text"
+      placeholder={placeholder}
+      onChange={onInputChange}
+      onBlur={onInputBlur}
+      onFocus={onInputFocus}
+    />
+  );
+};
+
+const FieldNumberInputComponent = props => {
+  /* eslint-disable no-unused-vars */
+  const {
+    rootClassName,
+    className,
+    inputRootClass,
+    customErrorText,
+    id,
+    label,
+    input,
+    meta,
+    onUnmount,
+    isUncontrolled,
+    inputRef,
+    isNeedReset,
+    setIsNeedReset,
+    ...rest
+  } = props;
+  /* eslint-enable no-unused-vars */
+
+  if (label && !id) {
+    throw new Error('id required when a label is given');
+  }
+
+  const { valid, invalid, touched, error } = meta;
+
+  const errorText = customErrorText || error;
+
+  // Error message and input error styles are only shown if the
+  // field has been touched and the validation has failed.
+  const hasError = !!customErrorText || !!(touched && invalid && error);
+
+  const fieldMeta = { touched: hasError, error: errorText, valid, invalid };
+
+  // Textarea doesn't need type.
+  const { type } = input;
+  // Uncontrolled input uses defaultValue instead of value.
+  const { value: defaultValue, ...inputWithoutValue } = input;
+  // Use inputRef if it is passed as prop.
+  const refMaybe = inputRef ? { ref: inputRef } : {};
+
+  const inputClasses =
+    inputRootClass ||
+    classNames(css.input, {
+      [css.inputSuccess]: valid,
+      [css.inputError]: hasError,
     });
-  }
+  console.log('isUncontrolled: ', isUncontrolled);
 
-  onInputFocus(event) {
-    event.preventDefault();
-    event.stopPropagation();
+  const inputProps = isUncontrolled
+    ? {
+        className: inputClasses,
+        id,
+        type,
+        defaultValue,
+        ...refMaybe,
+        ...inputWithoutValue,
+        ...rest,
+      }
+    : { className: inputClasses, id, type, ...refMaybe, ...input, ...rest };
 
-    const value = event.target.value;
+  const classes = classNames(rootClassName || css.root, className);
 
-    if (isNaN(value) || value.charAt(value.length - 1) === '.') {
-      return;
-    }
-
-    this.props.onFocus(value);
-    this.setState({
-      value,
-    });
-  }
-
-  render() {
-    const { className, placeholder, isOpenModal, ...rest } = this.props;
-
-    return (
-      <input
-        {...rest}
-        className={className}
-        value={this.state.value}
-        type="text"
-        placeholder={placeholder}
-        onChange={this.onInputChange}
-        onBlur={this.onInputBlur}
-        onFocus={this.onInputFocus}
-      />
-    );
-  }
-}
-
-class FieldNumberInputComponent extends Component {
-  render() {
-    /* eslint-disable no-unused-vars */
-    const {
-      rootClassName,
-      className,
-      inputRootClass,
-      customErrorText,
-      id,
-      label,
-      input,
-      meta,
-      onUnmount,
-      isUncontrolled,
-      inputRef,
-      ...rest
-    } = this.props;
-    /* eslint-enable no-unused-vars */
-
-    if (label && !id) {
-      throw new Error('id required when a label is given');
-    }
-
-    const { valid, invalid, touched, error } = meta;
-
-    const errorText = customErrorText || error;
-
-    // Error message and input error styles are only shown if the
-    // field has been touched and the validation has failed.
-    const hasError = !!customErrorText || !!(touched && invalid && error);
-
-    const fieldMeta = { touched: hasError, error: errorText, valid, invalid };
-
-    // Textarea doesn't need type.
-    const { type } = input;
-    // Uncontrolled input uses defaultValue instead of value.
-    const { value: defaultValue, ...inputWithoutValue } = input;
-    // Use inputRef if it is passed as prop.
-    const refMaybe = inputRef ? { ref: inputRef } : {};
-
-    const inputClasses =
-      inputRootClass ||
-      classNames(css.input, {
-        [css.inputSuccess]: valid,
-        [css.inputError]: hasError,
-      });
-    const inputProps = isUncontrolled
-      ? {
-          className: inputClasses,
-          id,
-          type,
-          defaultValue,
-          ...refMaybe,
-          ...inputWithoutValue,
-          ...rest,
-        }
-      : { className: inputClasses, id, type, ...refMaybe, ...input, ...rest };
-
-    const classes = classNames(rootClassName || css.root, className);
-
-    return (
-      <div className={classes}>
-        {label ? <label htmlFor={id}>{label}</label> : null}
-        <NumberInput {...inputProps} />
-        <ValidationError fieldMeta={fieldMeta} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className={classes}>
+      {label ? <label htmlFor={id}>{label}</label> : null}
+      <NumberInput {...inputProps} isNeedReset={isNeedReset} setIsNeedReset={setIsNeedReset} />
+      <ValidationError fieldMeta={fieldMeta} />
+    </div>
+  );
+};
 
 FieldNumberInputComponent.defaultProps = {
   rootClassName: null,

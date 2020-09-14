@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { bool, func, object, string } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
@@ -38,6 +38,8 @@ export class EditListingAvailabilityFormComponent extends Component {
       updateInProgress,
       onSetUpdateInProgress,
     } = props;
+
+    const [isClosing, setIsClosing] = useState(false);
 
     const dateStartAndEndInUTC = date => {
       const start = moment(date)
@@ -134,12 +136,14 @@ export class EditListingAvailabilityFormComponent extends Component {
           isOpenModal={isOpenModal}
           date={date}
           updateInProgress={updateInProgress}
-          onSubmit={values => {
-            onSetUpdateInProgress(true);
-            onDayAvailabilityChange(date, parseInt(values.seat), exceptions).then(() => {
-              onSetUpdateInProgress(false);
-              onClose();
-            });
+          onSubmit={async values => {
+            await onSetUpdateInProgress(true);
+            await onDayAvailabilityChange(date, parseInt(values.seat), exceptions).then(
+              async () => {
+                await onSetUpdateInProgress(false);
+                onClose();
+              }
+            );
           }}
         />
       </Modal>
