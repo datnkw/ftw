@@ -379,6 +379,52 @@
   width: fit-content;
 }
 
+.seatNumberWrapper {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  width: fit-content;
+}
+
+.seatNumber {
+  position: absolute;
+
+  top: -50px;
+  left: -100%;
+
+  border-radius: 5px;
+  background: #404040;
+
+  padding: 10px;
+
+  /* background-color: #000; */
+
+  color: #fff;
+  line-height: 14px !important;
+
+  visibility: hidden;
+}
+
+.seatNumber span {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.seatNumber:after {
+  content: ' ';
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.seatNumberWrapper:hover .seatNumber {
+  visibility: visible;
+}
+
 @media (--viewportSmall) {
   /* day aka table cell content should have bigger paddings when there's more space */
   .day {

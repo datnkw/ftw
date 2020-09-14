@@ -37,6 +37,6 @@
   font-size: 40px;
 }
 
-.titleEditSeat span {
+.titleEditSeat .dateInLabelEdit {
   color: #f04747;
 }

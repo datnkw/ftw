@@ -10,8 +10,6 @@ const SectionSubjects = props => {
     return null;
   }
 
-  console.log('sectionSubjects');
-
   const optionsMappingLabel = options.map(op => ({
     ...op,
     label: intl.formatMessage({ id: op.label }),
@@ -20,14 +18,9 @@ const SectionSubjects = props => {
   const selectedOptions = publicData && publicData[type] ? publicData[type] : [];
 
   const subSelectedOptions = () => {
-    console.log('get in subSelectedOption');
-
     if (!(publicData && publicData[type])) {
-      console.log('return null');
       return null;
     }
-
-    console.log('publicData in SectionSubject: ', publicData);
 
     const subjects = publicData[type];
 
@@ -35,11 +28,8 @@ const SectionSubjects = props => {
 
     subjects.forEach(el => {
       const fieldLevelName = getFieldLevelName(el);
-      console.log('fieldLevelName: ', fieldLevelName);
       result[el] = publicData[fieldLevelName];
     });
-
-    console.log('result: ', result);
 
     return result;
   };

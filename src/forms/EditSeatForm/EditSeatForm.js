@@ -54,7 +54,7 @@ export const EditSeatFormComponent = props => (
           ) : null}
           <h1 className={css.titleEditSeat}>
             <FormattedMessage id="EditSeatForm.setSeatTitle" />{' '}
-            <span>{!date ? '' : date.format('DD/MM/YYYY')}</span>
+            <span className={css.dateInLabelEdit}>{!date ? '' : date.format('DD/MM/YYYY')}</span>
           </h1>
           <FieldNumberInput
             isOpenModal={isOpenModal}

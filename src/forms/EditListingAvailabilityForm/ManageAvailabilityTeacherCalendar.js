@@ -21,7 +21,7 @@ import { IconArrowHead, IconSpinner } from '../../components';
 
 import css from './ManageAvailabilityCalendar.css';
 import { ReactComponent as Logo } from '../../logos/chalkboard_teacher.svg';
-
+import { ReactComponent as SeatLogo } from '../../logos/chair.svg';
 // Constants
 
 const HORIZONTAL_ORIENTATION = 'horizontal';
@@ -136,7 +136,7 @@ const findException = (exceptions, day) => {
   });
 };
 
-const isBlocked = (availabilityPlan, exception, date) => {
+const getSeats = (availabilityPlan, exception, date) => {
   const planEntries = ensureDayAvailabilityPlan(availabilityPlan).entries;
   const planEntry = planEntries.find(
     weekDayEntry => weekDayEntry.dayOfWeek === DAYS_OF_WEEK[date.isoWeekday() - 1]
@@ -146,17 +146,18 @@ const isBlocked = (availabilityPlan, exception, date) => {
   const seatsFromException =
     exception && ensureAvailabilityException(exception.availabilityException).attributes.seats;
 
-  const seats = exception ? seatsFromException : seatsFromPlan;
-  return seats === 0;
+  return exception ? seatsFromException : seatsFromPlan;
 };
 
 const dateModifiers = (availabilityPlan, exceptions, bookings, date) => {
   const exception = findException(exceptions, date);
+  const seats = getSeats(availabilityPlan, exception, date);
 
   return {
     isOutsideRange: isOutsideRange(date),
     isSameDay: isSameDay(date, TODAY_MOMENT),
-    isBlocked: isBlocked(availabilityPlan, exception, date),
+    seats: seats,
+    isBlocked: seats === 0,
     isBooked: isBooked(bookings, date),
     isInProgress: exception && exception.inProgress,
     isFailed: exception && exception.error,
@@ -167,12 +168,15 @@ const renderDayContents = (calendar, availabilityPlan, toggleModal) => date => {
   // This component is for day/night based processes. If time-based process is used,
   // you might want to deal with local dates using monthIdString instead of monthIdStringInUTC.
   const { exceptions = [], bookings = [] } = calendar[monthIdStringInUTC(date)] || {};
-  const { isOutsideRange, isSameDay, isBlocked, isBooked, isInProgress, isFailed } = dateModifiers(
-    availabilityPlan,
-    exceptions,
-    bookings,
-    date
-  );
+  const {
+    isOutsideRange,
+    isSameDay,
+    seats,
+    isBlocked,
+    isBooked,
+    isInProgress,
+    isFailed,
+  } = dateModifiers(availabilityPlan, exceptions, bookings, date);
 
   const dayClasses = classNames(css.default, {
     [css.outsideRange]: isOutsideRange,
@@ -192,10 +196,18 @@ const renderDayContents = (calendar, availabilityPlan, toggleModal) => date => {
   return (
     <div className={css.dayWrapper}>
       {!isOutsideRange ? (
-        <div className={css.btnSeatWrapper}>
-          <button onClick={setSeatSingleDate}>
-            <Logo />
-          </button>
+        <div>
+          <div className={css.btnSeatWrapper}>
+            <button onClick={setSeatSingleDate}>
+              <Logo />
+            </button>
+          </div>
+          <div className={css.seatNumberWrapper}>
+            <SeatLogo />
+            <div className={css.seatNumber}>
+              <span>{seats} seats</span>
+            </div>
+          </div>
         </div>
       ) : null}
       <span className={dayClasses}>
