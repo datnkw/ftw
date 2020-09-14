@@ -62,6 +62,7 @@ class FieldTimeInputComponent extends Component {
             });
           }}
         </OnChange>
+        <div className={css.divineLine}></div>
         <FieldSelect
           name="ToHour"
           id="to"

@@ -1,6 +1,6 @@
 .hourSelectorWrapper {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
 
   margin-bottom: 20px;
@@ -13,4 +13,11 @@
 
 .hourSelectorWrapper select {
   font-size: 16px;
+}
+
+.divineLine {
+  border-width: 2px 0px 0px 0px;
+  border-style: solid;
+  width: 20px !important;
+  margin-top: 50px;
 }
