@@ -167,8 +167,6 @@ class DateInputComponent extends Component {
     } = this.props;
     /* eslint-enable no-unused-vars */
 
-    console.log('props: ', this.props);
-
     const initialMoment = initialDate ? moment(initialDate) : null;
 
     const date = value && value.date instanceof Date ? moment(value.date) : initialMoment;
@@ -191,13 +189,9 @@ class DateInputComponent extends Component {
       ? phrases.clearDate
       : intl.formatMessage({ id: 'FieldDateInput.clearDate' });
 
-    //console.log('!!value: ', !!value);
     const classes = classNames(css.inputRoot, className, {
       [css.withMobileMargins]: useMobileMargins,
-      //[css.datePicked]: !!value,
     });
-
-    console.log('classes: ', classes);
 
     return (
       <div className={classes}>
