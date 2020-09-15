@@ -17,6 +17,10 @@
   --DateInput_top: 252px;
 }
 
+.datePicked {
+  border-bottom-color: var(--successColor);
+}
+
 .inputRoot {
   /* Contain repainting to this component only */
   transform: translate3d(0, 0, 0);
@@ -42,6 +46,10 @@
       box-shadow: var(--boxShadowPopup);
       border-radius: 0 0 2px 2px;
     }
+  }
+
+  & :global(.datePicked) {
+    border-bottom-color: var(--successColor);
   }
 
   & :global(.DateInput_input) {
