@@ -11,13 +11,12 @@ import { maxLength, required, composeValidators } from '../../util/validators';
 import { Form, Button, FieldTextInput, FieldCheckboxGroupWithSubCheckbox } from '../../components';
 import CustomCategorySelectFieldMaybe from './CustomCategorySelectFieldMaybe';
 import config from '../../config';
-import _ from 'lodash';
 import css from '../EditListingDescriptionForm/EditListingDescriptionForm.css';
 
 const TITLE_MAX_LENGTH = 60;
 
 const EditTeacherListingGeneralFormComponent = props => {
-  const { intl, initialValues } = props;
+  const { intl } = props;
 
   const errorMessageSubjectDefault = intl.formatMessage({
     id: 'EditTeacherListingGeneralForm.subjectRequired',

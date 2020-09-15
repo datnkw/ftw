@@ -73,9 +73,12 @@ const PropertyGroup = props => {
 
   return (
     <ul className={listClasses}>
-      {checked.map(option => (
-        <Item key={`${id}.${option.key}`} label={option.label} isSelected={option.isSelected} />
-      ))}
+      {checked.map(option => {
+        console.log('key in PropertyGroup: ', `${id}.${option.key}`);
+        return (
+          <Item key={`${id}.${option.key}`} label={option.label} isSelected={option.isSelected} />
+        );
+      })}
     </ul>
   );
 };
@@ -90,12 +93,16 @@ export const PropertyGroupWithSubAttribute = props => {
   return (
     <ul className={listClasses}>
       {checked.map(option => {
+        const keyItem = `${id}.${option.key}`;
+        console.log('keyItem : ', keyItem);
         return (
           <div>
-            <Item key={`${id}.${option.key}`} label={option.label} isSelected={option.isSelected} />
+            <Item key={keyItem} label={option.label} isSelected={option.isSelected} />
             {subSelectedOptions[option.key]
               ? subSelectedOptions[option.key].map(subOption => {
-                  return <SubItem key={`${id}.${option.key}.${subOption}`} label={subOption} />;
+                  const keySubItem = `${id}.${option.key}.${subOption}`;
+                  console.log('key SubItem: ', keySubItem);
+                  return <SubItem key={keySubItem} label={subOption} />;
                 })
               : null}
           </div>

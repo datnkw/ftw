@@ -1,4 +1,4 @@
-import React, { Component, useState, createRef } from 'react';
+import React, { Component, createRef } from 'react';
 import { bool, func, object, string } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
@@ -24,6 +24,7 @@ export class EditListingAvailabilityFormComponent extends Component {
       isOpenModal: false,
       date: null,
       updateInProgress: false,
+      currentSeats: 0,
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -38,9 +39,8 @@ export class EditListingAvailabilityFormComponent extends Component {
       date,
       updateInProgress,
       onSetUpdateInProgress,
+      seats,
     } = props;
-
-    const [isClosing, setIsClosing] = useState(false);
 
     const dateStartAndEndInUTC = date => {
       const start = moment(date)
@@ -122,34 +122,31 @@ export class EditListingAvailabilityFormComponent extends Component {
       }
     };
 
-    const onClosingForm = () => {
-      onClose();
-      setIsClosing(true);
-    };
     return (
       <Modal
         id="SetSeatModal"
         isOpen={isOpenModal}
         onClose={() => {
           this.form.current.reset();
-          onClosingForm();
+          onClose();
         }}
         onManageDisableScrolling={() => {}}
       >
         <EditSeatForm
           intl={this.props.intl}
+          initialValues={{
+            seat: seats,
+          }}
           ref={this.form}
           isOpenModal={isOpenModal}
           date={date}
           updateInProgress={updateInProgress}
-          isClosingForm={isClosing}
-          setIsClosingForm={setIsClosing}
           onSubmit={async values => {
             await onSetUpdateInProgress(true);
             await onDayAvailabilityChange(date, parseInt(values.seat), exceptions).then(
               async () => {
                 await onSetUpdateInProgress(false);
-                onClosingForm();
+                onClose();
               }
             );
           }}
@@ -158,10 +155,12 @@ export class EditListingAvailabilityFormComponent extends Component {
     );
   };
 
-  toggleModal(date) {
+  toggleModal(date, seats) {
+    console.log('seats: ', seats);
     this.setState({
       isOpenModal: !this.state.isOpenModal,
       date,
+      currentSeats: seats,
     });
   }
 
@@ -179,7 +178,6 @@ export class EditListingAvailabilityFormComponent extends Component {
               disabled,
               ready,
               handleSubmit,
-              //intl,
               invalid,
               pristine,
               saveActionMsg,
@@ -254,6 +252,7 @@ export class EditListingAvailabilityFormComponent extends Component {
               updateInProgress: isInProgress,
             });
           }}
+          seats={this.state.currentSeats}
         />
       </div>
     );

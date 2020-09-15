@@ -16,28 +16,38 @@ const NumberInput = props => {
     onChange,
     className,
     placeholder,
+    initValue,
     ...rest
   } = props;
 
   useEffect(() => {
-    if (!isOpenModal) {
-      setValue('');
+    console.log('initValue: ', initValue);
 
-      onChange('');
-    }
-  }, [isOpenModal]);
-
-  useEffect(() => {
-    console.log('set value field');
-
-    if (!isNeedReset) {
-      console.log('return');
+    if (!initValue) {
       return;
     }
 
-    console.log('set value ');
+    setValue(initValue);
+  }, [initValue]);
+
+  useEffect(() => {
+    if (isOpenModal) {
+      return;
+    }
+
+    setValue('');
+    onChange('');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpenModal]);
+
+  useEffect(() => {
+    if (!isNeedReset) {
+      return;
+    }
+
     setValue('');
     setIsNeedReset(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isNeedReset]);
 
   const onInputChange = event => {
@@ -114,6 +124,7 @@ const FieldNumberInputComponent = props => {
     inputRef,
     isNeedReset,
     setIsNeedReset,
+    initValue,
     ...rest
   } = props;
   /* eslint-enable no-unused-vars */
@@ -145,7 +156,6 @@ const FieldNumberInputComponent = props => {
       [css.inputSuccess]: valid,
       [css.inputError]: hasError,
     });
-  console.log('isUncontrolled: ', isUncontrolled);
 
   const inputProps = isUncontrolled
     ? {
@@ -164,7 +174,12 @@ const FieldNumberInputComponent = props => {
   return (
     <div className={classes}>
       {label ? <label htmlFor={id}>{label}</label> : null}
-      <NumberInput {...inputProps} isNeedReset={isNeedReset} setIsNeedReset={setIsNeedReset} />
+      <NumberInput
+        {...inputProps}
+        isNeedReset={isNeedReset}
+        setIsNeedReset={setIsNeedReset}
+        initValue={initValue}
+      />
       <ValidationError fieldMeta={fieldMeta} />
     </div>
   );

@@ -12,7 +12,11 @@ export const EditSeatFormComponent = (props, ref) => {
   const [isNeedReset, setIsNeedReset] = useState(false);
   const formRef = useRef(null);
   useImperativeHandle(ref, () => ({
-    reset: () => formRef.current.reset(),
+    reset: () =>
+      (() => {
+        formRef.current.resetFieldState('seat');
+        formRef.current.reset();
+      })(),
   }));
   return (
     <FinalForm
@@ -32,8 +36,7 @@ export const EditSeatFormComponent = (props, ref) => {
           date,
           intl,
           isOpenModal,
-          isClosingForm,
-          setIsClosingForm,
+          initialValues,
         } = formRenderProps;
         if (!formRef.current) formRef.current = form;
 
@@ -54,17 +57,6 @@ export const EditSeatFormComponent = (props, ref) => {
           form.resetFieldState('seat');
           setIsNeedReset(true);
         };
-
-        const resetFormWhenClosing = () => {
-          if (!isClosingForm) {
-            return;
-          }
-
-          setIsClosingForm(false);
-          resetForm();
-        };
-
-        resetFormWhenClosing();
 
         return (
           <Form
@@ -93,7 +85,7 @@ export const EditSeatFormComponent = (props, ref) => {
               id="seat"
               name="seat"
               className={css.seatNumberInput}
-              type="number"
+              type="text"
               label={intl.formatMessage({ id: 'EditSeatForm.labelFieldNumberInput' })}
               placeholder={intl.formatMessage({ id: 'EditSeatForm.placeholderFieldNumberInput' })}
               maxLength="10"
@@ -102,6 +94,7 @@ export const EditSeatFormComponent = (props, ref) => {
               setIsNeedReset={value => {
                 setIsNeedReset(value);
               }}
+              initValue={initialValues.seat}
             />
 
             <Button
@@ -113,16 +106,6 @@ export const EditSeatFormComponent = (props, ref) => {
             >
               {intl.formatMessage({ id: 'EditSeatForm.submitButtonText' })}
             </Button>
-            <button
-              type="button"
-              onClick={() => {
-                form.reset();
-                form.resetFieldState('seat');
-                setIsNeedReset(true);
-              }}
-            >
-              Reset
-            </button>
           </Form>
         );
       }}

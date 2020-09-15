@@ -381,7 +381,6 @@ export class TeacherListingPageComponent extends Component {
 
     const categoryOptions = findOptionsForSelectFilter('category', filterConfig);
     const subjectOptions = findOptionsForSelectFilter('subjects', filterConfig);
-    const levelOptions = findOptionsForSelectFilter('levels', filterConfig);
 
     const category =
       publicData && publicData.category ? (
