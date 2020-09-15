@@ -100,7 +100,7 @@ class FieldDateInputComponent extends Component {
             {label}
           </label>
         ) : null}
-        <DateInput className={JSON.stringify(inputClasses)} {...inputProps} />
+        <DateInput className={inputClasses} {...inputProps} />
         <ValidationError className={errorClasses} fieldMeta={meta} />
       </div>
     );
