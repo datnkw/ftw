@@ -84,18 +84,14 @@ const tabCompleted = (tab, listing) => {
 
   const isSelectedLevelValid = () => {
     if (!publicData.subjects) {
-      // console.log('false subjects');
       return false;
     }
 
     let result = true;
 
     publicData.subjects.forEach(el => {
-      // console.log('getSelectedLevel: ', getSelectedLevel(el));
       const selectedLevelBySubject = getSelectedLevel(el);
-      // console.log('!selectedLevelBySubject: ', !selectedLevelBySubject);
       if (!selectedLevelBySubject) {
-        //console.log('return false');
         result = false;
         return;
       }

@@ -12,7 +12,11 @@ export const EditSeatFormComponent = (props, ref) => {
   const [isNeedReset, setIsNeedReset] = useState(false);
   const formRef = useRef(null);
   useImperativeHandle(ref, () => ({
-    reset: () => formRef.current.reset(),
+    reset: () =>
+      (() => {
+        formRef.current.resetFieldState('seat');
+        formRef.current.reset();
+      })(),
   }));
   return (
     <FinalForm
@@ -100,16 +104,6 @@ export const EditSeatFormComponent = (props, ref) => {
             >
               {intl.formatMessage({ id: 'EditSeatForm.submitButtonText' })}
             </Button>
-            <button
-              type="button"
-              onClick={() => {
-                form.reset();
-                form.resetFieldState('seat');
-                setIsNeedReset(true);
-              }}
-            >
-              Reset
-            </button>
           </Form>
         );
       }}

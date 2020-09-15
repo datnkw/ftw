@@ -144,7 +144,6 @@ const FieldNumberInputComponent = props => {
       [css.inputSuccess]: valid,
       [css.inputError]: hasError,
     });
-  console.log('isUncontrolled: ', isUncontrolled);
 
   const inputProps = isUncontrolled
     ? {
