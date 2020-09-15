@@ -20,24 +20,23 @@ const NumberInput = props => {
   } = props;
 
   useEffect(() => {
-    if (!isOpenModal) {
-      setValue('');
-
-      onChange('');
-    }
-  }, [isOpenModal]);
-
-  useEffect(() => {
-    console.log('set value field');
-
-    if (!isNeedReset) {
-      console.log('return');
+    if (isOpenModal) {
       return;
     }
 
-    console.log('set value ');
+    setValue('');
+    onChange('');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpenModal]);
+
+  useEffect(() => {
+    if (!isNeedReset) {
+      return;
+    }
+
     setValue('');
     setIsNeedReset(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isNeedReset]);
 
   const onInputChange = event => {

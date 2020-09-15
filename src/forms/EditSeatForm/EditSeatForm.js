@@ -32,8 +32,6 @@ export const EditSeatFormComponent = (props, ref) => {
           date,
           intl,
           isOpenModal,
-          isClosingForm,
-          setIsClosingForm,
         } = formRenderProps;
         if (!formRef.current) formRef.current = form;
 
@@ -54,17 +52,6 @@ export const EditSeatFormComponent = (props, ref) => {
           form.resetFieldState('seat');
           setIsNeedReset(true);
         };
-
-        const resetFormWhenClosing = () => {
-          if (!isClosingForm) {
-            return;
-          }
-
-          setIsClosingForm(false);
-          resetForm();
-        };
-
-        resetFormWhenClosing();
 
         return (
           <Form

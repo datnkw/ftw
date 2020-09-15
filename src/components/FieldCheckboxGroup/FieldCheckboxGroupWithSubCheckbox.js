@@ -41,6 +41,7 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
 
   useEffect(() => {
     setChoosenSubject(initialValues.subjects);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getIsChoosen = subject => {

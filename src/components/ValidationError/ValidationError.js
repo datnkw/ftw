@@ -11,7 +11,7 @@ import css from './ValidationError.css';
  * shown.
  */
 const ValidationError = props => {
-  const { rootClassName, className, fieldMeta, name } = props;
+  const { rootClassName, className, fieldMeta } = props;
 
   const { touched, error } = fieldMeta;
 
