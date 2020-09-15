@@ -190,7 +190,7 @@ const renderDayContents = (calendar, availabilityPlan, toggleModal) => date => {
     e.stopPropagation();
     e.preventDefault();
 
-    toggleModal(date);
+    toggleModal(date, seats);
   };
 
   return (

@@ -36,6 +36,7 @@ export const EditSeatFormComponent = (props, ref) => {
           date,
           intl,
           isOpenModal,
+          initialValues,
         } = formRenderProps;
         if (!formRef.current) formRef.current = form;
 
@@ -84,7 +85,7 @@ export const EditSeatFormComponent = (props, ref) => {
               id="seat"
               name="seat"
               className={css.seatNumberInput}
-              type="number"
+              type="text"
               label={intl.formatMessage({ id: 'EditSeatForm.labelFieldNumberInput' })}
               placeholder={intl.formatMessage({ id: 'EditSeatForm.placeholderFieldNumberInput' })}
               maxLength="10"
@@ -93,6 +94,7 @@ export const EditSeatFormComponent = (props, ref) => {
               setIsNeedReset={value => {
                 setIsNeedReset(value);
               }}
+              initValue={initialValues.seat}
             />
 
             <Button

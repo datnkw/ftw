@@ -24,6 +24,7 @@ export class EditListingAvailabilityFormComponent extends Component {
       isOpenModal: false,
       date: null,
       updateInProgress: false,
+      currentSeats: 0,
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -38,6 +39,7 @@ export class EditListingAvailabilityFormComponent extends Component {
       date,
       updateInProgress,
       onSetUpdateInProgress,
+      seats,
     } = props;
 
     const dateStartAndEndInUTC = date => {
@@ -132,6 +134,9 @@ export class EditListingAvailabilityFormComponent extends Component {
       >
         <EditSeatForm
           intl={this.props.intl}
+          initialValues={{
+            seat: seats,
+          }}
           ref={this.form}
           isOpenModal={isOpenModal}
           date={date}
@@ -150,10 +155,12 @@ export class EditListingAvailabilityFormComponent extends Component {
     );
   };
 
-  toggleModal(date) {
+  toggleModal(date, seats) {
+    console.log('seats: ', seats);
     this.setState({
       isOpenModal: !this.state.isOpenModal,
       date,
+      currentSeats: seats,
     });
   }
 
@@ -171,7 +178,6 @@ export class EditListingAvailabilityFormComponent extends Component {
               disabled,
               ready,
               handleSubmit,
-              //intl,
               invalid,
               pristine,
               saveActionMsg,
@@ -246,6 +252,7 @@ export class EditListingAvailabilityFormComponent extends Component {
               updateInProgress: isInProgress,
             });
           }}
+          seats={this.state.currentSeats}
         />
       </div>
     );

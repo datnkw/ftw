@@ -16,8 +16,19 @@ const NumberInput = props => {
     onChange,
     className,
     placeholder,
+    initValue,
     ...rest
   } = props;
+
+  useEffect(() => {
+    console.log('initValue: ', initValue);
+
+    if (!initValue) {
+      return;
+    }
+
+    setValue(initValue);
+  }, [initValue]);
 
   useEffect(() => {
     if (isOpenModal) {
@@ -113,6 +124,7 @@ const FieldNumberInputComponent = props => {
     inputRef,
     isNeedReset,
     setIsNeedReset,
+    initValue,
     ...rest
   } = props;
   /* eslint-enable no-unused-vars */
@@ -162,7 +174,12 @@ const FieldNumberInputComponent = props => {
   return (
     <div className={classes}>
       {label ? <label htmlFor={id}>{label}</label> : null}
-      <NumberInput {...inputProps} isNeedReset={isNeedReset} setIsNeedReset={setIsNeedReset} />
+      <NumberInput
+        {...inputProps}
+        isNeedReset={isNeedReset}
+        setIsNeedReset={setIsNeedReset}
+        initValue={initValue}
+      />
       <ValidationError fieldMeta={fieldMeta} />
     </div>
   );
