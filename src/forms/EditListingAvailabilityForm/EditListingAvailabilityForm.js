@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, createRef } from 'react';
 import { bool, func, object, string } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
@@ -27,6 +27,7 @@ export class EditListingAvailabilityFormComponent extends Component {
     };
 
     this.toggleModal = this.toggleModal.bind(this);
+    this.form = createRef();
   }
 
   ModalSetSeat = props => {
@@ -38,6 +39,8 @@ export class EditListingAvailabilityFormComponent extends Component {
       updateInProgress,
       onSetUpdateInProgress,
     } = props;
+
+    const [isClosing, setIsClosing] = useState(false);
 
     const dateStartAndEndInUTC = date => {
       const start = moment(date)
@@ -119,27 +122,36 @@ export class EditListingAvailabilityFormComponent extends Component {
       }
     };
 
+    const onClosingForm = () => {
+      onClose();
+      setIsClosing(true);
+    };
     return (
       <Modal
         id="SetSeatModal"
-        // containerClassName={containerClassName}
         isOpen={isOpenModal}
         onClose={() => {
-          onClose();
+          this.form.current.reset();
+          onClosingForm();
         }}
         onManageDisableScrolling={() => {}}
-        // closeButtonMessage={closeButtonMessage}
       >
         <EditSeatForm
+          intl={this.props.intl}
+          ref={this.form}
           isOpenModal={isOpenModal}
           date={date}
           updateInProgress={updateInProgress}
-          onSubmit={values => {
-            onSetUpdateInProgress(true);
-            onDayAvailabilityChange(date, parseInt(values.seat), exceptions).then(() => {
-              onSetUpdateInProgress(false);
-              onClose();
-            });
+          isClosingForm={isClosing}
+          setIsClosingForm={setIsClosing}
+          onSubmit={async values => {
+            await onSetUpdateInProgress(true);
+            await onDayAvailabilityChange(date, parseInt(values.seat), exceptions).then(
+              async () => {
+                await onSetUpdateInProgress(false);
+                onClosingForm();
+              }
+            );
           }}
         />
       </Modal>
