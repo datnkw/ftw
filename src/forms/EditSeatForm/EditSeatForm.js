@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
+import React, { useState, useRef, useImperativeHandle, forwardRef } from 'react';
 import { bool, func, shape } from 'prop-types';
-import { compose } from 'redux';
-import { Form as FinalForm, useForm } from 'react-final-form';
-import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
+import { Form as FinalForm } from 'react-final-form';
+import { intlShape, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { Button, Form, FieldNumberInput } from '../../components';
