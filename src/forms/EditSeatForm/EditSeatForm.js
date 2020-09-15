@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import { bool, func, shape } from 'prop-types';
 import { compose } from 'redux';
-import { Form as FinalForm } from 'react-final-form';
+import { Form as FinalForm, useForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
@@ -9,14 +9,15 @@ import { Button, Form, FieldNumberInput } from '../../components';
 import css from './EditSeatForm.css';
 import * as validators from '../../util/validators';
 
-export const EditSeatFormComponent = props => {
+export const EditSeatFormComponent = (props, ref) => {
   const [isNeedReset, setIsNeedReset] = useState(false);
-
+  const formRef = useRef(null);
+  useImperativeHandle(ref, () => ({
+    reset: () => formRef.current.reset(),
+  }));
   return (
     <FinalForm
       {...props}
-      isNeedReset={isNeedReset}
-      setIsNeedReset={setIsNeedReset}
       render={formRenderProps => {
         const {
           className,
@@ -32,11 +33,10 @@ export const EditSeatFormComponent = props => {
           date,
           intl,
           isOpenModal,
-          isNeedReset,
-          setIsNeedReset,
+          isClosingForm,
+          setIsClosingForm,
         } = formRenderProps;
-
-        console.log('isNeedReset: ', isNeedReset);
+        if (!formRef.current) formRef.current = form;
 
         const classes = classNames(css.root, className);
         const submitReady = (updated && pristine) || ready;
@@ -50,16 +50,28 @@ export const EditSeatFormComponent = props => {
           })
         );
 
+        const resetForm = () => {
+          form.reset();
+          form.resetFieldState('seat');
+          setIsNeedReset(true);
+        };
+
+        const resetFormWhenClosing = () => {
+          if (!isClosingForm) {
+            return;
+          }
+
+          setIsClosingForm(false);
+          resetForm();
+        };
+
+        resetFormWhenClosing();
+
         return (
           <Form
             onSubmit={async event => {
               await handleSubmit(event);
-
-              form.reset();
-              form.resetFieldState('seat');
-              setIsNeedReset(true);
-              //event.prevenDefault();
-              //form.reset();
+              resetForm();
             }}
             className={classes}
           >
@@ -131,4 +143,4 @@ EditSeatFormComponent.propTypes = {
   }),
 };
 
-export default compose(injectIntl)(EditSeatFormComponent);
+export default forwardRef(EditSeatFormComponent);
