@@ -83,7 +83,7 @@ const createListingURL = (routes, listing) => {
             variant,
           },
         }
-      : TEACHER
+      : listing.attributes.publicData.listingType === TEACHER
       ? {
           name: 'TeacherListingPage',
           params: { id, slug },
