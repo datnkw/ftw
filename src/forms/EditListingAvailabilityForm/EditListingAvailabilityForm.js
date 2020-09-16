@@ -156,7 +156,6 @@ export class EditListingAvailabilityFormComponent extends Component {
   };
 
   toggleModal(date, seats) {
-    console.log('seats: ', seats);
     this.setState({
       isOpenModal: !this.state.isOpenModal,
       date,

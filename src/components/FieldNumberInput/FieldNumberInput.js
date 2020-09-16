@@ -21,8 +21,6 @@ const NumberInput = props => {
   } = props;
 
   useEffect(() => {
-    console.log('initValue: ', initValue);
-
     if (!initValue) {
       return;
     }
