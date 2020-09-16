@@ -37,7 +37,7 @@ class FieldTimeInputComponent extends Component {
   }
 
   render() {
-    const { intl } = this.props;
+    const { intl, disabled } = this.props;
 
     return (
       <div className={css.hourSelectorWrapper}>
@@ -45,10 +45,8 @@ class FieldTimeInputComponent extends Component {
           name="FromHour"
           id="from"
           label={intl.formatMessage({ id: 'FieldDateInput.fromLabel' })}
+          disabled={disabled}
         >
-          <option disabled value="">
-            {intl.formatMessage({ id: 'FieldDateInput.selectHour' })}
-          </option>
           {this.generateHourOptions(true).map(c => (
             <option key={c.key} value={c.key}>
               {c.label}
@@ -67,10 +65,8 @@ class FieldTimeInputComponent extends Component {
           name="ToHour"
           id="to"
           label={intl.formatMessage({ id: 'FieldDateInput.toLabel' })}
+          disabled={disabled}
         >
-          <option disabled value="">
-            {intl.formatMessage({ id: 'FieldDateInput.selectHour' })}
-          </option>
           {this.generateHourOptions(false, this.state.timeBegin).map(c => (
             <option key={c.key} value={c.key}>
               {c.label}

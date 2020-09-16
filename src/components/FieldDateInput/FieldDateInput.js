@@ -25,22 +25,6 @@ class FieldDateInputComponent extends Component {
     };
   }
 
-  generateHourOptions(isBegin, hourBegin = -1) {
-    let hourSelection = [];
-
-    const lastHour = isBegin ? 22 : 23;
-
-    for (let i = parseInt(hourBegin) + 1; i < lastHour; i++) {
-      hourSelection.push({
-        key: i,
-        //render hour format: hh:mm
-        label: `${i < 10 ? '0' + i : i}:00`,
-      });
-    }
-
-    return hourSelection;
-  }
-
   render() {
     const {
       className,

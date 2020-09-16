@@ -24,3 +24,9 @@
 .selectError {
   border-bottom-color: var(--failColor);
 }
+
+.selectDisabled {
+  z-index: -1;
+  position: relative;
+  border-bottom-color: var(--matterColorAnti);
+}
