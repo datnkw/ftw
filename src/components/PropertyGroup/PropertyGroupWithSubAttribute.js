@@ -51,35 +51,53 @@ const Item = props => {
   );
 };
 
-const PropertyGroup = props => {
-  const { rootClassName, className, id, options, selectedOptions, twoColumns } = props;
+const SubItem = props => {
+  const { label } = props;
+  const labelClass = classNames(css.selectedLabel, css.subItemLabel);
+
+  return (
+    <li className={css.item}>
+      <div className={css.labelWrapper}>
+        <span className={labelClass}>{label}</span>
+      </div>
+    </li>
+  );
+};
+
+const PropertyGroupWithSubAttribute = props => {
+  const { rootClassName, className, id, options, selectedOptions, subSelectedOptions } = props;
   const classes = classNames(rootClassName || css.root, className);
-  const listClasses = twoColumns ? classNames(classes, css.twoColumns) : classes;
+  const listClasses = classNames(classes, css.threeColumnsFlex);
 
   const checked = checkSelected(options, selectedOptions);
 
   return (
     <ul className={listClasses}>
       {checked.map(option => {
-        console.log('key in PropertyGroup: ', `${id}.${option.key}`);
         return (
-          <Item key={`${id}.${option.key}`} label={option.label} isSelected={option.isSelected} />
+          <div key={`${id}.${option.key}`}>
+            <Item label={option.label} isSelected={option.isSelected} />
+            {subSelectedOptions[option.key]
+              ? subSelectedOptions[option.key].map(subOption => {
+                  return <SubItem key={`${id}.${option.key}.${subOption}`} label={subOption} />;
+                })
+              : null}
+          </div>
         );
       })}
     </ul>
   );
 };
 
-PropertyGroup.defaultProps = {
+PropertyGroupWithSubAttribute.defaultProps = {
   rootClassName: null,
   className: null,
   selectedOptions: [],
-  twoColumns: false,
 };
 
-const { arrayOf, bool, node, shape, string } = PropTypes;
+const { arrayOf, node, shape, string } = PropTypes;
 
-PropertyGroup.propTypes = {
+PropertyGroupWithSubAttribute.propTypes = {
   rootClassName: string,
   className: string,
   id: string.isRequired,
@@ -90,7 +108,6 @@ PropertyGroup.propTypes = {
     })
   ),
   selectedOptions: arrayOf(string),
-  twoColumns: bool,
 };
 
-export default PropertyGroup;
+export default PropertyGroupWithSubAttribute;
