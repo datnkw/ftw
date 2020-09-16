@@ -11,7 +11,7 @@ import React, { useState, useEffect } from 'react';
 import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
-import { FieldCheckbox, ValidationByErrorMsg } from '../../components';
+import { FieldCheckbox, ValidationByErrorMsg, ValidationError } from '../../components';
 import { injectIntl } from '../../util/reactIntl';
 import { OnChange } from 'react-final-form-listeners';
 import css from './FieldCheckboxGroup.css';
@@ -23,6 +23,7 @@ const FieldCheckboxRenderer = props => {
     label,
     twoColumns,
     id,
+    meta,
     fields,
     options,
     intl,
@@ -31,8 +32,6 @@ const FieldCheckboxRenderer = props => {
     isVisible,
     choosenOption,
   } = props;
-
-  console.log('props: ', props);
 
   const [selectedValue, setSelectedValue] = useState([]);
 
@@ -50,8 +49,6 @@ const FieldCheckboxRenderer = props => {
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
 
   const getErrorMessage = () => {
-    console.log('selectedValue: ', selectedValue);
-
     if (!selectedValue) {
       return errorMessage;
     }
@@ -87,7 +84,7 @@ const FieldCheckboxRenderer = props => {
           );
         })}
       </ul>
-      <ValidationByErrorMsg fieldMeta={{ error: getErrorMessage() }} name={''} />
+      <ValidationError fieldMeta={meta} />
     </fieldset>
   );
 };

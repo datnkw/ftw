@@ -11,10 +11,11 @@ import React, { useState, useEffect } from 'react';
 import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
-import { FieldCheckbox, ValidationByErrorMsg } from '../../components';
+import { FieldCheckbox, ValidationByErrorMsg, ValidationError } from '../../components';
 import { injectIntl } from '../../util/reactIntl';
 import FieldCheckboxGroup from './FieldCheckboxGroup';
 import { findOptionsForSelectFilter } from '../../util/search';
+import { required } from '../../util/validators';
 import config from '../../config';
 import configLevel from '../../config-level';
 import { OnChange } from 'react-final-form-listeners';
@@ -27,6 +28,7 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
     label,
     twoColumns,
     id,
+    meta,
     fields,
     options,
     intl,
@@ -37,8 +39,6 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
   } = props;
 
   const [choosenOption, setChoosenOption] = useState([]);
-
-  console.log('initialValues: ', initialValues);
 
   useEffect(() => {
     setChoosenOption(initialValues.subjects);
@@ -93,6 +93,7 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
       <ul className={listClasses}>
         {options.map((option, index) => {
           const fieldId = `${id}.${option.key}`;
+          const childName = `level${option.key}`;
           return (
             <li key={fieldId} className={css.item}>
               <FieldCheckbox
@@ -103,13 +104,19 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
               />
               <FieldCheckboxGroup
                 className={classesSubCheckbox}
-                id={`level${option.key}`}
-                name={`level${option.key}`}
+                id={childName}
+                name={childName}
                 options={getSelectableLevel(option.key)}
                 isNeedMapping={isNeedMapping}
                 errorMessage={subErrorMsg}
                 isVisible={getIsChoosen(option.key)}
                 choosenOption={initialValues[`level${option.key}`]}
+                validate={(_, allValues) => {
+                  if (!!allValues[childName]) {
+                    return undefined;
+                  }
+                  return 'test message';
+                }}
               />
               <OnChange name={fields.name}>
                 {value => {
@@ -120,7 +127,7 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
           );
         })}
       </ul>
-      <ValidationByErrorMsg
+      {/* <ValidationByErrorMsg
         name="selectSubject"
         fieldMeta={{
           error: (() => {
@@ -129,7 +136,8 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
             return errMsg;
           })(),
         }}
-      />
+      /> */}
+      <ValidationError fieldMeta={meta} />
     </fieldset>
   );
 };

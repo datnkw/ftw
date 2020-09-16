@@ -42,7 +42,9 @@ const EditTeacherListingGeneralPanel = props => {
   );
 
   const onSubmitGeneral = values => {
-    const { title, teachingHour, gender, subjects, levels } = values;
+    console.log('values: ', values);
+
+    const { title, teachingHour, gender, subjects } = values;
 
     const subjectsLevel = getObjectLevel(values);
 
@@ -52,7 +54,6 @@ const EditTeacherListingGeneralPanel = props => {
         teachingHour,
         gender,
         subjects,
-        levels,
         listingType: TEACHER,
         ...subjectsLevel,
       },
