@@ -11,11 +11,10 @@ import React, { useState, useEffect } from 'react';
 import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
-import { FieldCheckbox, ValidationByErrorMsg, ValidationError } from '../../components';
+import { FieldCheckbox, ValidationError } from '../../components';
 import { injectIntl } from '../../util/reactIntl';
 import FieldCheckboxGroup from './FieldCheckboxGroup';
 import { findOptionsForSelectFilter } from '../../util/search';
-import { required } from '../../util/validators';
 import config from '../../config';
 import configLevel from '../../config-level';
 import { OnChange } from 'react-final-form-listeners';
@@ -33,7 +32,6 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
     options,
     intl,
     isNeedMapping,
-    errorMessage,
     initialValues,
     subErrorMsg,
   } = props;
@@ -110,7 +108,6 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
                 isNeedMapping={isNeedMapping}
                 errorMessage={subErrorMsg}
                 isVisible={getIsChoosen(option.key)}
-                choosenOption={initialValues[`level${option.key}`]}
                 validate={(_, allValues) => {
                   if (getValidateBoolean(allValues, option.key, childName)) {
                     return undefined;
