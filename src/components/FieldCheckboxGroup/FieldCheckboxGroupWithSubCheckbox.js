@@ -76,17 +76,6 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
     return [];
   };
 
-  const getErrorMessage = () => {
-    if (!choosenOption) {
-      return errorMessage;
-    }
-    if (choosenOption.length === 0) {
-      return errorMessage;
-    }
-
-    return '';
-  };
-
   return (
     <fieldset className={classes}>
       {label && options && options.length > 0 ? <legend>{label}</legend> : null}
@@ -94,6 +83,17 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
         {options.map((option, index) => {
           const fieldId = `${id}.${option.key}`;
           const childName = `level${option.key}`;
+
+          const getValidateBoolean = (allValues, optionKey, childName) => {
+            if (
+              !allValues.subjects.includes(optionKey) ||
+              (!!allValues[childName] && allValues[childName].length !== 0)
+            ) {
+              return true;
+            }
+
+            return false;
+          };
           return (
             <li key={fieldId} className={css.item}>
               <FieldCheckbox
@@ -112,10 +112,10 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
                 isVisible={getIsChoosen(option.key)}
                 choosenOption={initialValues[`level${option.key}`]}
                 validate={(_, allValues) => {
-                  if (!!allValues[childName]) {
+                  if (getValidateBoolean(allValues, option.key, childName)) {
                     return undefined;
                   }
-                  return 'test message';
+                  return subErrorMsg;
                 }}
               />
               <OnChange name={fields.name}>
@@ -127,16 +127,6 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
           );
         })}
       </ul>
-      {/* <ValidationByErrorMsg
-        name="selectSubject"
-        fieldMeta={{
-          error: (() => {
-            const errMsg = getErrorMessage();
-
-            return errMsg;
-          })(),
-        }}
-      /> */}
       <ValidationError fieldMeta={meta} />
     </fieldset>
   );
