@@ -11,7 +11,7 @@ import React, { useState, useEffect } from 'react';
 import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
-import { FieldCheckbox, ValidationError } from '../../components';
+import { FieldCheckbox, ValidationByErrorMsg } from '../../components';
 import { injectIntl } from '../../util/reactIntl';
 import FieldCheckboxGroup from './FieldCheckboxGroup';
 import { findOptionsForSelectFilter } from '../../util/search';
@@ -29,7 +29,6 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
     id,
     fields,
     options,
-    meta,
     intl,
     isNeedMapping,
     errorMessage,
@@ -37,18 +36,20 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
     subErrorMsg,
   } = props;
 
-  const [choosenSubject, setChoosenSubject] = useState([]);
+  const [choosenOption, setChoosenOption] = useState([]);
+
+  console.log('initialValues: ', initialValues);
 
   useEffect(() => {
-    setChoosenSubject(initialValues.subjects);
+    setChoosenOption(initialValues.subjects);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getIsChoosen = subject => {
-    if (!choosenSubject) {
+    if (!choosenOption) {
       return false;
     }
-    return choosenSubject.includes(subject);
+    return choosenOption.includes(subject);
   };
 
   const classes = classNames(rootClassName || css.root, className);
@@ -75,6 +76,17 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
     return [];
   };
 
+  const getErrorMessage = () => {
+    if (!choosenOption) {
+      return errorMessage;
+    }
+    if (choosenOption.length === 0) {
+      return errorMessage;
+    }
+
+    return '';
+  };
+
   return (
     <fieldset className={classes}>
       {label && options && options.length > 0 ? <legend>{label}</legend> : null}
@@ -97,29 +109,24 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
                 isNeedMapping={isNeedMapping}
                 errorMessage={subErrorMsg}
                 isVisible={getIsChoosen(option.key)}
+                choosenOption={initialValues[`level${option.key}`]}
               />
               <OnChange name={fields.name}>
                 {value => {
-                  setChoosenSubject(value);
+                  setChoosenOption(value);
                 }}
               </OnChange>
             </li>
           );
         })}
       </ul>
-      <ValidationError
+      <ValidationByErrorMsg
         name="selectSubject"
         fieldMeta={{
-          ...meta,
           error: (() => {
-            if (!choosenSubject) {
-              return errorMessage;
-            }
-            if (choosenSubject.length === 0) {
-              return errorMessage;
-            }
+            const errMsg = getErrorMessage();
 
-            return '';
+            return errMsg;
           })(),
         }}
       />

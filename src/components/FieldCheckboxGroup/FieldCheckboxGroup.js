@@ -7,11 +7,11 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
-import { FieldCheckbox, ValidationError } from '../../components';
+import { FieldCheckbox, ValidationByErrorMsg } from '../../components';
 import { injectIntl } from '../../util/reactIntl';
 import { OnChange } from 'react-final-form-listeners';
 import css from './FieldCheckboxGroup.css';
@@ -25,14 +25,21 @@ const FieldCheckboxRenderer = props => {
     id,
     fields,
     options,
-    meta,
     intl,
     isNeedMapping,
     errorMessage,
     isVisible,
+    choosenOption,
   } = props;
 
+  console.log('props: ', props);
+
   const [selectedValue, setSelectedValue] = useState([]);
+
+  useEffect(() => {
+    setSelectedValue(choosenOption);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   //when component use this props doesn't need hidden option, set isVisibleFinal is true
   const isVisibleFinal = isVisible === null ? true : isVisible && options && options.length > 0;
@@ -41,6 +48,19 @@ const FieldCheckboxRenderer = props => {
     [css.visible]: isVisibleFinal,
   });
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
+
+  const getErrorMessage = () => {
+    console.log('selectedValue: ', selectedValue);
+
+    if (!selectedValue) {
+      return errorMessage;
+    }
+    if (selectedValue.length === 0) {
+      return errorMessage;
+    }
+
+    return '';
+  };
 
   return (
     <fieldset className={classes}>
@@ -67,7 +87,7 @@ const FieldCheckboxRenderer = props => {
           );
         })}
       </ul>
-      <ValidationError fieldMeta={{ ...meta, error: selectedValue.length ? null : errorMessage }} />
+      <ValidationByErrorMsg fieldMeta={{ error: getErrorMessage() }} name={''} />
     </fieldset>
   );
 };
