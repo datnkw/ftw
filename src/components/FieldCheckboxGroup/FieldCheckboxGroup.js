@@ -7,13 +7,12 @@
  *
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
 import { FieldCheckbox, ValidationError } from '../../components';
 import { injectIntl } from '../../util/reactIntl';
-import { OnChange } from 'react-final-form-listeners';
 import css from './FieldCheckboxGroup.css';
 
 const FieldCheckboxRenderer = props => {
@@ -23,16 +22,13 @@ const FieldCheckboxRenderer = props => {
     label,
     twoColumns,
     id,
+    meta,
     fields,
     options,
-    meta,
     intl,
     isNeedMapping,
-    errorMessage,
     isVisible,
   } = props;
-
-  const [selectedValue, setSelectedValue] = useState([]);
 
   //when component use this props doesn't need hidden option, set isVisibleFinal is true
   const isVisibleFinal = isVisible === null ? true : isVisible && options && options.length > 0;
@@ -58,16 +54,11 @@ const FieldCheckboxRenderer = props => {
                   value={option.key}
                 />
               </li>
-              <OnChange name={fields.name}>
-                {value => {
-                  setSelectedValue(value);
-                }}
-              </OnChange>
             </div>
           );
         })}
       </ul>
-      <ValidationError fieldMeta={{ ...meta, error: selectedValue.length ? null : errorMessage }} />
+      <ValidationError fieldMeta={meta} />
     </fieldset>
   );
 };

@@ -27,28 +27,27 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
     label,
     twoColumns,
     id,
+    meta,
     fields,
     options,
-    meta,
     intl,
     isNeedMapping,
-    errorMessage,
     initialValues,
     subErrorMsg,
   } = props;
 
-  const [choosenSubject, setChoosenSubject] = useState([]);
+  const [choosenOption, setChoosenOption] = useState([]);
 
   useEffect(() => {
-    setChoosenSubject(initialValues.subjects);
+    setChoosenOption(initialValues.subjects);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getIsChoosen = subject => {
-    if (!choosenSubject) {
+    if (!choosenOption) {
       return false;
     }
-    return choosenSubject.includes(subject);
+    return choosenOption.includes(subject);
   };
 
   const classes = classNames(rootClassName || css.root, className);
@@ -81,6 +80,18 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
       <ul className={listClasses}>
         {options.map((option, index) => {
           const fieldId = `${id}.${option.key}`;
+          const childName = `level${option.key}`;
+
+          const getValidateBoolean = (allValues, optionKey, childName) => {
+            if (
+              !allValues.subjects.includes(optionKey) ||
+              (!!allValues[childName] && allValues[childName].length !== 0)
+            ) {
+              return true;
+            }
+
+            return false;
+          };
           return (
             <li key={fieldId} className={css.item}>
               <FieldCheckbox
@@ -91,38 +102,29 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
               />
               <FieldCheckboxGroup
                 className={classesSubCheckbox}
-                id={`level${option.key}`}
-                name={`level${option.key}`}
+                id={childName}
+                name={childName}
                 options={getSelectableLevel(option.key)}
                 isNeedMapping={isNeedMapping}
                 errorMessage={subErrorMsg}
                 isVisible={getIsChoosen(option.key)}
+                validate={(_, allValues) => {
+                  if (getValidateBoolean(allValues, option.key, childName)) {
+                    return undefined;
+                  }
+                  return subErrorMsg;
+                }}
               />
               <OnChange name={fields.name}>
                 {value => {
-                  setChoosenSubject(value);
+                  setChoosenOption(value);
                 }}
               </OnChange>
             </li>
           );
         })}
       </ul>
-      <ValidationError
-        name="selectSubject"
-        fieldMeta={{
-          ...meta,
-          error: (() => {
-            if (!choosenSubject) {
-              return errorMessage;
-            }
-            if (choosenSubject.length === 0) {
-              return errorMessage;
-            }
-
-            return '';
-          })(),
-        }}
-      />
+      <ValidationError fieldMeta={meta} />
     </fieldset>
   );
 };

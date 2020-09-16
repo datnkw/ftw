@@ -142,9 +142,15 @@ const EditTeacherListingGeneralFormComponent = props => {
               label={subjectSelectLabel}
               options={subjectOptions}
               isNeedMapping={true}
-              errorMessage={errorMessageSubjectDefault}
               subErrorMsg={errorMessageLevelDefault}
               initialValues={initialValues}
+              validate={values => {
+                if (!!values.length) {
+                  return undefined;
+                }
+
+                return errorMessageSubjectDefault;
+              }}
             />
 
             <Button
