@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from '../../util/reactIntl';
-import { PropertyGroupWithSubAttribute, PropertyGroup } from '../../components';
+import { PropertyGroupWithSubAttribute } from '../../components';
 import { getFieldLevelName } from '../../util/subjectLevelHelper';
 import css from './ListingPage.css';
 
@@ -45,12 +45,6 @@ const SectionSubjects = props => {
         selectedOptions={selectedOptions}
         subSelectedOptions={subSelectedOptions()}
       />
-      {/* <PropertyGroups
-        id={`ListingPage.${type}`}
-        options={optionsMappingLabel}
-        selectedOptions={selectedOptions}
-        twoColumns={true}
-      /> */}
     </div>
   );
 };
