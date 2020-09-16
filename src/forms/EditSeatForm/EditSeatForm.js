@@ -113,9 +113,11 @@ export const EditSeatFormComponent = (props, ref) => {
   );
 };
 
-EditSeatFormComponent.defaultProps = { fetchErrors: null };
+const EditSeatForm = forwardRef(EditSeatFormComponent);
 
-EditSeatFormComponent.propTypes = {
+EditSeatForm.defaultProps = { fetchErrors: null };
+
+EditSeatForm.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: func.isRequired,
   updateInProgress: bool.isRequired,
@@ -125,4 +127,4 @@ EditSeatFormComponent.propTypes = {
   }),
 };
 
-export default forwardRef(EditSeatFormComponent);
+export default EditSeatForm;
