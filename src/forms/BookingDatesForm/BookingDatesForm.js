@@ -219,7 +219,10 @@ export class BookingDatesFormComponent extends Component {
                     id="bookingTeacher"
                     timeSlots={timeSlots}
                   />
-                  <FieldTimeInput name="bookingHours" />
+                  <FieldTimeInput
+                    name="bookingHours"
+                    disabled={!(values && values.bookingSingleDate)}
+                  />
                 </div>
               ) : (
                 <FieldDateRangeInput

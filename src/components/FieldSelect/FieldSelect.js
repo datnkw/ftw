@@ -16,6 +16,7 @@ const FieldSelectComponent = props => {
     input,
     meta,
     children,
+    disabled,
     ...rest
   } = props;
 
@@ -32,13 +33,16 @@ const FieldSelectComponent = props => {
   const selectClasses = classNames(css.select, {
     [css.selectSuccess]: valid,
     [css.selectError]: hasError,
+    [css.selectDisabled]: disabled,
   });
   const selectProps = {
     className: selectClasses,
     id,
+    disabled,
     ...input,
     ...rest,
   };
+
   const classes = classNames(rootClassName || css.root, className);
   return (
     <div className={classes}>
