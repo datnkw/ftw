@@ -177,7 +177,6 @@ const routeConfiguration = () => {
       path: '/l/:id',
       name: 'ListingPageCanonical',
       component: props => {
-        console.log('props when routing: ', props);
         return <ListingPage {...props} />;
       },
       loadData: ListingPage.loadData,
