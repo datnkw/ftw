@@ -84,6 +84,7 @@ const FieldCheckboxWithSubCheckboxRenderer = props => {
 
           const getValidateBoolean = (allValues, optionKey, childName) => {
             if (
+              //return true when this subject isn't selected or it is selected and one of its level is selected too.
               !allValues.subjects.includes(optionKey) ||
               (!!allValues[childName] && allValues[childName].length !== 0)
             ) {

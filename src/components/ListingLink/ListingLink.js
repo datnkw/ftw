@@ -16,7 +16,7 @@ import {
   createSlug,
 } from '../../util/urlHelpers';
 import { NamedLink } from '../../components';
-
+import { TEACHER } from '../../util/listingTypes';
 import css from './ListingLink.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS = 16;
@@ -46,6 +46,7 @@ const ListingLink = props => {
     : isDraft
     ? LISTING_PAGE_DRAFT_VARIANT
     : null;
+  const { listingType } = listing.attributes.publicData;
   const linkProps = !!variant
     ? {
         name: 'ListingPageVariant',
@@ -54,6 +55,11 @@ const ListingLink = props => {
           slug,
           variant,
         },
+      }
+    : listingType === TEACHER
+    ? {
+        name: 'TeacherListingPage',
+        params: { id, slug },
       }
     : {
         name: 'ListingPage',
